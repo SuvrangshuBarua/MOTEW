@@ -42,10 +42,14 @@ public class Navigation : MonoBehaviour
             Random.Range(bounds.min.z, bounds.max.z)
         );
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 10f, 1 << NavMesh.GetAreaFromName("Walkable")))
+        if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, 1 << NavMesh.GetAreaFromName("Walkable")))
         {
             agent.SetDestination(hit.position);
         }
+    }
+
+    public void SetDestination(Vector3 position)
+    {
+        agent.SetDestination(position);
     }
 }
