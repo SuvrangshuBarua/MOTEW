@@ -64,6 +64,11 @@ public class Perception : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_trigger == null)
+        {
+            return;
+        }
+
         if (Time.time >= _disabledUntil)
         {
             // at least one perceiver is ready
