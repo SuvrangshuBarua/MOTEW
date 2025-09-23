@@ -13,39 +13,39 @@ public class Navigation : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        SetRandomDestination();
+        GetRandomDestination();
         nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
     void Update()
     {
-        if (agent.remainingDistance <= 1.0f || !agent.hasPath)
+        if (agent.remainingDistance <= 1.0f || !agent.hasPath || Time.time >= nextGoalTime)
         {
-            SetRandomDestination();
-            nextGoalTime = Time.time + Random.Range(3f, 8f);
-        }
-
-        if (Time.time >= nextGoalTime)
-        {
-            SetRandomDestination();
+            GetRandomDestination();
             nextGoalTime = Time.time + Random.Range(3f, 8f);
         }
     }
 
-    void SetRandomDestination()
+    public Vector3 GetRandomDestination()
+    {
+        Vector3 randomPoint = TakeRandomPoint();
+
+        if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, 1 << NavMesh.GetAreaFromName("Walkable")))
+        {
+            return hit.position;
+        }
+        return transform.position;
+    }
+
+    Vector3 TakeRandomPoint()
     {
         Bounds bounds = surface.navMeshData.sourceBounds;
 
-        Vector3 randomPoint = new Vector3(
+        return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
             transform.position.y,
             Random.Range(bounds.min.z, bounds.max.z)
         );
-
-        if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, 1 << NavMesh.GetAreaFromName("Walkable")))
-        {
-            agent.SetDestination(hit.position);
-        }
     }
 
     public void SetDestination(Vector3 position)
