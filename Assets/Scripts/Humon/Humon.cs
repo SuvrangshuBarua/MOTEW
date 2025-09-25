@@ -39,7 +39,6 @@ public class Humon : MonoBehaviour
 
     void Start()
     {
-        
         InitializeStateMachine();
         _draggable.OnStartDrag += OnStartDrag;
         _draggable.OnDragEnd += OnDragEnd;
@@ -65,16 +64,12 @@ public class Humon : MonoBehaviour
     {
     }
 
-    void Die()
-    {
-        Destroy(gameObject);
-    }
-
     public void DropToSurface()
     {
         if(_dropCoroutine != null) return;
         _dropCoroutine = StartCoroutine(DropToSurfaceRoutine());
     }
+
     private IEnumerator DropToSurfaceRoutine()
     {
         _rigidbody.isKinematic = false;
@@ -122,11 +117,12 @@ public class Humon : MonoBehaviour
         _stateMachine.ChangeState<RoamState>();
         _dropCoroutine = null;
     }
+
     private void OnDestroy()
     {
         _draggable.OnStartDrag -= OnStartDrag;
         _draggable.OnDragEnd -= OnDragEnd;
     }
-    
 }
+
 
