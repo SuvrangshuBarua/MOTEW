@@ -86,7 +86,6 @@ public class BaseBuilding : MonoBehaviour
 
         foreach (var part in _parts)
         {
-            Debug.Log("X");
             if (part.TryGetComponent<Rigidbody>(out var body))
             {
                 body.AddExplosionForce(5000, transform.position, 10);

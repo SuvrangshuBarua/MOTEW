@@ -7,12 +7,12 @@ namespace Building
 public class Residence : BaseBuilding
 {
     [SerializeField]
-    private uint residentCapacity_;
+    private uint _residentCapacity;
 
     [SerializeField]
-    private uint visitorCapacity_;
+    private GameObject _humon;
 
-    private List<Humon> residents_ = new ();
+    private List<GameObject> _residents = new ();
 
     void Start()
     {
@@ -21,28 +21,29 @@ public class Residence : BaseBuilding
 
     void FixedUpdate()
     {
-        if (_state == Building.State.Constructed)
+        if (_state != Building.State.Constructed)
         {
-            Destruct();
-        }
-        else if (_state == Building.State.Destructed)
-        {
-            Construct();
+            return;
         }
 
-        foreach (var resident in residents_)
+        // souls that are no longer with us :d
+        _residents.RemoveAll((resident) => resident == null);
+
+        // try spawn
+        if (_residents.Count < _residentCapacity)
         {
-            // TODO: does this check Destroy(obj)
-            if (resident == null)
+            if (Random.Range(0f, 1f) < .01f)
             {
-                residents_.Remove(resident);
+                SpawnHumon();
             }
         }
+    }
 
-        if (residents_.Count < residentCapacity_)
-        {
-            // try to spawn a humon
-        }
+    void SpawnHumon()
+    {
+        var spawnPos = new Vector3(0, 20, 0) + transform.position;
+        var humon = Instantiate(_humon, spawnPos, Quaternion.identity);
+        _residents.Add(humon);
     }
 }
 
