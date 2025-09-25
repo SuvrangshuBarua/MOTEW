@@ -49,10 +49,10 @@ public class Humon : MonoBehaviour
         {
             // calculate: (ImpactSpeed − MinImpactSpeed) x DamagePerSpeed
             float over = impactSpeed - stats.MinImpactSpeed;
-            int dmg = Mathf.Clamp(Mathf.RoundToInt(over * stats.DamagePerSpeed), 1, stats.MaxFallDamage);
+            int damage = Mathf.Clamp(Mathf.RoundToInt(over * stats.DamagePerSpeed), 1, stats.MaxFallDamage);
 
-            Debug.Log($"[Humon] Impact {impactSpeed:F2} -> fall damage {dmg}"); // DEBUG
-            _health.TakeDamage(dmg, source: "fall");
+            Debug.Log($"[Humon] Impact {impactSpeed:F2} -> fall damage {damage}"); // DEBUG
+            _health.TakeDamage(damage, source: "fall");
         }
     }
 

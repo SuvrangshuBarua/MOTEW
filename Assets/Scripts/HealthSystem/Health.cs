@@ -44,7 +44,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 
         int delta = CurrentHealth - old;
-        Debug.Log($"[Health] {name} took {-delta} dmg (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
+        Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
 
         OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
 
