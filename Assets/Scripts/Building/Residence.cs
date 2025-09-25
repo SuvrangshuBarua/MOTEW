@@ -32,7 +32,7 @@ public class Residence : BaseBuilding
         // try spawn
         if (_residents.Count < _residentCapacity)
         {
-            if (Random.Range(0f, 1f) < .01f)
+            if (Random.Range(0f, 1f) < .1f)
             {
                 SpawnHumon();
             }

@@ -18,10 +18,11 @@ public class BaseBuilding : MonoBehaviour
     [SerializeField]
     protected uint _visitorCapacity;
 
-    protected List<Humon> _visitors = new ();
+    protected List<GameObject> _visitors = new ();
 
     [SerializeField]
     protected Building.State _state = Building.State.Destructed;
+
 
     Coroutine _task = null;
 
@@ -30,16 +31,36 @@ public class BaseBuilding : MonoBehaviour
     private GameObject _building = null;
     private List<GameObject> _parts = new ();
 
-
     [SerializeField]
     private GameObject _particle; 
 
     [SerializeField]
     private uint _constructionRate;
 
-    public List<Humon> Visitors()
+
+    public List<GameObject> Visitors()
     {
         return _visitors;
+    }
+
+    public bool Visit(GameObject visitor, float duration)
+    {
+        if (_visitors.Count == _visitorCapacity)
+            return false;
+
+        visitor.SetActive(false);
+        _visitors.Add(visitor);
+        StartCoroutine(Leave(visitor, duration));
+
+        return true;
+    }
+
+    private IEnumerator Leave(GameObject visitor, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        visitor.SetActive(true);
+        _visitors.Remove(visitor);
     }
 
     public void Construct()
@@ -60,7 +81,7 @@ public class BaseBuilding : MonoBehaviour
 
         _state = Building.State.InConstruction;
 
-        _building = Instantiate(BuildingPrefab);
+        _building = Instantiate(BuildingPrefab, transform);
         foreach (Transform part in _building.transform)
         {
             part.gameObject.SetActive(false);
@@ -74,7 +95,6 @@ public class BaseBuilding : MonoBehaviour
         }
 
         _state = Building.State.Constructed;
-        yield return null;
     }
 
     private IEnumerator DoDestruct()
@@ -107,8 +127,6 @@ public class BaseBuilding : MonoBehaviour
         Destroy(_building);
 
         _state = Building.State.Destructed;
-
-        yield return null;
     }
 
     private void CancelTask()

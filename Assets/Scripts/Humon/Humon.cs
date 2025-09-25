@@ -10,8 +10,9 @@ public class Humon : MonoBehaviour
         _perception = gameObject.AddComponent<Perception>();
         _draggable = gameObject.AddComponent<God.Draggable>();
 
-
         _draggable.OnStartDrag += Die;
+
+        _perception.Subscribe(20, 5, Perception.Type.Single, LayerMask.GetMask("Building"), VisitBuilding);
     }
 
     void Update()
@@ -22,5 +23,12 @@ public class Humon : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    void VisitBuilding(Collider collider)
+    {
+        var building = collider.GetComponentInParent<Building.Residence>();
+        building.Visit(gameObject, 2);
+    }
 }
+
 
