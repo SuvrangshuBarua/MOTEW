@@ -133,11 +133,11 @@ GameObject:
   - component: {fileID: 435021076}
   - component: {fileID: 435021075}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!54 &435021075
 Rigidbody:
@@ -386,13 +386,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590987725}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4018273, y: -0.056971055, z: 0.025057556, w: 0.913598}
-  m_LocalPosition: {x: -6.42, y: 13.7, z: -10.97}
+  m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: -52.3, y: 26.4, z: 3.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 47.483, y: -7.137, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 90, z: 0}
 --- !u!114 &590987730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1475626882}
   - component: {fileID: 1475626881}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: residence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,13 +710,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2ab8cf11721404ba015992085de75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visitorCapacity: 0
+  _visitorCapacity: 10
   _state: 3
   BuildingPrefab: {fileID: 4367787602747943360, guid: 24ce58ecfb36b0ec8b83da487836c4c1, type: 3}
   _particle: {fileID: 4263243854501637136, guid: fb539ed0a891e140d8c374e51b9d760a, type: 3}
   _constructionRate: 0
-  residentCapacity_: 0
-  visitorCapacity_: 0
+  _residentCapacity: 5
+  _humon: {fileID: 6999192501222637488, guid: 267f8df9570193fc388e0dac8762e13b, type: 3}
 --- !u!4 &1475626882
 Transform:
   m_ObjectHideFlags: 0
