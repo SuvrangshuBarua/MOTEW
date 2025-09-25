@@ -32,7 +32,7 @@ public class Humon : MonoBehaviour
 
     void HandleDeath(DeathArgs args)
     {
-        Debug.Log($"[Humon] {name} died (source: {args.Source})"); // DEBUG
+        Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);
     }
 
@@ -43,8 +43,11 @@ public class Humon : MonoBehaviour
 
         float impactSpeed = collision.relativeVelocity.magnitude;
 
+        // Calculates fall damage based on impact speed and stats
+        // ? Later change to height-based damage? 
         if (impactSpeed > stats.MinImpactSpeed)
         {
+            // calculate: (ImpactSpeed − MinImpactSpeed) x DamagePerSpeed
             float over = impactSpeed - stats.MinImpactSpeed;
             int dmg = Mathf.Clamp(Mathf.RoundToInt(over * stats.DamagePerSpeed), 1, stats.MaxFallDamage);
 
@@ -56,15 +59,6 @@ public class Humon : MonoBehaviour
     void Update()
     {
 
-        // HandleDeath(Source);
-        // stuff here to handle death damage
-        // Humon damage should occur when: 
-        // 
-        // - humon is dropped at a high height (-10 damage)
-        // This should be triggered when humon is picked up
-        // - if repeated, humon dies 
-
-        // Use OnStartDrag? 
     }
 }
 

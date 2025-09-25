@@ -1,6 +1,14 @@
 using UnityEngine;
 using System;
 
+/* 
+* HEALTH SYSTEM
+* 
+* Simple per-object component health system:
+* - Tracks current and max health
+* - Applies damage and emits events
+*/
+
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour, IHealth, IDamageable
 {
@@ -18,7 +26,6 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     private void Start()
     {
         // Spawn on start 
-        // TODO: not sure how this will be handled
         Spawn();
     }
 
@@ -26,6 +33,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     {
         CurrentHealth = MaxHealth;
         OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, MaxHealth));
+        Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{MaxHealth}"); // DEBUG
     }
 
     public void TakeDamage(int amount, object source = null)
@@ -34,7 +42,11 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
         int old = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
-        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, CurrentHealth - old, source));
+
+        int delta = CurrentHealth - old;
+        Debug.Log($"[Health] {name} took {-delta} dmg (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
+
+        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
 
         if (CurrentHealth == 0)
         {
@@ -42,12 +54,13 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         }
     }
 
-    public void Kill(object source = null)
+    // Method for instant kill
+    /* public void Kill(object source = null)
     {
         if (IsDead) return;
         CurrentHealth = 0;
         Die(source);
-    }
+    }*/
 
     private void Die(object source)
     {

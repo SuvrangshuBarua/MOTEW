@@ -1,3 +1,12 @@
+/*
+ * HEALTH EVENTS
+ * 
+ * Includes event argument structs used for health-related events: 
+ * - HealthChangedArgs: used when damage or healing is applied
+ * - SpawnedArgs: used when entity is spawned/reset
+ * - DeathArgs: used when entity's health reaches zero
+ */
+
 public readonly struct HealthChangedArgs
 {
     public readonly int Current;
