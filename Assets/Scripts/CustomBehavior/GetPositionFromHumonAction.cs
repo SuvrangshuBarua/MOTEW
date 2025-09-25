@@ -13,7 +13,10 @@ public partial class GetPositionFromHumonAction : Action
 
     protected override Status OnStart()
     {
-        return Status.Running;
+        if(Humon.Value.Navigation.Agent.GetComponent<Rigidbody>().useGravity)
+            Humon.Value.Navigation.Agent.GetComponent<Rigidbody>().useGravity = false;
+        Position.Value = Humon.Value.Navigation.GetRandomDestination();
+        return Status.Success;
     }
 
     protected override Status OnUpdate()
