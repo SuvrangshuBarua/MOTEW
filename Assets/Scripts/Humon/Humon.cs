@@ -63,7 +63,11 @@ public class Humon : MonoBehaviour
     }
     private void OnDragEnd()
     {
-        
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
     public void DropToSurface()
