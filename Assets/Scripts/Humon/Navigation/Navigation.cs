@@ -11,6 +11,7 @@ public class Navigation : MonoBehaviour
     private NavMeshAgent agent;
     
     [SerializeField] private NavMeshSurface surface;
+
     private float nextGoalTime;
     
     public NavMeshAgent Agent => agent;
@@ -28,16 +29,16 @@ public class Navigation : MonoBehaviour
 
     void Start()
     {
-        
-        /*GetRandomDestination();
-        nextGoalTime = Time.time + Random.Range(3f, 8f);*/
+        agent = GetComponent<NavMeshAgent>();
+        SetDestination(GetRandomDestination());
+        nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
     void Update()
     {
         /*if (agent.remainingDistance <= 1.0f || !agent.hasPath || Time.time >= nextGoalTime)
         {
-            GetRandomDestination();
+            SetDestination(GetRandomDestination());
             nextGoalTime = Time.time + Random.Range(3f, 8f);
         }*/
     }
@@ -67,7 +68,9 @@ public class Navigation : MonoBehaviour
     public void StopMoving()
     {
         if(agent.isOnNavMesh)
+        {
              agent.ResetPath();
+        }
     }
 
     public void SetDestination(Vector3 position)
