@@ -815,16 +815,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1475626880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d945567efe150ec6a16cc03fcc2661c, type: 3}
+  m_Script: {fileID: 11500000, guid: b34548f6e2c3be0d894f7929ba9a6e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visitorCapacity: 2
+  _visitorCapacity: 10
   _state: 3
-  BuildingPrefab: {fileID: 4367787602747943360, guid: 29b27e9222c882fbb87ac34e674f7248, type: 3}
-  _particle: {fileID: 4263243854501637136, guid: bd4ec8494f32e3f67a5db3e62181405d, type: 3}
+  BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
+  _particle: {fileID: 4263243854501637136, guid: 46ed5f237f6f0eb2093609b85aaa8327, type: 3}
   _constructionRate: 1
   _residentCapacity: 4
-  _humon: {fileID: 6999192501222637488, guid: 5549d5629e232e8bfbc56c80d7117fdf, type: 3}
+  _humon: {fileID: 6999192501222637488, guid: 87c52aee51859d2cdbf2d5ac159d78d7, type: 3}
 --- !u!1 &1986460221
 GameObject:
   m_ObjectHideFlags: 0
