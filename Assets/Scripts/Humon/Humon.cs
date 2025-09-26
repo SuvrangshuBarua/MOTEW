@@ -14,10 +14,7 @@ public class Humon : MonoBehaviour
 
     private Health _health;
 
-    private void Awake()
-    {
-        _health = GetComponent<Health>();
-    }
+
 
     private void OnEnable()
     {
@@ -30,12 +27,7 @@ public class Humon : MonoBehaviour
         if (_health != null)
             _health.OnDied -= HandleDeath;
     }
-
-
-    void Start()
-    {
-
-    }
+    
 
     void HandleDeath(DeathArgs args)
     {
@@ -45,6 +37,7 @@ public class Humon : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"[Humon] {name} collided with {collision.collider.name}"); // DEBUG
         // Handle fall damage
         if (_health == null || _health.IsDead || stats == null) return;
 
@@ -61,6 +54,8 @@ public class Humon : MonoBehaviour
             Debug.Log($"[Humon] Impact {impactSpeed:F2} -> fall damage {damage}"); // DEBUG
             _health.TakeDamage(damage, source: "fall");
         }
+    }
+
     [Header("Core Components: ")]
     private Perception _perception;
     private Navigation _navigation;
@@ -82,6 +77,7 @@ public class Humon : MonoBehaviour
         _navigation = gameObject.GetComponent<Navigation>();  
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _collider = gameObject.GetComponent<Collider>();
+        _health = gameObject.GetComponent<Health>();
         
         _agent = gameObject.GetComponent<BehaviorGraphAgent>();
         _draggable = gameObject.GetComponent<Draggable>();
@@ -91,7 +87,6 @@ public class Humon : MonoBehaviour
 
     void Start()
     {
-        
         InitializeStateMachine();
         _draggable.OnStartDrag += OnStartDrag;
         _draggable.OnDragEnd += OnDragEnd;
@@ -128,7 +123,7 @@ public class Humon : MonoBehaviour
     {
         _rigidbody.isKinematic = false;
         _rigidbody.useGravity = true;
-        _rigidbody.linearDamping = 1f;
+        
 
         if (Navigation.Agent.enabled)
         {
@@ -159,7 +154,6 @@ public class Humon : MonoBehaviour
         
         _rigidbody.isKinematic = true;
         _rigidbody.useGravity = false;
-        _rigidbody.linearVelocity = Vector3.zero;
             
         if (!Navigation.Agent.enabled)
         {

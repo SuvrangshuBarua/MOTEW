@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5858568909791802063}
   - component: {fileID: 7187477235126656296}
   - component: {fileID: 6078541814777963309}
+  - component: {fileID: 6926242164919699821}
   m_Layer: 3
   m_Name: Humon
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1e9e57424999793af171deaba51b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: c8c964b6eeddc634989a9de9de650bcf, type: 2}
 --- !u!114 &5858568909791802063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,4 +202,17 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!114 &6926242164919699821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271701012968332579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88417e7ed7d25b742b54503ed7336168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: c8c964b6eeddc634989a9de9de650bcf, type: 2}
