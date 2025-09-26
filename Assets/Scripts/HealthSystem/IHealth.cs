@@ -1,0 +1,22 @@
+/* 
+* HEALTH INTERFACE
+*
+* Generic interface for health management:
+* - Exposes health-related properties and events
+*/
+
+public interface IHealth
+{
+    int CurrentHealth { get; }
+    int MaxHealth { get; }
+    bool IsDead { get; }
+
+    event System.Action<HealthChangedArgs> OnDamaged;
+    // event System.Action<HealthChangedArgs> OnHealed;
+    event System.Action<SpawnedArgs> OnSpawned;
+    event System.Action<DeathArgs> OnDied;
+
+    void Spawn();
+    // void Heal(int amount, object source = null);
+    // void Kill(object source = null);
+}
