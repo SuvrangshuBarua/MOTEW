@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.AI.Navigation;
 using System.Collections.Generic;
 
 namespace Building
@@ -13,6 +14,10 @@ public class Residence : BaseBuilding
     private GameObject _humon;
 
     private List<GameObject> _residents = new ();
+
+    // hack
+    [SerializeField]
+    private NavMeshSurface _navSurface;
 
     void Start()
     {
@@ -41,8 +46,9 @@ public class Residence : BaseBuilding
 
     void SpawnHumon()
     {
-        var spawnPos = new Vector3(0, 20, 0) + transform.position;
+        var spawnPos = new Vector3(-4, 1, 8);
         var humon = Instantiate(_humon, spawnPos, Quaternion.identity);
+        humon.GetComponent<Navigation>().Surface = _navSurface;
         _residents.Add(humon);
     }
 }

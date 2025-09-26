@@ -7,13 +7,13 @@ public class Navigation : MonoBehaviour
 {
     public NavMeshAgent Agent { get { return agent; } }
     private NavMeshAgent agent;
-    [SerializeField] private NavMeshSurface surface;
+    [SerializeField] public NavMeshSurface Surface;
     private float nextGoalTime;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        GetRandomDestination();
+        SetDestination(GetRandomDestination());
         nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
@@ -21,7 +21,7 @@ public class Navigation : MonoBehaviour
     {
         if (agent.remainingDistance <= 1.0f || !agent.hasPath || Time.time >= nextGoalTime)
         {
-            GetRandomDestination();
+            SetDestination(GetRandomDestination());
             nextGoalTime = Time.time + Random.Range(3f, 8f);
         }
     }
@@ -39,7 +39,7 @@ public class Navigation : MonoBehaviour
 
     Vector3 TakeRandomPoint()
     {
-        Bounds bounds = surface.navMeshData.sourceBounds;
+        Bounds bounds = Surface.navMeshData.sourceBounds;
 
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),

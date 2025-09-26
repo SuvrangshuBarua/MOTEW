@@ -12,7 +12,7 @@ public class Humon : MonoBehaviour
 
         _draggable.OnStartDrag += Die;
 
-        _perception.Subscribe(20, 5, Perception.Type.Single, LayerMask.GetMask("Building"), VisitBuilding);
+        _perception.Subscribe(5, 5, Perception.Type.Single, LayerMask.GetMask("Building"), VisitBuilding);
     }
 
     void Update()
