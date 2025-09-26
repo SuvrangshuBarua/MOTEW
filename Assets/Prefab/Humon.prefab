@@ -12,11 +12,12 @@ GameObject:
   - component: {fileID: 2304129899898813814}
   - component: {fileID: 6144106650876050307}
   - component: {fileID: 7202059065557807882}
-  - component: {fileID: 3045839721161314622}
   - component: {fileID: 5461673106057303184}
   - component: {fileID: 4064623401430800096}
   - component: {fileID: 5858568909791802063}
-  m_Layer: 0
+  - component: {fileID: 7187477235126656296}
+  - component: {fileID: 6078541814777963309}
+  m_Layer: 3
   m_Name: Humon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,52 +115,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3045839721161314622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271701012968332579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Graph: {fileID: -8101134426592058870, guid: 154413ed80cc0b143b4a512307987926, type: 2}
-  m_BlackboardVariableOverridesList:
-  - rid: 8094252194356265528
-  - rid: 8094252194356265751
-  - rid: 8094252194356265752
-  m_IsInitialised: 0
-  m_IsStarted: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: 8094252194356265528
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 1271701012968332579}
-    - rid: 8094252194356265751
-      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 16347037010927347732
-          m_Value1: 11396442820620127154
-        Name: npcAgent
-        m_Value: {fileID: 5461673106057303184}
-    - rid: 8094252194356265752
-      type: {class: 'BlackboardVariable`1[[Humon, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 7363690232266221413
-          m_Value1: 10067837412225607864
-        Name: selfHumon
-        m_Value: {fileID: 4064623401430800096}
 --- !u!195 &5461673106057303184
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -170,7 +125,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -207,3 +162,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surface: {fileID: 0}
+--- !u!114 &7187477235126656296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271701012968332579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8f0cc8f1f026331ae683d0d73cde59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &6078541814777963309
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271701012968332579}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
