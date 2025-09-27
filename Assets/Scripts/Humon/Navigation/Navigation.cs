@@ -1,48 +1,38 @@
 using System;
 using Unity.AI.Navigation;
 using UnityEngine;
-
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Navigation : MonoBehaviour
 {
-    
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
     
     [SerializeField] private NavMeshSurface surface;
 
     private float nextGoalTime;
     
-    public NavMeshAgent Agent => agent;
-    public bool IsMoving => agent.velocity.sqrMagnitude > 0.01f;
-    public bool HasPath => agent.hasPath;
-    public float RemainingDistance => agent.remainingDistance;
-    public float Speed => agent.speed;
-    public float RemainingTime => agent.remainingDistance / agent.speed;
-    public bool ReachedDestination => !agent.pathPending && agent.remainingDistance <= 1.0f;
+    public NavMeshAgent Agent => _agent;
+    public bool IsMoving => _agent.velocity.sqrMagnitude > 0.01f;
+    public bool HasPath => _agent.hasPath;
+    public float RemainingDistance => _agent.remainingDistance;
+    public float Speed => _agent.speed;
+    public float RemainingTime => _agent.remainingDistance / _agent.speed;
+    public bool ReachedDestination => !_agent.pathPending && _agent.remainingDistance <= 1.0f;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
     }
+
+    private bool _reachedDestination = false;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        SetDestination(GetRandomDestination());
+        _agent = GetComponent<NavMeshAgent>();
         nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
-    void Update()
-    {
-        /*if (agent.remainingDistance <= 1.0f || !agent.hasPath || Time.time >= nextGoalTime)
-        {
-            SetDestination(GetRandomDestination());
-            nextGoalTime = Time.time + Random.Range(3f, 8f);
-        }*/
-    }
-    
     public Vector3 GetRandomDestination()
     {
         Vector3 randomPoint = TakeRandomPoint();
@@ -67,14 +57,17 @@ public class Navigation : MonoBehaviour
 
     public void StopMoving()
     {
-        if(agent.isOnNavMesh)
+        if(_agent.isOnNavMesh)
         {
-             agent.ResetPath();
+             _agent.ResetPath();
         }
     }
 
     public void SetDestination(Vector3 position)
     {
-        agent.SetDestination(position);
+        _reachedDestination = false;
+        _agent.SetDestination(position);
+        nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 }
+
