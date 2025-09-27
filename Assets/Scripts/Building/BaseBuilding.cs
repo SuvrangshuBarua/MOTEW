@@ -5,46 +5,71 @@ using System.Collections.Generic;
 
 namespace Building {
 
-public enum State
+public class StateImpl
 {
-    InConstruction,
-    Constructed,
-    InDestruction,
-    Destructed,
-}
+    public bool IsInConstruction => (_state & Flag.InConstruction) != 0;
+    public bool IsConstructed => (_state & Flag.Constructed) != 0;
+    public bool IsInDestruction => (_state & Flag.InDestruction) != 0;
+    public bool IsDestructed => (_state & Flag.Destructed) != 0;
+    public bool IsOnFire => (_state & Flag.OnFire) != 0;
+
+
+    private Flag _state = Flag.Destructed;
+
+    internal void Set(Flag fl)
+    {
+        if (fl <= Flag.Destructed)
+        {
+            // first 4 flags are exclusive
+            //_state &= ~0xf;
+            Clear(Flag.InConstruction);
+            Clear(Flag.Constructed);
+            Clear(Flag.InDestruction);
+            Clear(Flag.Destructed);
+        }
+
+        _state |= fl;
+    }
+
+    internal void Clear(Flag fl)
+    {
+        _state &= ~fl;
+    }
+
+    internal enum Flag
+    {
+        InConstruction  = (1 << 0),
+        Constructed     = (1 << 1),
+        InDestruction   = (1 << 2),
+        Destructed      = (1 << 3),
+
+        OnFire          = (1 << 4),
+    }
+};
 
 public class BaseBuilding : MonoBehaviour
 {
-    [SerializeField]
-    protected uint _visitorCapacity;
+    /// State of the building
+    public StateImpl State = new StateImpl();
 
-    protected List<GameObject> _visitors = new ();
+    /// Radius workers must be in to help construction
+    public float ConstructionSiteRadius => _constructionSiteRadius;
 
-    [SerializeField]
-    protected Building.State _state = Building.State.Destructed;
+    /// Box collider of the building
+    public BoxCollider Collider => _building.GetComponent<BoxCollider>();
 
-
-    Coroutine _task = null;
-
-    [SerializeField]
-    public GameObject BuildingPrefab = null;
-    private GameObject _building = null;
-    private List<GameObject> _parts = new ();
-
-    [SerializeField]
-    private GameObject _particle; 
-
-    [SerializeField]
-    private uint _constructionRate;
-
-
+    /// Get current visitors
     public List<GameObject> Visitors()
     {
         return _visitors;
     }
 
+    /// Visit the building.  Visiting temporarily disables the
+    /// visitor and re-enables after duration seconds.
     public bool Visit(GameObject visitor, float duration)
     {
+        Assert.IsTrue(State.IsConstructed);
+
         if (_visitors.Count == _visitorCapacity)
             return false;
 
@@ -55,31 +80,88 @@ public class BaseBuilding : MonoBehaviour
         return true;
     }
 
-    private IEnumerator Leave(GameObject visitor, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-
-        visitor.SetActive(true);
-        _visitors.Remove(visitor);
-    }
-
+    /// Start constructing the building.  In order to construct
+    /// the building, it has to be in the destructed state.
     public void Construct()
     {
-        CancelTask();
-        _task = StartCoroutine(DoConstruct());
+        Assert.IsTrue(State.IsDestructed);
+
+        _task = StartTask(DoConstruct());
     }
 
+    /// Destruct the building.  In order to destroy the building,
+    /// it must be in the constructed state.
     public void Destruct()
     {
-        CancelTask();
-        _task = StartCoroutine(DoDestruct());
+        Assert.IsTrue(State.IsConstructed);
+
+        _task = StartTask(DoDestruct());
+    }
+
+    public void AddConstructionWorker(GameObject worker)
+    {
+        _workers.Add(worker);
+    }
+
+
+
+
+
+
+    // private impl
+
+
+    [SerializeField]
+    private uint _visitorCapacity;
+    private List<GameObject> _visitors = new ();
+
+    private Coroutine _task = null;
+
+    [SerializeField]
+    private GameObject BuildingPrefab = null;
+    private GameObject _building = null;
+    private List<GameObject> _parts = new ();
+
+    [SerializeField]
+    private GameObject _particle; 
+
+    [SerializeField]
+    private uint _baseConstructionRate; // smaller is faster
+    private List<GameObject> _workers = new ();
+    // TODO: make this dependent on the building size
+    // if we're gonna have buildings of differnet sizes
+    private float _constructionSiteRadius = 10;
+
+    void FixedUpdate()
+    {
+        if (State.IsInConstruction)
+        {
+            CheckConstructionWorkers();
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (State.IsInConstruction)
+        {
+            DebugUtils.DrawCircle(transform.position, _constructionSiteRadius);
+        }
+    }
+
+    void CheckConstructionWorkers()
+    {
+        // dead
+        _workers.RemoveAll((worker) => worker == null);
+
+        // remove any workers that are not in range of the
+        // construction site, aka buiding.
+        _workers.RemoveAll((worker) => Vector3.Distance(
+                transform.position, worker.transform.position) > _constructionSiteRadius);
     }
 
     private IEnumerator DoConstruct()
     {
-        Assert.AreNotEqual(_state, Building.State.InConstruction);
-
-        _state = Building.State.InConstruction;
+        State.Set(StateImpl.Flag.InConstruction);
 
         _building = Instantiate(BuildingPrefab, transform);
         foreach (Transform part in _building.transform)
@@ -88,19 +170,32 @@ public class BaseBuilding : MonoBehaviour
             _parts.Add(part.gameObject);
         }
 
-        foreach (var part in _parts)
+        for (var i = 0; i < _parts.Count; )
         {
-            part.SetActive(true);
-            yield return new WaitForSeconds(.2f);
+            if (_workers.Count == 0)
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
+
+            // we got workers, continue construction
+            var time = _baseConstructionRate / _workers.Count;
+            yield return new WaitForSeconds(time);
+
+            _parts[i].SetActive(true);
+
+            ++i;
         }
 
-        _state = Building.State.Constructed;
+        // remove all workers
+        _workers.Clear();
+
+        State.Set(StateImpl.Flag.Constructed);
     }
 
     private IEnumerator DoDestruct()
     {
-        Assert.AreNotEqual(_state, Building.State.InDestruction);
-        _state = Building.State.InDestruction;
+        State.Set(StateImpl.Flag.InDestruction);
 
         // EXPLODE.
 
@@ -118,23 +213,35 @@ public class BaseBuilding : MonoBehaviour
 
         foreach (var part in _parts)
         {
+            // TODO: skip inactive parts, construction may have never finished
+            yield return new WaitForSeconds(0.1f);
             Instantiate(_particle, part.transform.position, Quaternion.identity);
             part.SetActive(false);
-            yield return new WaitForSeconds(0.1f);
         }
 
         _parts.Clear();
         Destroy(_building);
 
-        _state = Building.State.Destructed;
+        State.Set(StateImpl.Flag.Destructed);
     }
 
-    private void CancelTask()
+    private Coroutine StartTask(IEnumerator task)
     {
+        // stop the current task, then start the new one
         if (_task != null)
         {
             StopCoroutine(_task);
         }
+
+        return StartCoroutine(task);
+    }
+
+    private IEnumerator Leave(GameObject visitor, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        visitor.SetActive(true);
+        _visitors.Remove(visitor);
     }
 }
 
