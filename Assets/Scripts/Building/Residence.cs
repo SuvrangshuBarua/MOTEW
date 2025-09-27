@@ -26,7 +26,7 @@ public class Residence : BaseBuilding
 
     void FixedUpdate()
     {
-        if (_state != Building.State.Constructed)
+        if (!State.IsConstructed)
         {
             return;
         }
