@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 using System;
 using System.Collections.Generic;
 
 public class Perception : MonoBehaviour
 {
-    private GameObject _triggerObject;
-    private SphereCollider _trigger;
+    private GameObject _triggerObject = null;
+    private SphereCollider _trigger = null;
     private List<Perceiver> _perceivers = new ();
     private float _disabledUntil = 0f;
 
@@ -52,7 +53,7 @@ public class Perception : MonoBehaviour
         }
 
         _trigger.radius = Math.Max(_trigger.radius, radius);
-        _trigger.enabled = true;
+        _triggerObject.SetActive(true);
 
         return perceiver;
     }
@@ -72,7 +73,7 @@ public class Perception : MonoBehaviour
         if (Time.time >= _disabledUntil)
         {
             // at least one perceiver is ready
-            _trigger.enabled = true;
+            _triggerObject.SetActive(true);
         }
 
         foreach (var perceiver in _perceivers)
@@ -81,6 +82,7 @@ public class Perception : MonoBehaviour
         }
     }
 
+    /*
     void OnTriggerEnter(Collider other)
     {
         float dist = Vector3.Distance(_trigger.transform.position,
@@ -91,6 +93,7 @@ public class Perception : MonoBehaviour
             perceiver.TryPerceive(other, dist);
         }
     }
+    */
 
     void OnTriggerStay(Collider other)
     {
@@ -115,7 +118,7 @@ public class Perception : MonoBehaviour
         if (minTimeout > 0f)
         {
             // all perceivers are timed out, we can suspend
-            _trigger.enabled = false;
+            _triggerObject.SetActive(false);
             _disabledUntil = Time.time + minTimeout;
         }
     }    
