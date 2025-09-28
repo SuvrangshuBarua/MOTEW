@@ -46,7 +46,7 @@ public class Residence : BaseBuilding
 
     void SpawnHumon()
     {
-        var spawnPos = new Vector3(-4, 1, 8);
+        var spawnPos = new Vector3(-5, 1, 0) + transform.position;
         var humon = Instantiate(_humon, spawnPos, Quaternion.identity);
         humon.GetComponent<Navigation>().Surface = _navSurface;
         _residents.Add(humon);

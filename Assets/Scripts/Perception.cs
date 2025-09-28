@@ -97,6 +97,11 @@ public class Perception : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (_trigger == null)
+        {
+            return;
+        }
+
         float minTimeout = 0f;
         float dist = Vector3.Distance(_trigger.transform.position,
                 other.ClosestPoint(_trigger.transform.position));
