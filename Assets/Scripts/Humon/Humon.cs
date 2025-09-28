@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using God;
 using StateMachine;
 using Unity.Behavior;
@@ -40,6 +38,7 @@ public class Humon : MonoBehaviour
     void Start()
     {
         InitializeStateMachine();
+        InitializePerception();
         _draggable.OnStartDrag += OnStartDrag;
         _draggable.OnDragEnd += OnDragEnd;
     }
@@ -48,7 +47,14 @@ public class Humon : MonoBehaviour
     {
         _stateMachine.AddState(new RoamState());
         _stateMachine.AddState(new InAirState());
+        _stateMachine.AddState(new ConstructionState());
         _stateMachine.ChangeState<RoamState>();
+    }
+
+    void InitializePerception()
+    {
+        _perception.Subscribe(5, 1, Perception.Type.Single,
+                LayerMask.GetMask("Building"), OnPerceiveBuilding);
     }
 
     private void Update()
@@ -60,6 +66,7 @@ public class Humon : MonoBehaviour
     {
         _stateMachine.ChangeState<InAirState>();
     }
+
     private void OnDragEnd()
     {
     }
@@ -116,6 +123,32 @@ public class Humon : MonoBehaviour
 
         _stateMachine.ChangeState<RoamState>();
         _dropCoroutine = null;
+    }
+
+    void OnPerceiveBuilding(Collider collider)
+    {
+        var building = collider.GetComponentInParent<Building.BaseBuilding>();
+
+        if (building.State.IsInConstruction)
+        {
+            var state = _stateMachine.CurrentState.GetState();
+            if (state == State.Roam && state != State.Construction)
+            {
+                building.AddConstructionWorker(gameObject);
+                building.OnConstructed += OnBuildingConstructed;
+                _stateMachine.GetState<ConstructionState>().Building = building;
+                _stateMachine.ChangeState<ConstructionState>();
+            }
+        }
+    }
+    
+    void OnBuildingConstructed()
+    {
+        if (_stateMachine.CurrentState.GetState() == State.Construction)
+        {
+            // back to idling
+            _stateMachine.ChangeState<RoamState>();
+        }
     }
 
     private void OnDestroy()

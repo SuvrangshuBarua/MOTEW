@@ -8,11 +8,12 @@ namespace StateMachine
     {
         Roam = 0,
         InAir,
-        Building,
+        Construction,
         Panic,
         Fire,
         Dead
     }
+
     public interface IState
     {
         void Enter(Humon npc);
@@ -20,6 +21,7 @@ namespace StateMachine
         void Exit(Humon npc);
         State GetState();
     }
+
     public class StateMachine
     {
         private IState m_currentState;

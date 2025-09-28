@@ -8,7 +8,7 @@ public class Navigation : MonoBehaviour
 {
     private NavMeshAgent _agent;
     
-    [SerializeField] private NavMeshSurface surface;
+    [SerializeField] public NavMeshSurface Surface;
 
     private float nextGoalTime;
     
@@ -24,8 +24,6 @@ public class Navigation : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
     }
-
-    private bool _reachedDestination = false;
 
     void Start()
     {
@@ -46,7 +44,7 @@ public class Navigation : MonoBehaviour
 
     Vector3 TakeRandomPoint()
     {
-        Bounds bounds = surface.navMeshData.sourceBounds;
+        Bounds bounds = Surface.navMeshData.sourceBounds;
 
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
@@ -65,7 +63,6 @@ public class Navigation : MonoBehaviour
 
     public void SetDestination(Vector3 position)
     {
-        _reachedDestination = false;
         _agent.SetDestination(position);
         nextGoalTime = Time.time + Random.Range(3f, 8f);
     }

@@ -52,6 +52,9 @@ public class BaseBuilding : MonoBehaviour
     /// State of the building
     public StateImpl State = new StateImpl();
 
+    /// Callbacks for when construction finishes
+    public System.Action OnConstructed;
+
     /// Radius workers must be in to help construction
     public float ConstructionSiteRadius => _constructionSiteRadius;
 
@@ -189,6 +192,8 @@ public class BaseBuilding : MonoBehaviour
 
         // remove all workers
         _workers.Clear();
+        // callbacks
+        OnConstructed?.Invoke();
 
         State.Set(StateImpl.Flag.Constructed);
     }
