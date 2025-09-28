@@ -4,11 +4,21 @@ using System.Collections.Generic;
 
 namespace StateMachine
 {
+    public enum State
+    {
+        Roam = 0,
+        InAir,
+        Building,
+        Panic,
+        Fire,
+        Dead
+    }
     public interface IState
     {
         void Enter(Humon npc);
         void Update(Humon npc);
         void Exit(Humon npc);
+        State GetState();
     }
     public class StateMachine
     {
