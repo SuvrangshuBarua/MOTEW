@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class Humon : MonoBehaviour
 {
+    [SerializeField] private Stats stats;
+
     [Header("Core Components: ")]
     private Perception _perception;
     private Navigation _navigation;
@@ -22,18 +24,34 @@ public class Humon : MonoBehaviour
     private StateMachine.StateMachine _stateMachine;
     private Draggable _draggable;
     private Coroutine _dropCoroutine;
+    private FallDamage _fallDamage;
+    private IHealth _health;
 
     private void Awake()
     {
         _perception = gameObject.AddComponent<Perception>();
-        _navigation = gameObject.GetComponent<Navigation>();  
+        _navigation = gameObject.GetComponent<Navigation>();
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _collider = gameObject.GetComponent<Collider>();
-        
+
         _agent = gameObject.GetComponent<BehaviorGraphAgent>();
         _draggable = gameObject.GetComponent<Draggable>();
-        
+
         _stateMachine = new StateMachine.StateMachine(this);
+
+        _health = GetComponent<IHealth>();
+        _fallDamage = gameObject.AddComponent<FallDamage>();
+
+        // Fall damage
+        // TODO: check logic here
+        _fallDamage.StatsAsset = stats;
+        _fallDamage.OnLand += () =>
+        {
+            if (_stateMachine.CurrentState.GetState() != State.Construction)
+                _stateMachine.ChangeState<RoamState>();
+        };
+
+        if (_health != null) _health.OnDied += HandleDeath; // subscribe to death event
     }
 
     void Start()
@@ -50,6 +68,7 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new InAirState());
         _stateMachine.AddState(new ConstructionState());
         _stateMachine.AddState(new PanicState());
+        _stateMachine.AddState(new SocializeState());
         _stateMachine.ChangeState<RoamState>();
     }
 
@@ -59,17 +78,21 @@ public class Humon : MonoBehaviour
                 LayerMask.GetMask("Building"), OnPerceiveBuilding);
 
         _perception.Subscribe(6, 1, Perception.Type.Multiple,
-                LayerMask.GetMask("NPC"), OnPerceiveHumon);
+                LayerMask.GetMask("NPC"), OnPerceiveHumonPanic);
+
+        _perception.Subscribe(4, 5, Perception.Type.Single,
+                LayerMask.GetMask("NPC"), OnPerceiveHumonSocialize);
     }
 
     private void Update()
     {
         _stateMachine.Update();
     }
-    
+
     private void OnStartDrag()
     {
         _stateMachine.ChangeState<InAirState>();
+        _fallDamage.BeginAirborne();
     }
 
     private void OnDragEnd()
@@ -78,7 +101,7 @@ public class Humon : MonoBehaviour
 
     public void DropToSurface()
     {
-        if(_dropCoroutine != null) return;
+        if (_dropCoroutine != null) return;
         _dropCoroutine = StartCoroutine(DropToSurfaceRoutine());
     }
 
@@ -92,14 +115,14 @@ public class Humon : MonoBehaviour
         {
             Navigation.Agent.enabled = false;
         }
-        
+
         bool isOnGround = false;
 
         while (!isOnGround && _rigidbody.linearVelocity.y <= 0.0f)
         {
             float checkDistance = 0.2f;
             RaycastHit hit;
-            Vector3 rayOrigin = transform.position - new Vector3(0, _collider.bounds.extents.y, 0 );
+            Vector3 rayOrigin = transform.position - new Vector3(0, _collider.bounds.extents.y, 0);
             if (Physics.Raycast(rayOrigin, Vector3.down, out hit, checkDistance, LayerMask.GetMask("Terrain"), QueryTriggerInteraction.Ignore))
             {
                 isOnGround = true;
@@ -107,23 +130,23 @@ public class Humon : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-        
+
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(transform.position, out navHit, 10f, 1 << NavMesh.GetAreaFromName("Walkable")))
         {
             transform.position = navHit.position;
-           
+
         }
-        
+
         _rigidbody.isKinematic = true;
         _rigidbody.useGravity = false;
         _rigidbody.linearVelocity = Vector3.zero;
-            
+
         if (!Navigation.Agent.enabled)
         {
             Navigation.Agent.enabled = true;
         }
-        
+
         yield return null;
 
         _stateMachine.ChangeState<RoamState>();
@@ -147,7 +170,7 @@ public class Humon : MonoBehaviour
         }
     }
 
-    void OnPerceiveHumon(Collider other)
+    void OnPerceiveHumonPanic(Collider other)
     {
         var humon = other.GetComponent<Humon>();
 
@@ -161,6 +184,25 @@ public class Humon : MonoBehaviour
             }
         }
     }
+
+    void OnPerceiveHumonSocialize(Collider other)
+    {
+        var humon = other.GetComponent<Humon>();
+
+        // both humons must be roaming
+        if (StateMachine.CurrentState.GetState() != State.Roam
+            || humon.StateMachine.CurrentState.GetState() != State.Roam)
+        {
+            return;
+        }
+
+        StateMachine.GetState<SocializeState>().Other = humon;
+        StateMachine.GetState<SocializeState>().Speak = true;
+        humon.StateMachine.GetState<SocializeState>().Other = this;
+
+        StateMachine.ChangeState<SocializeState>();
+        humon.StateMachine.ChangeState<SocializeState>();
+    }
     
     void OnBuildingConstructed()
     {
@@ -171,8 +213,15 @@ public class Humon : MonoBehaviour
         }
     }
 
+    private void HandleDeath(DeathArgs args)
+    {
+        Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
+        Destroy(gameObject);
+    }
+
     private void OnDestroy()
     {
+        if (_health != null) _health.OnDied -= HandleDeath;
         _draggable.OnStartDrag -= OnStartDrag;
         _draggable.OnDragEnd -= OnDragEnd;
     }

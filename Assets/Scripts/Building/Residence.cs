@@ -37,7 +37,7 @@ public class Residence : BaseBuilding
         // try spawn
         if (_residents.Count < _residentCapacity)
         {
-            if (Random.Range(0f, 1f) < .1f)
+            if (Random.Range(0f, 1f) < .01f)
             {
                 SpawnHumon();
             }
@@ -46,7 +46,7 @@ public class Residence : BaseBuilding
 
     void SpawnHumon()
     {
-        var spawnPos = new Vector3(-5, 1, 0) + transform.position;
+        var spawnPos = new Vector3(-6, 1, 0) + transform.position;
         var humon = Instantiate(_humon, spawnPos, Quaternion.identity);
         humon.GetComponent<Navigation>().Surface = _navSurface;
         _residents.Add(humon);
