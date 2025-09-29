@@ -15,3 +15,6 @@ MonoBehaviour:
   _baseHealth: 100
   _baseRange: 1
   _baseSpeed: 2
+  _minFallHeight: 2.5
+  _damagePerMeter: 10
+  _maxFallDamage: 50
