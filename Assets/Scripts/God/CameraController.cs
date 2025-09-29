@@ -47,8 +47,8 @@ public class CameraController : MonoBehaviour
             }
         }
     }
-
-    void Update()
+    
+    private void LateUpdate()
     {
         if (_draggable && _draggable.IsDragged)
         {

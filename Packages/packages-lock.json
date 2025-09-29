@@ -1,5 +1,20 @@
 {
   "dependencies": {
+    "com.grimtools.utilities": {
+      "version": "https://github.com/SuvrangshuBarua/grimtools-utilities.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.collections": "1.0.1"
+      },
+      "hash": "5dc57324ba5bdc8e7ef9977a2823aa53f0a7f659"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,

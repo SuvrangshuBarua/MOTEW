@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.grimtools.utilities": "https://github.com/SuvrangshuBarua/grimtools-utilities.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.8",
     "com.unity.behavior": "1.0.12",
     "com.unity.collab-proxy": "2.9.3",
