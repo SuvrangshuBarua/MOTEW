@@ -54,6 +54,8 @@ public class BaseBuilding : MonoBehaviour
 
     /// Callbacks for when construction finishes
     public System.Action OnConstructed;
+    /// Callbacks for when construction starts
+    public System.Action OnConstruction;
 
     /// Radius workers must be in to help construction
     public float ConstructionSiteRadius => _constructionSiteRadius;
@@ -172,6 +174,12 @@ public class BaseBuilding : MonoBehaviour
             part.gameObject.SetActive(false);
             _parts.Add(part.gameObject);
         }
+
+        // NOTE: currently used for rebaking the mesh, so make
+        // sure the callbacks are called AFTER instantiaion of
+        // the building prefab.
+        OnConstruction?.Invoke();
+        OnConstruction = null;
 
         for (var i = 0; i < _parts.Count; )
         {

@@ -80,7 +80,7 @@ public class Humon : MonoBehaviour
         _perception.Subscribe(6, 1, Perception.Type.Multiple,
                 LayerMask.GetMask("NPC"), OnPerceiveHumonPanic);
 
-        _perception.Subscribe(4, 5, Perception.Type.Single,
+        _perception.Subscribe(5, 10, Perception.Type.Single,
                 LayerMask.GetMask("NPC"), OnPerceiveHumonSocialize);
     }
 

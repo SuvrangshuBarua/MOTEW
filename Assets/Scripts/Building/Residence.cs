@@ -21,6 +21,7 @@ public class Residence : BaseBuilding
 
     void Start()
     {
+        OnConstruction += Rebake;
         Construct();
     }
 
@@ -42,6 +43,23 @@ public class Residence : BaseBuilding
                 SpawnHumon();
             }
         }
+    }
+
+    void Rebake()
+    {
+        // collider don't get considered for nav mesh generation,
+        // create a temporary mesh for baking
+
+        GameObject box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+        box.transform.position = Collider.transform.position;
+        box.transform.rotation = Collider.transform.rotation;
+        box.transform.localScale = Collider.size;
+        box.isStatic = true;
+
+        _navSurface.BuildNavMesh();
+
+        Destroy(box);
     }
 
     void SpawnHumon()
