@@ -194,6 +194,7 @@ public class BaseBuilding : MonoBehaviour
         _workers.Clear();
         // callbacks
         OnConstructed?.Invoke();
+        OnConstructed = null;
 
         State.Set(StateImpl.Flag.Constructed);
     }
