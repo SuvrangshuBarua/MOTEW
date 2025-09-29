@@ -58,6 +58,7 @@ public class PanicState : IState
         npc.Navigation.TogglePanicSpeed();
 
         // TODO: draw bubble with ?!
+        SpeechBubbleManager.Instance.CreateSpeechBubble(npc.transform, "?!");
     }
 
     public void Update(Humon npc)
