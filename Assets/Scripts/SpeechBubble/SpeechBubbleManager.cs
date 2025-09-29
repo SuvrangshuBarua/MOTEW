@@ -20,6 +20,9 @@ public class SpeechBubbleManager : PersistantMonoSingleton<SpeechBubbleManager>
 
     public SpeechBubble CreateSpeechBubble(Transform target, string text, Sprite emoji = null, float duration = 3f)
     {
+        if(m_activeSpeechBubbles.ContainsKey(target))
+            return m_activeSpeechBubbles[target];
+        
         var speechBubble = ObjectPool.Instance.GetObject(m_speechBubblePrefab);
         speechBubble.transform.SetParent(m_canvas.transform, false);
         var rectTransform = speechBubble.GetComponent<RectTransform>();
