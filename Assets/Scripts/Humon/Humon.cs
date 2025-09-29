@@ -50,6 +50,7 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new InAirState());
         _stateMachine.AddState(new ConstructionState());
         _stateMachine.AddState(new PanicState());
+        _stateMachine.AddState(new SocializeState());
         _stateMachine.ChangeState<RoamState>();
     }
 
@@ -59,7 +60,10 @@ public class Humon : MonoBehaviour
                 LayerMask.GetMask("Building"), OnPerceiveBuilding);
 
         _perception.Subscribe(6, 1, Perception.Type.Multiple,
-                LayerMask.GetMask("NPC"), OnPerceiveHumon);
+                LayerMask.GetMask("NPC"), OnPerceiveHumonPanic);
+
+        _perception.Subscribe(4, 5, Perception.Type.Single,
+                LayerMask.GetMask("NPC"), OnPerceiveHumonSocialize);
     }
 
     private void Update()
@@ -147,7 +151,7 @@ public class Humon : MonoBehaviour
         }
     }
 
-    void OnPerceiveHumon(Collider other)
+    void OnPerceiveHumonPanic(Collider other)
     {
         var humon = other.GetComponent<Humon>();
 
@@ -160,6 +164,25 @@ public class Humon : MonoBehaviour
                 _stateMachine.ChangeState<PanicState>();
             }
         }
+    }
+
+    void OnPerceiveHumonSocialize(Collider other)
+    {
+        var humon = other.GetComponent<Humon>();
+
+        // both humons must be roaming
+        if (StateMachine.CurrentState.GetState() != State.Roam
+            || humon.StateMachine.CurrentState.GetState() != State.Roam)
+        {
+            return;
+        }
+
+        StateMachine.GetState<SocializeState>().Other = humon;
+        StateMachine.GetState<SocializeState>().Speak = true;
+        humon.StateMachine.GetState<SocializeState>().Other = this;
+
+        StateMachine.ChangeState<SocializeState>();
+        humon.StateMachine.ChangeState<SocializeState>();
     }
     
     void OnBuildingConstructed()

@@ -11,7 +11,8 @@ namespace StateMachine
         Construction,
         Panic,
         Fire,
-        Dead
+        Dead,
+        Socialize,
     }
 
     public interface IState
