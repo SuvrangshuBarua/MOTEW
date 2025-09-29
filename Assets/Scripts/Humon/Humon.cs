@@ -16,6 +16,7 @@ public class Humon : MonoBehaviour
     public Perception Perception => _perception;
     public Navigation Navigation => _navigation;
     public Rigidbody Rigidbody => _rigidbody;
+    public StateMachine.StateMachine StateMachine => _stateMachine;
     
     private BehaviorGraphAgent _agent;
     private StateMachine.StateMachine _stateMachine;
@@ -48,6 +49,7 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new RoamState());
         _stateMachine.AddState(new InAirState());
         _stateMachine.AddState(new ConstructionState());
+        _stateMachine.AddState(new PanicState());
         _stateMachine.ChangeState<RoamState>();
     }
 
@@ -55,6 +57,9 @@ public class Humon : MonoBehaviour
     {
         _perception.Subscribe(5, 1, Perception.Type.Single,
                 LayerMask.GetMask("Building"), OnPerceiveBuilding);
+
+        _perception.Subscribe(6, 1, Perception.Type.Multiple,
+                LayerMask.GetMask("NPC"), OnPerceiveHumon);
     }
 
     private void Update()
@@ -138,6 +143,21 @@ public class Humon : MonoBehaviour
                 building.OnConstructed += OnBuildingConstructed;
                 _stateMachine.GetState<ConstructionState>().Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
+            }
+        }
+    }
+
+    void OnPerceiveHumon(Collider other)
+    {
+        var humon = other.GetComponent<Humon>();
+
+        if (humon.IsBeingDragged)
+        {
+            // spotted a floating humon -> panic
+            if (_stateMachine.CurrentState.GetState() != State.Panic)
+            {
+                _stateMachine.GetState<PanicState>().Threat = humon.gameObject;
+                _stateMachine.ChangeState<PanicState>();
             }
         }
     }

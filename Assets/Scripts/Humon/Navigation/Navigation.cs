@@ -66,5 +66,24 @@ public class Navigation : MonoBehaviour
         _agent.SetDestination(position);
         nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
+
+    public void TogglePanicSpeed()
+    {
+        // FIXME: the _agent should query its speed from the humon stats
+        // and then we modify the stats' speed, not the navigation
+
+        if (_agent.acceleration == 1000)
+        {
+            _agent.speed = 5;
+            _agent.acceleration = 10;
+            _agent.angularSpeed = 120;
+        }
+        else
+        {
+            _agent.speed = 20;
+            _agent.acceleration = 1000;
+            _agent.angularSpeed = 1000;
+        }
+    }
 }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class DebugUtils
 {
@@ -15,6 +16,25 @@ public class DebugUtils
                     Mathf.Cos(angle) * radius, 1, Mathf.Sin(angle) * radius);
             Gizmos.DrawLine(prevPoint, newPoint);
             prevPoint = newPoint;
+        }
+    }
+
+    public static void DrawPath(List<Vector3> path)
+    {
+        //Gizmos.color = Color.magenta;
+
+        if (path.Count < 2)
+        {
+            return;
+        }
+
+        var off = new Vector3(0, 3, 0);
+        var prev = path[0];
+        for (var i = 1; i < path.Count; ++i)
+        {
+            //Gizmos.DrawLine(prev, next);
+            Debug.DrawLine(prev + off, path[i] + off, Color.magenta, 2000);
+            prev = path[i];
         }
     }
 }
