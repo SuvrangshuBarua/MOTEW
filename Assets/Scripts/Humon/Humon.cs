@@ -165,7 +165,6 @@ public class Humon : MonoBehaviour
             if (state == State.Roam && state != State.Construction)
             {
                 building.AddConstructionWorker(gameObject);
-                building.OnConstructed += OnBuildingConstructed;
                 _stateMachine.GetState<ConstructionState>().Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
             }
@@ -204,15 +203,6 @@ public class Humon : MonoBehaviour
 
         StateMachine.ChangeState<SocializeState>();
         humon.StateMachine.ChangeState<SocializeState>();
-    }
-    
-    void OnBuildingConstructed()
-    {
-        if (_stateMachine.CurrentState.GetState() == State.Construction)
-        {
-            // back to idling
-            _stateMachine.ChangeState<RoamState>();
-        }
     }
 
     private void HandleDeath(DeathArgs args)

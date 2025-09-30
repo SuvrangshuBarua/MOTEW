@@ -7,10 +7,8 @@ using Random = UnityEngine.Random;
 public class Navigation : MonoBehaviour
 {
     private NavMeshAgent _agent;
-    
-    [SerializeField] public NavMeshSurface Surface;
-
-    private float nextGoalTime;
+    private NavMeshSurface _surface;
+    private float _nextGoalTime;
     
     public NavMeshAgent Agent => _agent;
     public bool IsMoving => _agent.velocity.sqrMagnitude > 0.01f;
@@ -23,13 +21,13 @@ public class Navigation : MonoBehaviour
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        Surface = FindFirstObjectByType<Unity.AI.Navigation.NavMeshSurface>();
+        _surface = FindFirstObjectByType<Unity.AI.Navigation.NavMeshSurface>();
     }
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-        nextGoalTime = Time.time + Random.Range(3f, 8f);
+        _nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
     public Vector3 GetRandomDestination()
@@ -45,7 +43,7 @@ public class Navigation : MonoBehaviour
 
     Vector3 TakeRandomPoint()
     {
-        Bounds bounds = Surface.navMeshData.sourceBounds;
+        Bounds bounds = _surface.navMeshData.sourceBounds;
 
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
@@ -65,7 +63,7 @@ public class Navigation : MonoBehaviour
     public void SetDestination(Vector3 position)
     {
         _agent.SetDestination(position);
-        nextGoalTime = Time.time + Random.Range(3f, 8f);
+        _nextGoalTime = Time.time + Random.Range(3f, 8f);
     }
 
     public void TogglePanicSpeed()

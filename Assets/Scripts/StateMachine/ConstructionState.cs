@@ -46,11 +46,18 @@ public class ConstructionState : IState
 
     public void Update(Humon npc)
     {
+        if (Building.State.IsConstructed)
+        {
+            npc.StateMachine.ChangeState<RoamState>();
+            return;
+        }
+
         _patrol.Update();
     }
 
     public void Exit(Humon npc)
     {
+        Building.RemoveConstructionWorker(npc.gameObject);
         Building = null;
         _patrol = null;
     }

@@ -108,6 +108,14 @@ public class BaseBuilding : MonoBehaviour
         _workers.Add(worker);
     }
 
+    public void RemoveConstructionWorker(GameObject worker)
+    {
+        if (_workers.Contains(worker))
+        {
+            _workers.Remove(worker);
+        }
+    }
+
 
 
 
