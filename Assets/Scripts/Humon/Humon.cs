@@ -109,7 +109,7 @@ public class Humon : MonoBehaviour
     {
         _rigidbody.isKinematic = false;
         _rigidbody.useGravity = true;
-        _rigidbody.linearDamping = 1f;
+        
 
         if (Navigation.Agent.enabled)
         {
@@ -188,6 +188,7 @@ public class Humon : MonoBehaviour
     void OnPerceiveHumonSocialize(Collider other)
     {
         var humon = other.GetComponent<Humon>();
+        if (humon == null) return;
 
         // both humons must be roaming
         if (StateMachine.CurrentState.GetState() != State.Roam

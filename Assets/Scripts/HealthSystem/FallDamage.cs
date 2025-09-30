@@ -35,7 +35,8 @@ public class FallDamage : MonoBehaviour
 
         if (_agent && _agent.enabled) _agent.enabled = false;
 
-        _rigidbody.isKinematic = false; _rigidbody.useGravity = true;
+        //_rigidbody.isKinematic = false; 
+        //_rigidbody.useGravity = true;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
     }
@@ -78,8 +79,8 @@ public class FallDamage : MonoBehaviour
 
         _rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
-        _rigidbody.isKinematic = true;
-        _rigidbody.useGravity = false;
+        //_rigidbody.isKinematic = true;
+        //_rigidbody.useGravity = false;
 
         if (_agent)
         {
