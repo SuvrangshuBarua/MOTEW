@@ -109,7 +109,7 @@ public class Humon : MonoBehaviour
     {
         _rigidbody.isKinematic = false;
         _rigidbody.useGravity = true;
-        
+        _rigidbody.linearDamping = 0.0f;
 
         if (Navigation.Agent.enabled)
         {

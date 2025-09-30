@@ -38,7 +38,7 @@ public class FallDamage : MonoBehaviour
         //_rigidbody.isKinematic = false; 
         //_rigidbody.useGravity = true;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        //_rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,7 +77,7 @@ public class FallDamage : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
 
-        _rigidbody.linearVelocity = Vector3.zero;
+        //_rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
         //_rigidbody.isKinematic = true;
         //_rigidbody.useGravity = false;
