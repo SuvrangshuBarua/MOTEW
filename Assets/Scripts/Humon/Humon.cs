@@ -31,6 +31,7 @@ public class Humon : MonoBehaviour
     {
         _perception = gameObject.AddComponent<Perception>();
         _navigation = gameObject.GetComponent<Navigation>();
+
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _collider = gameObject.GetComponent<Collider>();
 
@@ -52,14 +53,16 @@ public class Humon : MonoBehaviour
         };
 
         if (_health != null) _health.OnDied += HandleDeath; // subscribe to death event
+
+        InitializeStateMachine();
+        InitializePerception();
+        _stateMachine.ChangeState<RoamState>();
+        _draggable.OnStartDrag += OnStartDrag;
+        _draggable.OnDragEnd += OnDragEnd;
     }
 
     void Start()
     {
-        InitializeStateMachine();
-        InitializePerception();
-        _draggable.OnStartDrag += OnStartDrag;
-        _draggable.OnDragEnd += OnDragEnd;
     }
 
     private void InitializeStateMachine()
@@ -69,7 +72,6 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new ConstructionState());
         _stateMachine.AddState(new PanicState());
         _stateMachine.AddState(new SocializeState());
-        _stateMachine.ChangeState<RoamState>();
     }
 
     void InitializePerception()
@@ -188,7 +190,6 @@ public class Humon : MonoBehaviour
     void OnPerceiveHumonSocialize(Collider other)
     {
         var humon = other.GetComponent<Humon>();
-        if (humon == null) return;
 
         // both humons must be roaming
         if (StateMachine.CurrentState.GetState() != State.Roam

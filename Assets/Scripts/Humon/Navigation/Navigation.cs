@@ -23,6 +23,7 @@ public class Navigation : MonoBehaviour
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        Surface = FindFirstObjectByType<Unity.AI.Navigation.NavMeshSurface>();
     }
 
     void Start()
