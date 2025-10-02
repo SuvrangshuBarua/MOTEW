@@ -72,6 +72,7 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new ConstructionState());
         _stateMachine.AddState(new PanicState());
         _stateMachine.AddState(new SocializeState());
+        _stateMachine.AddState(new DeadState());
     }
 
     void InitializePerception()
@@ -164,7 +165,6 @@ public class Humon : MonoBehaviour
             var state = _stateMachine.CurrentState.GetState();
             if (state == State.Roam && state != State.Construction)
             {
-                building.AddConstructionWorker(gameObject);
                 _stateMachine.GetState<ConstructionState>().Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
             }
@@ -207,7 +207,11 @@ public class Humon : MonoBehaviour
 
     private void HandleDeath(DeathArgs args)
     {
-        Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
+        StateMachine.ChangeState<DeadState>();
+
+        IndicatorManager.Instance.New(transform, "$10");
+
+        //Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);
     }
 

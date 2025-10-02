@@ -14,6 +14,8 @@ public class ConstructionState : IState
     {
         Assert.IsNotNull(Building, "Building must be assigned before changing states");
 
+        Building.AddConstructionWorker(npc.gameObject);
+
         System.Func<Vector3> pos = () =>
         {
             while (true)
