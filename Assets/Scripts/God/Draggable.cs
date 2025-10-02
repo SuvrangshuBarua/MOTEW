@@ -109,6 +109,11 @@ public class Draggable : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _fixedY += 1f;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (_dragPlane.Raycast(ray, out float enter))
