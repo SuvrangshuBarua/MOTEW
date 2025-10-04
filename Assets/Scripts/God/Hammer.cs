@@ -1,12 +1,23 @@
 using UnityEngine;
 
+namespace God
+{
+
 public class Hammer : BaseTool
 {
     private float _radius = 6f;
     private int _damage = 50;
 
-    public override void Use(RaycastHit hit)
+    public override void MouseDown()
     {
+        Ray ray = Camera.main.ScreenPointToRay(
+                Input.mousePosition);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit))
+        {
+            return;
+        }
+
         Collider[] hits = Physics.OverlapSphere(hit.point,
                 _radius, LayerMask.GetMask("NPC"));
 
@@ -18,5 +29,15 @@ public class Hammer : BaseTool
             }
         }
     }
+
+    public override void MouseUp()
+    {
+    }
+
+    public override void FixedUpdate()
+    {
+    }
 }
+
+} // namespace God
 
