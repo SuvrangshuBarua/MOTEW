@@ -1031,6 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14a2603de5e02cb8af62e4e18d94867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HammerPrefab: {fileID: 6785804703948368277, guid: ebebc941b14cd149aa08b3849ddedb16, type: 3}
 --- !u!4 &1484001373
 Transform:
   m_ObjectHideFlags: 0

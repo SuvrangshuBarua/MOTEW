@@ -5,6 +5,8 @@ namespace God {
 
 public class ToolManager : MonoBehaviour
 {
+    public GameObject HammerPrefab;
+
     private Dictionary<string, BaseTool> _tools = new ();
     private BaseTool _selected;
 
@@ -13,9 +15,13 @@ public class ToolManager : MonoBehaviour
 
     void Awake()
     {
-        _tools.Add("hammer", Hammer.CreateInstance<Hammer>());
+        var hammer = Hammer.CreateInstance<Hammer>();
+        hammer.Prefab = HammerPrefab;
+        _tools.Add("hammer", hammer);
+
         _tools.Add("pickup", Pickup.CreateInstance<Pickup>());
-        _selected = _tools["pickup"];
+
+        _selected = _tools["hammer"];
     }
 
     void Update()
