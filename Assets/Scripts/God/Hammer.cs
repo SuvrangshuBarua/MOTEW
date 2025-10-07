@@ -8,14 +8,14 @@ public class Hammer : BaseTool
     public GameObject Prefab;
 
     private float _radius = 6f;
-    private int _damage = 50;
+    private int _damage = 10;
 
     public override void MouseDown()
     {
         Ray ray = Camera.main.ScreenPointToRay(
                 Input.mousePosition);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit))
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Default")))
         {
             return;
         }
@@ -41,6 +41,10 @@ public class Hammer : BaseTool
 
     public override void FixedUpdate()
     {
+    }
+    public override void Upgrade()
+    {
+        _damage *= 2;
     }
 }
 

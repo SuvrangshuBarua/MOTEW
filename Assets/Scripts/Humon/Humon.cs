@@ -210,6 +210,7 @@ public class Humon : MonoBehaviour
         StateMachine.ChangeState<DeadState>();
 
         IndicatorManager.Instance.New(transform, "$10");
+        GameManager.Instance.AddCash(10);
 
         //Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);

@@ -16,6 +16,7 @@ public class ToolManager : MonoSingleton<ToolManager>
 
     private string[] _toolKeys;
     private int _currentToolIndex;
+    private const int _hammerUpgradeCost = 10;
 
     void Awake()
     {
@@ -36,6 +37,16 @@ public class ToolManager : MonoSingleton<ToolManager>
         _currentToolIndex = (_currentToolIndex + 1) % _toolKeys.Length;
         _selected = _tools[_toolKeys[_currentToolIndex]];
         return _toolKeys[_currentToolIndex];
+    }
+
+    public void UpgradeTool(string toolName)
+    {
+        if (GameManager.Instance.CanDeductCash(_hammerUpgradeCost))
+        {
+            _tools[toolName].Upgrade();
+            GameManager.Instance.SetCash(GameManager.Instance.GetCash() - _hammerUpgradeCost);
+        }  
+        
     }
 
     void Update()
