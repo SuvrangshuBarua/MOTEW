@@ -2,8 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Collider))]
-public class FallDamage : MonoBehaviour
+public class HouseDamage : MonoBehaviour
 {
+
+    // Script should handle damage for houses when they are hit by God or with a hammer
+    // if damage is taken, second "build type" should be applied. Maybe animation too?
+    // Note: houses should have stats, maybe add a house
+    // Call this script in BaseBuilding.cs
 
     [Header("Data")]
     [SerializeField] private Stats stats;
@@ -16,7 +21,6 @@ public class FallDamage : MonoBehaviour
 
     public Stats StatsAsset { get => stats; set => stats = value; }
 
-    bool _isAirborne;
     float _lastLandingTime;
     float _maxYHeight; // track apex
     const float _LandingCooldown = 0.15f;
@@ -28,22 +32,8 @@ public class FallDamage : MonoBehaviour
         _damageable = GetComponent<IDamageable>();
     }
 
-    public void BeginAirborne()
-    {
-        _isAirborne = true;
-        _maxYHeight = transform.position.y; // start tracking from current Y
-
-        if (_agent && _agent.enabled) _agent.enabled = false;
-
-        //_rigidbody.isKinematic = false; 
-        //_rigidbody.useGravity = true;
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        //_rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (!_isAirborne) return;
 
         if ((groundMask.value & (1 << collision.gameObject.layer)) == 0) return;
         if (Time.time - _lastLandingTime < _LandingCooldown) return;
@@ -57,8 +47,7 @@ public class FallDamage : MonoBehaviour
 
         float fallHeight = Mathf.Max(0f, _maxYHeight - groundY);
 
-        // Calculate fall damage
-        // damage = round( max(0, (fallHeight - minFallHeight) * damagePerMeter ) )
+        // Calculate house damage
         int damageAmount = 0;
         if (stats && fallHeight >= stats.MinFallHeight)
         {
@@ -77,10 +66,7 @@ public class FallDamage : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
 
-        //_rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
-        //_rigidbody.isKinematic = true;
-        //_rigidbody.useGravity = false;
 
         if (_agent)
         {
@@ -89,14 +75,13 @@ public class FallDamage : MonoBehaviour
             _agent.enabled = true;
         }
 
-        _isAirborne = false;
         OnLand?.Invoke();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isAirborne)
-            _maxYHeight = Mathf.Max(_maxYHeight, transform.position.y); // track apex
+
     }
+
 }
