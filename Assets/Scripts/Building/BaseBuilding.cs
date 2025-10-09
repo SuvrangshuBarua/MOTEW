@@ -71,16 +71,14 @@ public class BaseBuilding : MonoBehaviour
 
     /// Visit the building.  Visiting temporarily disables the
     /// visitor and re-enables after duration seconds.
-    public bool Visit(GameObject visitor, float duration)
+    public bool Visit(GameObject visitor, float duration, System.Action onExit)
     {
-        Assert.IsTrue(State.IsConstructed);
-
-        if (_visitors.Count == _visitorCapacity)
+        if (!State.IsConstructed || _visitors.Count == _visitorCapacity)
             return false;
 
         visitor.SetActive(false);
         _visitors.Add(visitor);
-        StartCoroutine(Leave(visitor, duration));
+        StartCoroutine(Leave(visitor, duration, onExit));
 
         return true;
     }
@@ -258,12 +256,14 @@ public class BaseBuilding : MonoBehaviour
         return StartCoroutine(task);
     }
 
-    private IEnumerator Leave(GameObject visitor, float duration)
+    private IEnumerator Leave(GameObject visitor, float duration, System.Action OnExit)
     {
         yield return new WaitForSeconds(duration);
 
         visitor.SetActive(true);
         _visitors.Remove(visitor);
+
+        OnExit?.Invoke();
     }
 }
 

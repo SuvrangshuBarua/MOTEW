@@ -160,15 +160,31 @@ public class Humon : MonoBehaviour
     {
         var building = collider.GetComponentInParent<Building.BaseBuilding>();
 
+        if (_stateMachine.CurrentState.GetState() == State.Panic)
+        {
+            // try to hide in the building
+            if (building.Visit(gameObject, 5f, OnExitBuilding))
+            {
+                _stateMachine.GetState<PanicState>().SpeechBubble.Hide();
+            }
+            return;
+        }
+
         if (building.State.IsInConstruction)
         {
             var state = _stateMachine.CurrentState.GetState();
-            if (state == State.Roam && state != State.Construction)
+            if (_stateMachine.CurrentState.GetState() == State.Roam)
             {
                 _stateMachine.GetState<ConstructionState>().Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
+                return;
             }
         }
+    }
+
+    void OnExitBuilding()
+    {
+        _stateMachine.ChangeState<RoamState>();
     }
 
     void OnPerceiveHumonPanic(Collider other)

@@ -12,7 +12,7 @@ public class NavMeshPathGenerator : MonoBehaviour
     public float stepRadius = 5f;
     public int maxAttemptsPerStep = 20;
 
-    private List<Vector3> pathPositions = new List<Vector3>();
+    private List<Vector3> _path = new List<Vector3>();
 
     void Start()
     {
@@ -21,15 +21,15 @@ public class NavMeshPathGenerator : MonoBehaviour
 
     void GeneratePath()
     {
-        pathPositions.Clear();
+        _path.Clear();
         Vector3 currentPosition = transform.position;
-        pathPositions.Add(currentPosition);
+        _path.Add(currentPosition);
 
 
         // Optional: visualize the path
-        for (int i = 0; i < pathPositions.Count - 1; i++)
+        for (int i = 0; i < _path.Count - 1; i++)
         {
-            Debug.DrawLine(pathPositions[i], pathPositions[i + 1], Color.green, 10f);
+            Debug.DrawLine(_path[i], _path[i + 1], Color.green, 10f);
         }
     }
 }
@@ -37,6 +37,8 @@ public class NavMeshPathGenerator : MonoBehaviour
 public class PanicState : IState
 {
     public GameObject Threat = null;
+    public SpeechBubble SpeechBubble = null;
+
     private Nav.Path _path = null;
 
     public void Enter(Humon npc)
@@ -79,7 +81,7 @@ public class PanicState : IState
         npc.Navigation.TogglePanicSpeed();
 
         // TODO: draw bubble with ?!
-        SpeechBubbleManager.Instance.CreateSpeechBubble(npc.transform, "?!");
+        SpeechBubble = SpeechBubbleManager.Instance.CreateSpeechBubble(npc.transform, "?!");
     }
 
     public void Update(Humon npc)
@@ -96,8 +98,10 @@ public class PanicState : IState
     public void Exit(Humon npc)
     {
         npc.Navigation.TogglePanicSpeed();
+        npc.Navigation.StopMoving();
 
         Threat = null;
+        SpeechBubble = null;
         _path = null;
     }
 
