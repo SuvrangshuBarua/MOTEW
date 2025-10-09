@@ -80,7 +80,7 @@ public class Humon : MonoBehaviour
         _perception.Subscribe(5, 1, Perception.Type.Single,
                 LayerMask.GetMask("Building"), OnPerceiveBuilding);
 
-        _perception.Subscribe(6, 1, Perception.Type.Multiple,
+        _perception.Subscribe(6, 0.1f, Perception.Type.Multiple,
                 LayerMask.GetMask("NPC"), OnPerceiveHumonPanic);
 
         _perception.Subscribe(5, 10, Perception.Type.Single,
@@ -190,14 +190,15 @@ public class Humon : MonoBehaviour
     void OnPerceiveHumonPanic(Collider other)
     {
         var humon = other.GetComponent<Humon>();
-
-        if (humon.IsBeingDragged)
+        
+        if (humon.StateMachine.CurrentState.GetState() == State.InAir)
         {
             // spotted a floating humon -> panic
             if (_stateMachine.CurrentState.GetState() != State.Panic)
             {
                 _stateMachine.GetState<PanicState>().Threat = humon.gameObject;
                 _stateMachine.ChangeState<PanicState>();
+                return;
             }
         }
     }
