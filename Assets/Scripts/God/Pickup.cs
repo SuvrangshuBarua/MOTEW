@@ -57,6 +57,14 @@ public class Pickup : BaseTool
         _draggable.OnStartDrag?.Invoke();
     }
 
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _fixedY += 1f;
+        }
+    }
+
     public override void MouseUp()
     {
         if (_draggable == null)
@@ -83,10 +91,7 @@ public class Pickup : BaseTool
         }
 
         // TODO: can miss inputs
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _fixedY += 1f;
-        }
+        
 
         Ray ray = Camera.main.ScreenPointToRay(
                 Input.mousePosition);
@@ -100,6 +105,7 @@ public class Pickup : BaseTool
             _draggable.OnDragging?.Invoke();
         }
     }
+    
 }
 
 } // namespace God

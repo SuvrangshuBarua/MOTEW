@@ -2,9 +2,8 @@ using GrimTools.Runtime.Core;
 using UnityEngine;
 using System;
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : PersistantMonoSingleton<GameManager>
 {
-    
     private int _cash;
     public bool canAfford;
     public event Action<int> OnCashChanged;

@@ -60,6 +60,7 @@ public class ToolManager : MonoSingleton<ToolManager>
         {
             _mUp = true;
         }
+        _selected?.Update();
     }
 
     void FixedUpdate()

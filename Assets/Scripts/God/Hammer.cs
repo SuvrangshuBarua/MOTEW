@@ -38,9 +38,14 @@ public class Hammer : BaseTool
     public override void MouseUp()
     {
     }
+    public override void Update()
+    {
+        Debug.Log("Logged every frame");
+    }
 
     public override void FixedUpdate()
     {
+        Debug.Log("Logged every physics frame");
     }
     public override void Upgrade()
     {
