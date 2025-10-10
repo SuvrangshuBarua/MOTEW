@@ -170,11 +170,16 @@ public class Humon : MonoBehaviour
             return;
         }
 
-        if (building.State.IsInConstruction)
+        if (building.State.IsInConstruction || building.State.IsDestructed)
         {
             var state = _stateMachine.CurrentState.GetState();
             if (_stateMachine.CurrentState.GetState() == State.Roam)
             {
+                if (building.State.IsDestructed)
+                {
+                    building.Construct();
+                }
+
                 _stateMachine.GetState<ConstructionState>().Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
                 return;
