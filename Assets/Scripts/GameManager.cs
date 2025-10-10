@@ -131,10 +131,8 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         for (var tries = 0; tries < 100; ++tries)
         {
             var pos = new Vector3(
-                    //Random.Range(_bounds.min.x + half.x, _bounds.max.x - half.x),
                     Random.Range(min.x, max.x),
                     0,
-                    //Random.Range(_bounds.min.z + half.z, _bounds.max.z - half.z));
                     Random.Range(min.y, max.y));
 
             var cols = Physics.OverlapBox(pos, half,
