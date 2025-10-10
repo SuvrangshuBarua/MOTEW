@@ -170,15 +170,28 @@ public class BaseBuilding : MonoBehaviour
                 transform.position, worker.transform.position) > _constructionSiteRadius);
     }
 
-    private IEnumerator DoConstruct()
+    public void Instantiate()
     {
-        State.Set(StateImpl.Flag.InConstruction);
-
         _building = Instantiate(BuildingPrefab, transform);
         foreach (Transform part in _building.transform)
         {
             part.gameObject.SetActive(false);
             _parts.Add(part.gameObject);
+        }
+    }
+
+    private IEnumerator DoConstruct()
+    {
+        State.Set(StateImpl.Flag.InConstruction);
+
+        if (_building == null)
+        {
+            _building = Instantiate(BuildingPrefab, transform);
+            foreach (Transform part in _building.transform)
+            {
+                part.gameObject.SetActive(false);
+                _parts.Add(part.gameObject);
+            }
         }
 
         // NOTE: currently used for rebaking the mesh, so make

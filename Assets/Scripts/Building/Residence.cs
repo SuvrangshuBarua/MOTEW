@@ -7,12 +7,9 @@ namespace Building
 public class Residence : BaseBuilding
 {
     [SerializeField]
-    private uint _residentCapacity;
+    public uint ResidentCapacity;
 
-    [SerializeField]
-    private GameObject _humon;
-
-    private List<GameObject> _residents = new ();
+    private List<Humon> _residents = new ();
 
     void Start()
     {
@@ -31,7 +28,7 @@ public class Residence : BaseBuilding
         _residents.RemoveAll((resident) => resident == null);
 
         // try spawn
-        if (_residents.Count < _residentCapacity)
+        if (_residents.Count < ResidentCapacity)
         {
             if (Random.Range(0f, 1f) < .01f)
             {
@@ -59,9 +56,8 @@ public class Residence : BaseBuilding
 
     void SpawnHumon()
     {
-        var spawnPos = new Vector3(-6, 1, 0) + transform.position;
-        var humon = Instantiate(_humon, spawnPos, Quaternion.identity);
-        _residents.Add(humon);
+        var pos = new Vector3(-6, 1, 0) + transform.position;
+        _residents.Add(GameManager.Instance.SpawnHumon(pos));
     }
 }
 
