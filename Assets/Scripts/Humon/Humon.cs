@@ -238,6 +238,12 @@ public class Humon : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void SetOnFire(int damage)
+    {
+        var fire = gameObject.AddComponent<FireDamage>();
+        fire.Damage = damage;
+    }
+
     private void OnDestroy()
     {
         if (_health != null) _health.OnDied -= HandleDeath;

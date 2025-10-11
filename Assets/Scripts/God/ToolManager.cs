@@ -7,6 +7,7 @@ namespace God {
 public class ToolManager : MonoSingleton<ToolManager>
 {
     public GameObject HammerPrefab;
+    public GameObject FirePrefab;
 
     private Dictionary<string, BaseTool> _tools = new ();
     private BaseTool _selected;
@@ -16,18 +17,22 @@ public class ToolManager : MonoSingleton<ToolManager>
 
     private string[] _toolKeys;
     private int _currentToolIndex;
-    private const int _hammerUpgradeCost = 10;
 
     void Awake()
     {
+        _tools.Add("pickup", Pickup.CreateInstance<Pickup>());
+
         var hammer = Hammer.CreateInstance<Hammer>();
         hammer.Prefab = HammerPrefab;
-        
-        _tools.Add("pickup", Pickup.CreateInstance<Pickup>());
         _tools.Add("hammer", hammer);
+
+        var ignite = Hammer.CreateInstance<Ignite>();
+        ignite.Prefab = FirePrefab;
+        _tools.Add("ignite", ignite);
+
+
         _toolKeys = new string[_tools.Count];
         _tools.Keys.CopyTo(_toolKeys, 0);
-
         _currentToolIndex = 0;
         _selected = _tools[_toolKeys[_currentToolIndex]];
     }
@@ -39,14 +44,26 @@ public class ToolManager : MonoSingleton<ToolManager>
         return _toolKeys[_currentToolIndex];
     }
 
-    public void UpgradeTool(string toolName)
+    public void UpgradeTool(string toolName = null)
     {
-        if (GameManager.Instance.CanDeductCash(_hammerUpgradeCost))
+        var tool = (toolName == null) ?
+                _selected : _tools[toolName];
+
+        var cost = tool.UpgradeCost();
+        if (GameManager.Instance.CanDeductCash(cost))
         {
-            _tools[toolName].Upgrade();
-            GameManager.Instance.SetCash(GameManager.Instance.GetCash() - _hammerUpgradeCost);
-        }  
-        
+            tool.Upgrade();
+            GameManager.Instance.SetCash(
+                    GameManager.Instance.GetCash() - cost);
+        }
+    }
+
+    public int UpgradeCost(string toolName = null)
+    {
+        var tool = (toolName == null) ?
+                _selected : _tools[toolName];
+
+        return tool.UpgradeCost();
     }
 
     void Update()
