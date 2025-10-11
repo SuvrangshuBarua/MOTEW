@@ -47,10 +47,6 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 7200000, guid: b9a23f869c4fd45f19c5ada54dd82176, type: 3}
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
-<<<<<<< Updated upstream
-  - {fileID: 4054039908857424257}
-  m_RendererFeatureMap: ad6b866f10d7b46c8129b460d1d74238
-=======
   - {fileID: -2912497789766634974}
   m_RendererFeatureMap: ad6b866f10d7b46c2272d9f7b0ba94d7
 >>>>>>> Stashed changes
