@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class Humon : MonoBehaviour
 {
     [SerializeField] private Stats stats;
+    [SerializeField] private GameObject _firePrefab;
 
     [Header("Core Components: ")]
     private Perception _perception;
@@ -73,6 +74,7 @@ public class Humon : MonoBehaviour
         _stateMachine.AddState(new PanicState());
         _stateMachine.AddState(new SocializeState());
         _stateMachine.AddState(new DeadState());
+        _stateMachine.AddState(new OnFireState(_firePrefab));
     }
 
     void InitializePerception()
@@ -158,30 +160,48 @@ public class Humon : MonoBehaviour
 
     void OnPerceiveBuilding(Collider collider)
     {
-        var building = collider.GetComponentInParent<Building.BaseBuilding>();
+        var building = collider.GetComponentInParent<
+                Building.BaseBuilding>();
+        var state = _stateMachine.CurrentState.GetState();
 
-        if (_stateMachine.CurrentState.GetState() == State.Panic)
+        if (state == State.Panic)
         {
             // try to hide in the building
             if (building.Visit(gameObject, 5f, OnExitBuilding))
             {
-                _stateMachine.GetState<PanicState>().SpeechBubble.Hide();
+                _stateMachine.GetState<PanicState>()
+                        .SpeechBubble.Hide();
             }
+
             return;
         }
 
-        if (building.State.IsInConstruction || building.State.IsDestructed)
+        if (state == State.OnFire)
         {
-            var state = _stateMachine.CurrentState.GetState();
-            if (_stateMachine.CurrentState.GetState() == State.Roam)
+            // if we're on fire, visit and extinguish
+            if (building.Visit(gameObject, 1f, OnExitBuilding))
+            {
+                _stateMachine.GetState<OnFireState>()
+                        .SpeechBubble.Hide();
+            }
+
+            return;
+        }
+
+        if (building.State.IsInConstruction
+            || building.State.IsDestructed)
+        {
+            if (state == State.Roam)
             {
                 if (building.State.IsDestructed)
                 {
                     building.Construct();
                 }
 
-                _stateMachine.GetState<ConstructionState>().Building = building;
+                _stateMachine.GetState<ConstructionState>()
+                    .Building = building;
                 _stateMachine.ChangeState<ConstructionState>();
+
                 return;
             }
         }
@@ -238,10 +258,16 @@ public class Humon : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetOnFire(int damage)
+    public void SetOnFire(Fire source)
     {
-        var fire = gameObject.AddComponent<FireDamage>();
-        fire.Damage = damage;
+        if (StateMachine.CurrentState.GetState() == State.OnFire)
+        {
+            return;
+        }
+
+        var state = StateMachine.GetState<OnFireState>();
+        state.Source = source;
+        StateMachine.ChangeState<OnFireState>();
     }
 
     private void OnDestroy()

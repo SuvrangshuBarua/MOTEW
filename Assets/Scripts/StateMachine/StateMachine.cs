@@ -13,6 +13,7 @@ namespace StateMachine
         Fire,
         Dead,
         Socialize,
+        OnFire,
     }
 
     public interface IState

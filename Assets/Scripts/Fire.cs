@@ -21,7 +21,7 @@ public class Fire : MonoBehaviour
         {
             if (hit.TryGetComponent<Humon>(out var humon))
             {
-                humon.SetOnFire(Damage);
+                humon.SetOnFire(this);
             }
         }
     }
