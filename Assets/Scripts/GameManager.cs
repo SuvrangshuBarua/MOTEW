@@ -100,7 +100,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         if (pos == null)
         {
             Debug.LogWarning("Found no place to spawn residence");
-            Destroy(residence);
+            Destroy(residence.gameObject);
             return;
         }
 

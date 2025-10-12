@@ -221,7 +221,6 @@ public class Humon : MonoBehaviour
             // spotted a floating humon -> panic
             if (_stateMachine.CurrentState.GetState() != State.Panic)
             {
-                _stateMachine.GetState<PanicState>().Threat = humon.gameObject;
                 _stateMachine.ChangeState<PanicState>();
                 return;
             }
