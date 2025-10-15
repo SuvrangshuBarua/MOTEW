@@ -59,7 +59,7 @@ public class BaseBuilding : MonoBehaviour
     public float ConstructionSiteRadius => _constructionSiteRadius;
 
     /// Box collider of the building
-    public BoxCollider Collider => _building.GetComponent<BoxCollider>();
+    public BoxCollider Collider => _collider.GetComponent<BoxCollider>();
 
     /// Get current visitors
     public List<GameObject> Visitors()
@@ -129,6 +129,10 @@ public class BaseBuilding : MonoBehaviour
     [SerializeField]
     private GameObject BuildingPrefab = null;
     private GameObject _building = null;
+    [SerializeField]
+    private GameObject ColliderPrefab = null;
+    private GameObject _collider = null;
+
     private List<GameObject> _parts = new ();
 
     [SerializeField]
@@ -168,14 +172,11 @@ public class BaseBuilding : MonoBehaviour
                 transform.position, worker.transform.position) > _constructionSiteRadius);
     }
 
-    public void Instantiate()
+    public void InstantiateCollider()
     {
-        _building = Instantiate(BuildingPrefab, transform);
-        foreach (Transform part in _building.transform)
-        {
-            part.gameObject.SetActive(false);
-            _parts.Add(part.gameObject);
-        }
+        Assert.IsNull(_collider);
+        _collider = Instantiate(ColliderPrefab, transform);
+        _collider.transform.localPosition= Vector3.zero;
     }
 
     private IEnumerator DoConstruct()
@@ -185,6 +186,7 @@ public class BaseBuilding : MonoBehaviour
         if (_building == null)
         {
             _building = Instantiate(BuildingPrefab, transform);
+            _building.transform.localPosition= Vector3.zero;
             foreach (Transform part in _building.transform)
             {
                 part.gameObject.SetActive(false);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections.Generic;
 
 namespace Building
@@ -9,11 +10,14 @@ public class Residence : BaseBuilding
     [SerializeField]
     public uint ResidentCapacity;
 
+    [SerializeField]
+    private Vector3 _spawnOffset;
+
     private List<Humon> _residents = new ();
 
     void Start()
     {
-        //Construct();
+        Assert.IsFalse(_spawnOffset == Vector3.zero);
     }
 
     void FixedUpdate()
@@ -38,7 +42,7 @@ public class Residence : BaseBuilding
 
     void SpawnHumon()
     {
-        var pos = new Vector3(-6, 1, 0) + transform.position;
+        var pos = _spawnOffset + transform.position;
         _residents.Add(GameManager.Instance.SpawnHumon(pos));
     }
 }
