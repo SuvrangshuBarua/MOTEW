@@ -20,7 +20,7 @@ public class Humon : MonoBehaviour
     public Navigation Navigation => _navigation;
     public Rigidbody Rigidbody => _rigidbody;
     public StateMachine.StateMachine StateMachine => _stateMachine;
-    
+
     private BehaviorGraphAgent _agent;
     private StateMachine.StateMachine _stateMachine;
     private Draggable _draggable;
@@ -215,7 +215,7 @@ public class Humon : MonoBehaviour
     void OnPerceiveHumonPanic(Collider other)
     {
         var humon = other.GetComponent<Humon>();
-        
+
         if (humon.StateMachine.CurrentState.GetState() == State.InAir)
         {
             // spotted a floating humon -> panic
