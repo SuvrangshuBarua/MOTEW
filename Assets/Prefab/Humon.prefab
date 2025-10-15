@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7187477235126656296}
   - component: {fileID: 6078541814777963309}
   - component: {fileID: 8443638650289209297}
+  - component: {fileID: 5348444776700351718}
   m_Layer: 3
   m_Name: Humon
   m_TagString: Untagged
@@ -218,6 +219,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: c8c964b6eeddc634989a9de9de650bcf, type: 2}
+--- !u!114 &5348444776700351718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271701012968332579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ca4df8fe5494b43aa81fc1f6a72992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!1 &7316970232921834781
 GameObject:
   m_ObjectHideFlags: 0

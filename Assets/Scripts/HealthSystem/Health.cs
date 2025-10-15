@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Microlight.MicroBar;
 
 /* 
 * HEALTH SYSTEM
@@ -13,6 +14,7 @@ using System;
 public class Health : MonoBehaviour, IHealth, IDamageable
 {
     [SerializeField] private Stats stats;
+    private HealthBar healthBar;
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => stats != null ? stats.BaseHealth : 100;
@@ -25,6 +27,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Start()
     {
+        healthBar = GetComponentInChildren<HealthBar>();
         // Spawn on start
         Spawn();
     }
@@ -32,7 +35,8 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     public void Spawn()
     {
         CurrentHealth = MaxHealth;
-        
+        // Initialize health bar if available
+        healthBar?.Initialize(MaxHealth);
         OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, MaxHealth));
         Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{MaxHealth}"); // DEBUG
     }
@@ -48,6 +52,9 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
 
         OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
+
+        // Update health bar if available
+        healthBar?.UpdateCurrentHealth(CurrentHealth);
 
         if (CurrentHealth == 0)
         {
@@ -65,6 +72,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Die(object source)
     {
+        healthBar?.Destroy();
         // Emit death first
         OnDied?.Invoke(new DeathArgs(source));
         // TODO: disable other inputs here on death

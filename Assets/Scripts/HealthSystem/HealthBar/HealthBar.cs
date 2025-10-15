@@ -1,7 +1,7 @@
 using Microlight.MicroBar;
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour, IHealthBar
+public class HealthBar : MonoBehaviour
 {
     [SerializeField] MicroBar healthBar;
 
@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour, IHealthBar
         }
     }
 
-    public void InitializeHealthBar(int maxHealth)
+    public void Initialize(int maxHealth)
     {
         // Initialize the health bar with the maximum health
         if (healthBar != null)
@@ -24,7 +24,7 @@ public class HealthBar : MonoBehaviour, IHealthBar
         }
     }
 
-    public void UpdateHealthBar(int currentHealth)
+    public void UpdateCurrentHealth(int currentHealth)
     {
         // Update the health bar's fill amount based on the current health
         if (healthBar != null)
@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour, IHealthBar
         }
     }
 
-    public void DestroyHealthBar()
+    public void Destroy()
     {
         // Destroy the health bar game object
         if (healthBar != null)
