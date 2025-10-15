@@ -26,7 +26,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Start()
     {
-        healthBar = GetComponentInChildren<HealthBar>();
+        healthBar = GetComponent<HealthBar>();
         // Spawn on start
         Spawn();
     }
