@@ -1,9 +1,12 @@
+using System;
+using System.Collections;
 using Microlight.MicroBar;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] MicroBar healthBar;
+    private Coroutine fadeCoroutine; // Store reference to the coroutine
 
     private void LateUpdate()
     {
@@ -21,6 +24,7 @@ public class HealthBar : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.Initialize(maxHealth);
+            healthBar.gameObject.SetActive(false); // Hide initially
         }
     }
 
@@ -29,7 +33,24 @@ public class HealthBar : MonoBehaviour
         // Update the health bar's fill amount based on the current health
         if (healthBar != null)
         {
+            // Stop the existing coroutine if it's running
+            if (fadeCoroutine != null)
+            {
+                StopCoroutine(fadeCoroutine);
+            }
+
             healthBar.UpdateBar(currentHealth);
+            fadeCoroutine = StartCoroutine(FadeInOut(5f)); // Show for 5 seconds
+        }
+    }
+
+    private IEnumerator FadeInOut(float duration)
+    {
+        if (healthBar != null)
+        {
+            healthBar.gameObject.SetActive(true); // Show health bar
+            yield return new WaitForSeconds(duration);
+            healthBar.gameObject.SetActive(false); // Hide health bar
         }
     }
 
