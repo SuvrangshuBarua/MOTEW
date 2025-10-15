@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56692031}
   - component: {fileID: 56692030}
+  - component: {fileID: 56692032}
   m_Layer: 0
   m_Name: Residence (2)
   m_TagString: Untagged
@@ -169,6 +170,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &56692032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56692029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88417e7ed7d25b742b54503ed7336168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humonStats: {fileID: 0}
+  buildingStats: {fileID: 11400000, guid: 555573b3b699f422eaf144980392e449, type: 2}
 --- !u!1 &67014626
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2324204e7b54b04ca1ff53a3e9380e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnparentOnAwake: 1
   canAfford: 0
 --- !u!4 &293047470
 Transform:
@@ -1311,6 +1327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 554885532}
   - component: {fileID: 554885531}
+  - component: {fileID: 554885533}
   m_Layer: 0
   m_Name: Residence
   m_TagString: Untagged
@@ -1351,6 +1368,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &554885533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554885530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88417e7ed7d25b742b54503ed7336168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humonStats: {fileID: 0}
+  buildingStats: {fileID: 11400000, guid: 555573b3b699f422eaf144980392e449, type: 2}
 --- !u!1001 &687489108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1578,6 +1609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 855615859}
   - component: {fileID: 855615858}
+  - component: {fileID: 855615860}
   m_Layer: 0
   m_Name: Residence (1)
   m_TagString: Untagged
@@ -1618,6 +1650,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855615860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855615857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88417e7ed7d25b742b54503ed7336168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humonStats: {fileID: 0}
+  buildingStats: {fileID: 11400000, guid: 555573b3b699f422eaf144980392e449, type: 2}
 --- !u!223 &933272680 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 6761204306952192875, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}

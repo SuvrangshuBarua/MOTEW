@@ -6,7 +6,7 @@ public class FallDamage : MonoBehaviour
 {
 
     [Header("Data")]
-    [SerializeField] private Stats stats;
+    [SerializeField] private HumonStats humonStats;
     [SerializeField] private LayerMask groundMask = ~0; // for Terrain
 
     public System.Action OnLand;
@@ -14,7 +14,7 @@ public class FallDamage : MonoBehaviour
     UnityEngine.AI.NavMeshAgent _agent;
     IDamageable _damageable;
 
-    public Stats StatsAsset { get => stats; set => stats = value; }
+    public HumonStats HumonStatsAsset { get => humonStats; set => humonStats = value; }
 
     bool _isAirborne;
     float _lastLandingTime;
@@ -60,10 +60,10 @@ public class FallDamage : MonoBehaviour
         // Calculate fall damage
         // damage = round( max(0, (fallHeight - minFallHeight) * damagePerMeter ) )
         int damageAmount = 0;
-        if (stats && fallHeight >= stats.MinFallHeight)
+        if (humonStats && fallHeight >= humonStats.MinFallHeight)
         {
-            float excessHeight = fallHeight - stats.MinFallHeight;
-            damageAmount = Mathf.Clamp(Mathf.RoundToInt(excessHeight * stats.DamagePerMeter), 1, stats.MaxFallDamage);
+            float excessHeight = fallHeight - humonStats.MinFallHeight;
+            damageAmount = Mathf.Clamp(Mathf.RoundToInt(excessHeight * humonStats.DamagePerMeter), 1, humonStats.MaxFallDamage);
         }
 
         // Apply calculated damage

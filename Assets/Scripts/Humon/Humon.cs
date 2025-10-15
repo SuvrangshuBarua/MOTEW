@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Humon : MonoBehaviour
 {
-    [SerializeField] private Stats stats;
+    [SerializeField] private HumonStats humonStats;
 
     [Header("Core Components: ")]
     private Perception _perception;
@@ -45,7 +45,7 @@ public class Humon : MonoBehaviour
 
         // Fall damage
         // TODO: check logic here
-        _fallDamage.StatsAsset = stats;
+        _fallDamage.HumonStatsAsset = humonStats;
         _fallDamage.OnLand += () =>
         {
             if (_stateMachine.CurrentState.GetState() != State.Construction)
