@@ -150,10 +150,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visitorCapacity: 4
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
-  _destroyedBuildingPrefab: {fileID: 0}
+  ColliderPrefab: {fileID: 0}
   _particle: {fileID: 0}
   _baseConstructionRate: 4
   ResidentCapacity: 4
+  _spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &56692031
 Transform:
   m_ObjectHideFlags: 0
@@ -900,7 +901,7 @@ MonoBehaviour:
   UnparentOnAwake: 1
   canAfford: 0
   _humonPrefab: {fileID: 4064623401430800096, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-  _residencePrefab: {fileID: 8556151248952478518, guid: 96722ca33b4c9da15a385fdc7343467c, type: 3}
+  _residencePrefab: {fileID: -6050301789080440681, guid: c5b716538767b3cda89fc93478fa79b9, type: 3}
 --- !u!4 &293047470
 Transform:
   m_ObjectHideFlags: 0
@@ -1444,10 +1445,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visitorCapacity: 4
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
-  _destroyedBuildingPrefab: {fileID: 0}
+  ColliderPrefab: {fileID: 0}
   _particle: {fileID: 0}
   _baseConstructionRate: 4
   ResidentCapacity: 4
+  _spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &855615859
 Transform:
   m_ObjectHideFlags: 0
