@@ -48,7 +48,13 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     public void Spawn()
     {
         CurrentHealth = MaxHealth;
-        healthBar.Initialize(MaxHealth);
+        
+        // Add null check
+        if (healthBar != null)
+        {
+            healthBar.Initialize(MaxHealth);
+        }
+        
         OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, MaxHealth));
         Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{MaxHealth}"); // DEBUG
     }
@@ -62,7 +68,12 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
         int delta = CurrentHealth - old;
         Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
-        healthBar.UpdateBar(CurrentHealth);
+        
+        // Add null check before updating the health bar
+        if (healthBar != null)
+        {
+            healthBar.UpdateBar(CurrentHealth);
+        }
 
         OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
 
@@ -82,7 +93,13 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Die(object source)
     {
-        Destroy(healthBar.gameObject);
+        // Add null check before destroying
+        if (healthBar != null)
+        {
+            Destroy(healthBar.gameObject);
+            healthBar = null;
+        }
+        
         // Emit death first
         OnDied?.Invoke(new DeathArgs(source));
         // TODO: disable other inputs here on death
