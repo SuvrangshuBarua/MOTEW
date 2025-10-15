@@ -8,7 +8,9 @@
 public interface IHealth
 {
     int CurrentHealth { get; }
-    int MaxHealth { get; }
+    int HumonMaxHealth { get; }
+
+    int BuildingMaxHealth { get; }
     bool IsDead { get; }
 
     event System.Action<HealthChangedArgs> OnDamaged;

@@ -12,10 +12,12 @@ using System;
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour, IHealth, IDamageable
 {
-    [SerializeField] private Stats stats;
+    [SerializeField] private Stats stats;             // Humon
+    [SerializeField] private BuildingStats buildingStats;   // Buildings
 
     public int CurrentHealth { get; private set; }
-    public int MaxHealth => stats != null ? stats.BaseHealth : 100;
+    public int HumonMaxHealth => stats != null ? stats.BaseHealth : 100;
+    public int BuildingMaxHealth => buildingStats != null ? buildingStats.BuildingBaseHealth : 100;
     public bool IsDead => CurrentHealth <= 0;
 
     public event Action<HealthChangedArgs> OnDamaged;
@@ -31,9 +33,9 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     public void Spawn()
     {
-        CurrentHealth = MaxHealth;
-        OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, MaxHealth));
-        Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{MaxHealth}"); // DEBUG
+        CurrentHealth = HumonMaxHealth;
+        OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, HumonMaxHealth));
+        Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{HumonMaxHealth}"); // DEBUG
     }
 
     public void TakeDamage(int amount, object source = null)
@@ -44,9 +46,9 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 
         int delta = CurrentHealth - old;
-        Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
+        Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{HumonMaxHealth}"); // DEBUG
 
-        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
+        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, HumonMaxHealth, delta, source));
 
         if (CurrentHealth == 0)
         {
