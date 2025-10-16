@@ -11,6 +11,11 @@ public abstract class BaseTool : ScriptableObject
     public abstract void FixedUpdate();
     public abstract void Update();
     public virtual void Upgrade() {}
+
+    public virtual int UpgradeCost()
+    {
+        return int.MaxValue;
+    }
 }
 
 } // namespace God

@@ -19,6 +19,8 @@ public interface IHealth
     event System.Action<DeathArgs> OnDied;
 
     void Spawn();
+    void TakeDamage(int amount, object source = null);
     // void Heal(int amount, object source = null);
     // void Kill(object source = null);
 }
+

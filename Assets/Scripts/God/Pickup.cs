@@ -8,7 +8,7 @@ public class Pickup : BaseTool
     private Draggable _draggable = null;
 
     private float _fixedY;
-    private float _pickupOffset = 2f;
+    private float _pickupOffset = 4f;
     private Plane _dragPlane;
 
 

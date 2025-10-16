@@ -134,6 +134,14 @@ public class SpeechBubble : MonoBehaviour
         }
     }
 
+    public void SetContent(string what)
+    {
+        if (m_textField != null)
+        {
+            m_textField.text = what;
+        }
+    }
+
     private void UpdatePosition()
     {
        if(m_target == null) return;

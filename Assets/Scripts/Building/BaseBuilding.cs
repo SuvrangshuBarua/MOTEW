@@ -58,6 +58,7 @@ namespace Building
 
         /// Callbacks for when construction finishes
         public System.Action OnConstructed;
+        
         /// Callbacks for when construction starts
         public System.Action OnConstruction;
 
@@ -75,16 +76,14 @@ namespace Building
 
         /// Visit the building.  Visiting temporarily disables the
         /// visitor and re-enables after duration seconds.
-        public bool Visit(GameObject visitor, float duration)
+        public bool Visit(GameObject visitor, float duration, System.Action onExit)
         {
-            Assert.IsTrue(State.IsConstructed);
-
-            if (_visitors.Count == _visitorCapacity)
+            if (!State.IsConstructed || _visitors.Count == _visitorCapacity)
                 return false;
 
             visitor.SetActive(false);
             _visitors.Add(visitor);
-            StartCoroutine(Leave(visitor, duration));
+            StartCoroutine(Leave(visitor, duration, onExit));
 
             return true;
         }
@@ -199,22 +198,33 @@ namespace Building
                     transform.position, worker.transform.position) > _constructionSiteRadius);
         }
 
-        private IEnumerator DoConstruct()
+        public void Instantiate()
         {
-            State.Set(StateImpl.Flag.InConstruction);
-
             _building = Instantiate(BuildingPrefab, transform);
             foreach (Transform part in _building.transform)
             {
                 part.gameObject.SetActive(false);
                 _parts.Add(part.gameObject);
             }
+        }
 
-            // NOTE: currently used for rebaking the mesh, so make
-            // sure the callbacks are called AFTER instantiaion of
-            // the building prefab.
-            OnConstruction?.Invoke();
-            OnConstruction = null;
+        private IEnumerator DoConstruct()
+        {
+            State.Set(StateImpl.Flag.InConstruction);
+
+            if (_building == null)
+            {
+                _building = Instantiate(BuildingPrefab, transform);
+                foreach (Transform part in _building.transform)
+                {
+                    part.gameObject.SetActive(false);
+                    _parts.Add(part.gameObject);
+                }
+            }
+
+            FindFirstObjectByType<
+                    Unity.AI.Navigation.NavMeshSurface>()
+                        .BuildNavMesh();
 
             for (var i = 0; i < _parts.Count;)
             {
@@ -301,14 +311,15 @@ namespace Building
             return StartCoroutine(task);
         }
 
-        private IEnumerator Leave(GameObject visitor, float duration)
+        private IEnumerator Leave(GameObject visitor, float duration, System.Action OnExit)
         {
             yield return new WaitForSeconds(duration);
 
             visitor.SetActive(true);
             _visitors.Remove(visitor);
+
+            OnExit?.Invoke();
         }
     }
 
 } // namespace Building
-

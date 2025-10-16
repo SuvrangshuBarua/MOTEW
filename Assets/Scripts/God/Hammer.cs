@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using System;
 
 namespace God
 {
@@ -10,6 +10,8 @@ namespace God
 
         private float _radius = 6f;
         private int _damage = 10;
+
+        private int _cost = 50;
 
         public override void MouseDown()
         {
@@ -50,18 +52,22 @@ namespace God
         }
         public override void Update()
         {
-            Debug.Log("Logged every frame");
         }
 
         public override void FixedUpdate()
         {
-            Debug.Log("Logged every physics frame");
         }
+
         public override void Upgrade()
         {
             _damage *= 2;
+            _cost = Math.Max(_cost, _cost * 2);
+        }
+
+        public override int UpgradeCost()
+        {
+            return _cost;
         }
     }
 
 } // namespace God
-

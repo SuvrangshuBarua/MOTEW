@@ -14,6 +14,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 {
     [SerializeField] private HumonStats humonStats;
     [SerializeField] private BuildingStats buildingStats;
+    private HealthBar healthBar;
 
     public int CurrentHealth { get; private set; }
     public int HumonMaxHealth => humonStats != null ? humonStats.BaseHealth : 100;
@@ -30,7 +31,8 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Start()
     {
-        // Spawn on start 
+        healthBar = GetComponent<HealthBar>();
+        // Spawn on start
         Spawn();
     }
 
@@ -57,6 +59,8 @@ public class Health : MonoBehaviour, IHealth, IDamageable
             Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{HumonMaxHealth}"); // DEBUG
         }
 
+        // Initialize health bar
+        healthBar.Initialize(maxHealth);
         OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, maxHealth));
     }
 
@@ -81,6 +85,9 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
         OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, maxHealth, delta, source));
 
+        // Update health bar if available
+        healthBar.UpdateCurrentHealth(CurrentHealth);
+
         if (CurrentHealth == 0)
         {
             Die(source);
@@ -97,6 +104,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Die(object source)
     {
+        healthBar.Destroy();
         // Emit death first
         OnDied?.Invoke(new DeathArgs(source));
         // TODO: disable other inputs here on death
