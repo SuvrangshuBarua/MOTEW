@@ -62,7 +62,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     public void TakeDamage(int amount, object source = null)
     {
-        // Only take damage when fully constructed
+        // Only take damage when building is fully constructed
         if (_isBuilding && _building != null && !_building.State.IsConstructed)
         {
             Debug.Log($"[Health] Building {name} is under construction! ");

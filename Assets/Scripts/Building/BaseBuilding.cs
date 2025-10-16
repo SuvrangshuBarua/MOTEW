@@ -156,6 +156,10 @@ namespace Building
         [SerializeField]
         private GameObject BuildingPrefab = null;
         private GameObject _building = null;
+
+        [SerializeField]
+        private GameObject _destroyedBuildingPrefab = null;
+        private GameObject _destroyedBuilding = null;
         private List<GameObject> _parts = new();
 
         [SerializeField]
@@ -250,7 +254,11 @@ namespace Building
                 {
                     body.AddExplosionForce(5000, transform.position, 10);
                     body.useGravity = true;
-                    Instantiate(_particle, part.transform.position, Quaternion.identity);
+
+                    if (_particle != null)
+                    {
+                        Instantiate(_particle, part.transform.position, Quaternion.identity);
+                    }
                 }
             }
 
@@ -260,12 +268,24 @@ namespace Building
             {
                 // TODO: skip inactive parts, construction may have never finished
                 yield return new WaitForSeconds(0.1f);
-                Instantiate(_particle, part.transform.position, Quaternion.identity);
+
+                if (_particle != null)
+                {
+                    Instantiate(_particle, part.transform.position, Quaternion.identity);
+                }
+
                 part.SetActive(false);
             }
 
             _parts.Clear();
             Destroy(_building);
+            // _building = null; 
+
+            // ! placeholder code
+            if (_destroyedBuildingPrefab != null)
+            {
+                _destroyedBuilding = Instantiate(_destroyedBuildingPrefab, transform);
+            }
 
             State.Set(StateImpl.Flag.Destructed);
         }
