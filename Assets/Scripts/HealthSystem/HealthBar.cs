@@ -46,10 +46,10 @@ public class HealthBar : MonoBehaviour
 
     private IEnumerator FadeInOut(float duration)
     {
+        healthBar.gameObject.SetActive(true); // Show health bar
+        yield return new WaitForSeconds(duration);
         if (healthBar != null)
         {
-            healthBar.gameObject.SetActive(true); // Show health bar
-            yield return new WaitForSeconds(duration);
             healthBar.gameObject.SetActive(false); // Hide health bar
         }
     }
