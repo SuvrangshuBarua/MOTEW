@@ -12,6 +12,9 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     public event Action<int> OnCashChanged;
     public uint Population => (uint) _humons.Count;
 
+    private int humonDeathCount = 0;
+    public int HumonDeathCount => humonDeathCount;
+
     public uint PopulationCapacity()
     {
         uint capacity = 0;
@@ -61,6 +64,10 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         return humon;
     }
 
+    public void IncreaseDeathCount()
+    {
+        humonDeathCount++;
+    }
     public void DestroyHumon(Humon humon)
     {
         _humons.Remove(humon);

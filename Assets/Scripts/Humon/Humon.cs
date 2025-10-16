@@ -252,6 +252,7 @@ public class Humon : MonoBehaviour
 
         IndicatorManager.Instance.New(transform, "$10");
         GameManager.Instance.AddCash(10);
+        GameManager.Instance.IncreaseDeathCount();
 
         //Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);
