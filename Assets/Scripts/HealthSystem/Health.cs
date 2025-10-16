@@ -14,7 +14,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 {
     [SerializeField] private HumonStats humonStats;
     [SerializeField] private BuildingStats buildingStats;
-    private HealthBar healthBar;
+
 
     public int CurrentHealth { get; private set; }
     public int HumonMaxHealth => humonStats != null ? humonStats.BaseHealth : 100;
@@ -28,10 +28,12 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private Building.BaseBuilding _building;
     private bool _isBuilding;
+    private HealthBar _humonHealthBar;
+    private HealthBar _buildingHealthBar;
 
     private void Start()
     {
-        healthBar = GetComponent<HealthBar>();
+        _humonHealthBar = GetComponent<HealthBar>();
         // Spawn on start
         Spawn();
     }
@@ -39,6 +41,7 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     private void Awake()
     {
         _building = GetComponent<Building.BaseBuilding>();
+        _buildingHealthBar = GetComponent<HealthBar>();
         _isBuilding = buildingStats != null;
     }
 
@@ -50,17 +53,17 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         {
             CurrentHealth = BuildingMaxHealth;
             maxHealth = BuildingMaxHealth;
+            _buildingHealthBar.Initialize(maxHealth);
             Debug.Log($"[Health] Spawned building {name} with {CurrentHealth}/{BuildingMaxHealth}"); // DEBUG
         }
         else
         {
             CurrentHealth = HumonMaxHealth;
             maxHealth = HumonMaxHealth;
+            _humonHealthBar.Initialize(maxHealth);
             Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{HumonMaxHealth}"); // DEBUG
         }
 
-        // Initialize health bar
-        healthBar.Initialize(maxHealth);
         OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, maxHealth));
     }
 
@@ -85,8 +88,16 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
         OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, maxHealth, delta, source));
 
-        // Update health bar if available
-        healthBar.UpdateCurrentHealth(CurrentHealth);
+        if (_isBuilding && _building.State.IsConstructed)
+        {
+            // Update building health bar if available
+            _buildingHealthBar.UpdateCurrentHealth(CurrentHealth);
+        }
+        else
+        {
+            // Update humon health bar if available
+            _humonHealthBar.UpdateCurrentHealth(CurrentHealth);
+        }
 
         if (CurrentHealth == 0)
         {
@@ -104,7 +115,14 @@ public class Health : MonoBehaviour, IHealth, IDamageable
 
     private void Die(object source)
     {
-        healthBar.Destroy();
+        if (_isBuilding)
+        {
+            _buildingHealthBar.Destroy();
+        }
+        else
+        {
+            _humonHealthBar.Destroy();
+        }
         // Emit death first
         OnDied?.Invoke(new DeathArgs(source));
         // TODO: disable other inputs here on death
