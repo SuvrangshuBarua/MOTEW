@@ -12,17 +12,22 @@ using System;
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour, IHealth, IDamageable
 {
-    [SerializeField] private Stats stats;
+    [SerializeField] private HumonStats humonStats;
+    [SerializeField] private BuildingStats buildingStats;
     private HealthBar healthBar;
 
     public int CurrentHealth { get; private set; }
-    public int MaxHealth => stats != null ? stats.BaseHealth : 100;
+    public int HumonMaxHealth => humonStats != null ? humonStats.BaseHealth : 100;
+    public int BuildingMaxHealth => buildingStats != null ? buildingStats.BuildingBaseHealth : 100;
     public bool IsDead => CurrentHealth <= 0;
 
     public event Action<HealthChangedArgs> OnDamaged;
     // public event Action<HealthChangedArgs> OnHealed;
     public event Action<SpawnedArgs> OnSpawned;
     public event Action<DeathArgs> OnDied;
+
+    private Building.BaseBuilding _building;
+    private bool _isBuilding;
 
     private void Start()
     {
@@ -31,26 +36,54 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         Spawn();
     }
 
+    private void Awake()
+    {
+        _building = GetComponent<Building.BaseBuilding>();
+        _isBuilding = buildingStats != null;
+    }
+
     public void Spawn()
     {
-        CurrentHealth = MaxHealth;
-        // Initialize health bar if available
-        healthBar.Initialize(MaxHealth);
-        OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, MaxHealth));
-        Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{MaxHealth}"); // DEBUG
+        // Set either humon or building health
+        int maxHealth;
+        if (buildingStats != null)
+        {
+            CurrentHealth = BuildingMaxHealth;
+            maxHealth = BuildingMaxHealth;
+            Debug.Log($"[Health] Spawned building {name} with {CurrentHealth}/{BuildingMaxHealth}"); // DEBUG
+        }
+        else
+        {
+            CurrentHealth = HumonMaxHealth;
+            maxHealth = HumonMaxHealth;
+            Debug.Log($"[Health] Spawned {name} with {CurrentHealth}/{HumonMaxHealth}"); // DEBUG
+        }
+
+        // Initialize health bar
+        healthBar.Initialize(maxHealth);
+        OnSpawned?.Invoke(new SpawnedArgs(CurrentHealth, maxHealth));
     }
 
     public void TakeDamage(int amount, object source = null)
     {
+        // Only take damage when building is fully constructed
+        if (_isBuilding && _building != null && !_building.State.IsConstructed)
+        {
+            Debug.Log($"[Health] Building {name} is under construction! ");
+            return;
+        }
+
         if (IsDead || amount <= 0) return;
 
         int old = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 
         int delta = CurrentHealth - old;
-        Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{MaxHealth}"); // DEBUG
+        int maxHealth = buildingStats != null ? BuildingMaxHealth : HumonMaxHealth;
 
-        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, MaxHealth, delta, source));
+        Debug.Log($"[Health] {name} took {-delta} damage (src={source}) -> {CurrentHealth}/{maxHealth}"); // DEBUG
+
+        OnDamaged?.Invoke(new HealthChangedArgs(CurrentHealth, maxHealth, delta, source));
 
         // Update health bar if available
         healthBar.UpdateCurrentHealth(CurrentHealth);
