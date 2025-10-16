@@ -745,7 +745,7 @@ MonoBehaviour:
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
   _destroyedBuildingPrefab: {fileID: 0}
   _particle: {fileID: 0}
-  _baseConstructionRate: 4
+  _baseConstructionRate: 5
   ResidentCapacity: 4
 --- !u!114 &-3826648217870541500
 MonoBehaviour:
