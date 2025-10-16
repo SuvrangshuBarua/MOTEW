@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e908d282c2258449383d6aea04f6d537, type: 3}
   m_Name: Building Stats
   m_EditorClassIdentifier: 
-  _buildingBaseHealth: 100
+  _buildingBaseHealth: 300
