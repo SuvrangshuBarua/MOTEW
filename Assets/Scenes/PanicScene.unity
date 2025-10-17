@@ -151,8 +151,9 @@ MonoBehaviour:
   _visitorCapacity: 4
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
   ColliderPrefab: {fileID: 0}
+  _hiddenMat: {fileID: 0}
   _particle: {fileID: 0}
-  _baseConstructionRate: 4
+  _constructionTimeSeconds: 60
   ResidentCapacity: 4
   _spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &56692031
@@ -1446,8 +1447,9 @@ MonoBehaviour:
   _visitorCapacity: 4
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
   ColliderPrefab: {fileID: 0}
+  _hiddenMat: {fileID: 0}
   _particle: {fileID: 0}
-  _baseConstructionRate: 4
+  _constructionTimeSeconds: 60
   ResidentCapacity: 4
   _spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &855615859
@@ -1976,6 +1978,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
+--- !u!114 &1631679492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2240389913737533678, guid: 96722ca33b4c9da15a385fdc7343467c, type: 3}
+  m_PrefabInstance: {fileID: 3708745445177569324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09da2f98b89e85d4daf792708bdc0f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1999031743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2217,6 +2230,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3826648217870541500, guid: 96722ca33b4c9da15a385fdc7343467c, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1631679492}
     - target: {fileID: 3738052591233192966, guid: 96722ca33b4c9da15a385fdc7343467c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.35
