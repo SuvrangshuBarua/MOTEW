@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layer))
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(1))
         {
             return;
         }
@@ -69,13 +69,13 @@ public class CameraController : MonoBehaviour
 
     void HandleCameraMovement()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             _lastMousePos = Input.mousePosition;
             return;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             Vector3 delta = Input.mousePosition - _lastMousePos;
             Vector3 move = new Vector3(-delta.x, 0, -delta.y); 
