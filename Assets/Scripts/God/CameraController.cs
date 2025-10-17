@@ -6,7 +6,7 @@ namespace God
 
 public class CameraController : MonoBehaviour
 {
-    public float MoveSpeed = 4.0f;
+    public float MoveSpeed = 15.0f;
     public float ZoomSpeed = 20f;
 
     public float MinZoom = 10f;

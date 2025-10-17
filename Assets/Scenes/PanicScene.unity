@@ -781,8 +781,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 15, y: 3, z: 15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1728,6 +1728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484001373}
   - component: {fileID: 1484001372}
+  - component: {fileID: 1484001374}
   m_Layer: 0
   m_Name: GodTools
   m_TagString: Untagged
@@ -1764,6 +1765,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1484001374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484001371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe740eea26e5ae63785e3106d79ec7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 15
+  ZoomSpeed: 20
+  MinZoom: 10
+  MaxZoom: 60
+  BorderX: {x: -50, y: 50}
+  BorderZ: {x: -50, y: 50}
 --- !u!1 &1498685085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,7 +1814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnparentOnAwake: 1
   m_speechBubblePrefab: {fileID: 1312917540676315285, guid: f97cd96c6464bfa4784d93ed66ae005f, type: 3}
-  m_canvas: {fileID: 933272680}
+  m_canvas: {fileID: 0}
 --- !u!4 &1498685087
 Transform:
   m_ObjectHideFlags: 0
@@ -1932,6 +1951,26 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1069675857}
+    - target: {fileID: 7797287991756108698, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.036546
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797287991756108698, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.036546
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797287991756108698, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.036546
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797287991756108698, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.6952
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797287991756108698, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 13.002
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
