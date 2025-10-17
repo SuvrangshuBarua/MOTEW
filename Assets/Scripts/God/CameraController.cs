@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
     public float MinZoom = 10f;
     public float MaxZoom = 60f;
 
-    public Vector2 BorderX = new Vector2(-50, 50);
-    public Vector2 BorderZ = new Vector2(-50, 50);
+    public Vector2 BorderX = new Vector2(-30, 30);
+    public Vector2 BorderZ = new Vector2(-50, 0);
 
     private LayerMask _layer;
     private Camera _cam;
