@@ -86,8 +86,6 @@ public class BaseBuilding : MonoBehaviour
     /// the building, it has to be in the destructed state.
     public void Construct()
     {
-        Debug.Log("LOL");
-
         Assert.IsTrue(State.IsDestructed);
 
         _task = StartTask(DoConstruct());
@@ -200,6 +198,7 @@ public class BaseBuilding : MonoBehaviour
         {
             _building = Instantiate(_buildingPrefab, transform);
             _building.transform.localPosition = Vector3.zero;
+            _building.layer = LayerMask.NameToLayer("NoNavMesh");
 
             _mats = _building.GetComponent<MeshRenderer>()
                     .sharedMaterials;
@@ -214,6 +213,7 @@ public class BaseBuilding : MonoBehaviour
                     .sharedMaterials = hidden;
         }
 
+        Assert.IsNotNull(_collider);
         FindFirstObjectByType<
                 Unity.AI.Navigation.NavMeshSurface>()
                     .BuildNavMesh();
@@ -262,6 +262,7 @@ public class BaseBuilding : MonoBehaviour
 
         _building = Instantiate(_ruinPrefab, transform);
         _building.transform.localPosition = Vector3.zero;
+        //_building.layer = LayerMask.NameToLayer("NoNavMesh");
 
         // decay
         var mesh = _building.GetComponent<MeshRenderer>();

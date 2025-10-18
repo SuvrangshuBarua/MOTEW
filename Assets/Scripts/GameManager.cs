@@ -2,6 +2,7 @@ using GrimTools.Runtime.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Random = UnityEngine.Random;
@@ -117,6 +118,21 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         residence.gameObject.transform.position +=
                 prefab.transform.position;
         _residences.Add(residence);
+
+        // rebake mesh
+        StartCoroutine(DeferredRebake());
+    }
+
+    private IEnumerator DeferredRebake()
+    {
+        // defer at least 1 frame
+        yield return null;
+
+        var surface = FindFirstObjectByType<
+                Unity.AI.Navigation.NavMeshSurface>();
+        surface.useGeometry = UnityEngine.AI
+                .NavMeshCollectGeometry.PhysicsColliders;
+        surface.BuildNavMesh();
     }
 
     private Vector3? TryPlaceObject(Collider col)

@@ -69,5 +69,5 @@ MonoBehaviour:
   m_SerializedVersion: 0
   m_Size: {x: 0.02268328, y: 0.02333198, z: 0.02674822}
   m_Center: {x: 0.000008881092, y: -0.0002625631, z: 0.001927317}
-  m_Area: 0
+  m_Area: 1
   m_AffectedAgents: ffffffff
