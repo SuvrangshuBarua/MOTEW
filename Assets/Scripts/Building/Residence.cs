@@ -18,6 +18,7 @@ public class Residence : BaseBuilding
     void Start()
     {
         Assert.IsFalse(_spawnOffset == Vector3.zero);
+        _spawnOffset = transform.rotation * _spawnOffset;
     }
 
     void FixedUpdate()

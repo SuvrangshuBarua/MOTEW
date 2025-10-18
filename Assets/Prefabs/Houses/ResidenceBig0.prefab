@@ -749,7 +749,7 @@ MonoBehaviour:
   _particle: {fileID: 0}
   _constructionTimeSeconds: 60
   ResidentCapacity: 10
-  _spawnOffset: {x: 0, y: 0, z: -5}
+  _spawnOffset: {x: -5, y: 0, z: 0}
 --- !u!114 &-2377414794880200689
 MonoBehaviour:
   m_ObjectHideFlags: 0
