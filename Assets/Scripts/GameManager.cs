@@ -2,6 +2,7 @@ using GrimTools.Runtime.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Random = UnityEngine.Random;
@@ -28,7 +29,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     private Bounds _bounds;
 
     [SerializeField] private Humon _humonPrefab;
-    [SerializeField] private Building.Residence _residencePrefab;
+    [SerializeField] private Building.Residence[] _residencePrefabs;
 
     private List<Humon> _humons = new ();
     private List<Building.Residence> _residences = new ();
@@ -72,15 +73,18 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         _cash += amount;
         OnCashChanged?.Invoke(_cash);
     }
+
     public int GetCash()
     {
         return _cash;
     }
+
     public void SetCash(int amount)
     {
         _cash = amount;
         OnCashChanged?.Invoke(_cash);
     }
+
     public bool CanDeductCash(int amount)
     {
         if (_cash >= amount)
@@ -90,22 +94,45 @@ public class GameManager : PersistantMonoSingleton<GameManager>
 
     private void SpawnResidence()
     {
-        var residence = Instantiate(_residencePrefab,
+        var prefab = _residencePrefabs[
+                Random.Range(0, _residencePrefabs.Length)];
+        var residence = Instantiate(prefab,
                 new Vector3(0, 10000, 0),
                 new Quaternion(0, Random.value, 0, 1));
-        residence.Instantiate();
+
+        residence.InstantiateCollider();
 
         var pos = TryPlaceObject(residence.Collider);
 
         if (pos == null)
         {
-            Debug.LogWarning("Found no place to spawn residence");
+            Debug.LogWarning(
+                    "Found no place to spawn residence");
             Destroy(residence.gameObject);
             return;
         }
 
         residence.gameObject.transform.position = pos.Value;
+        // NOTE: add whatever offset needed so that
+        // the assets are level with the ground...
+        residence.gameObject.transform.position +=
+                prefab.transform.position;
         _residences.Add(residence);
+
+        // rebake mesh
+        StartCoroutine(DeferredRebake());
+    }
+
+    private IEnumerator DeferredRebake()
+    {
+        // defer at least 1 frame
+        yield return null;
+
+        var surface = FindFirstObjectByType<
+                Unity.AI.Navigation.NavMeshSurface>();
+        surface.useGeometry = UnityEngine.AI
+                .NavMeshCollectGeometry.PhysicsColliders;
+        surface.BuildNavMesh();
     }
 
     private Vector3? TryPlaceObject(Collider col)
@@ -120,7 +147,6 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         half.x += buffer;
         half.z += buffer;
 
-        Assert.IsTrue(box.size.x == box.size.z);
         var min = new Vector2(
                 _bounds.min.x + MathF.Sqrt(2) * half.x,
                 _bounds.min.z + MathF.Sqrt(2) * half.z);
