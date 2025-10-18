@@ -850,7 +850,9 @@ MonoBehaviour:
   UnparentOnAwake: 1
   canAfford: 0
   _humonPrefab: {fileID: 4064623401430800096, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-  _residencePrefab: {fileID: -6050301789080440681, guid: c5b716538767b3cda89fc93478fa79b9, type: 3}
+  _residencePrefabs:
+  - {fileID: -6050301789080440681, guid: c5b716538767b3cda89fc93478fa79b9, type: 3}
+  - {fileID: 3845971124658408634, guid: c1a653bd376d26657ab9d978f06972e6, type: 3}
 --- !u!4 &293047470
 Transform:
   m_ObjectHideFlags: 0

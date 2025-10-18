@@ -86,6 +86,8 @@ public class BaseBuilding : MonoBehaviour
     /// the building, it has to be in the destructed state.
     public void Construct()
     {
+        Debug.Log("LOL");
+
         Assert.IsTrue(State.IsDestructed);
 
         _task = StartTask(DoConstruct());
