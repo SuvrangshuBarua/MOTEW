@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Assertions;
 
 /* 
 * HEALTH SYSTEM
@@ -105,6 +106,15 @@ public class Health : MonoBehaviour, IHealth, IDamageable
         }
     }
 
+    public void Heal(int amount, object source = null)
+    {
+        Assert.IsTrue(_isBuilding);
+        Assert.IsTrue(amount >= 0);
+
+        CurrentHealth = Math.Min(CurrentHealth + amount,
+                buildingStats.BuildingBaseHealth);
+    }
+
     // Method for instant kill
     /* public void Kill(object source = null)
     {
@@ -117,7 +127,8 @@ public class Health : MonoBehaviour, IHealth, IDamageable
     {
         if (_isBuilding)
         {
-            _buildingHealthBar.Destroy();
+            // NOTE: buildings can be rebuilt!
+            //_buildingHealthBar.Destroy();
         }
         else
         {

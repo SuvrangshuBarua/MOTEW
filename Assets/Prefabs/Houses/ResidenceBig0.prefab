@@ -742,8 +742,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visitorCapacity: 20
-  BuildingPrefab: {fileID: 919132149155446097, guid: ee8b28d4259db474b962152243bff7eb, type: 3}
-  ColliderPrefab: {fileID: 7444830878335064010, guid: 6ace00d8bfc1992fea5f32cb329bd1ca, type: 3}
+  _ruinPrefab: {fileID: 919132149155446097, guid: 6f2fbdb2fc29085458d55ccc4faac647, type: 3}
+  _buildingPrefab: {fileID: 919132149155446097, guid: ee8b28d4259db474b962152243bff7eb, type: 3}
+  _colliderPrefab: {fileID: 7444830878335064010, guid: 6ace00d8bfc1992fea5f32cb329bd1ca, type: 3}
   _hiddenMat: {fileID: 2100000, guid: bcb77138ea2f4970f92075f276d0b5f3, type: 2}
   _particle: {fileID: 0}
   _constructionTimeSeconds: 60

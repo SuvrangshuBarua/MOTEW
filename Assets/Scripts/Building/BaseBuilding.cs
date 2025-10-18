@@ -120,7 +120,7 @@ public class BaseBuilding : MonoBehaviour
     // private impl
 
 
-    private IHealth _health;
+    private Health _health;
 
     [SerializeField]
     private uint _visitorCapacity;
@@ -129,10 +129,12 @@ public class BaseBuilding : MonoBehaviour
     private Coroutine _task = null;
 
     [SerializeField]
-    private GameObject BuildingPrefab = null;
+    private GameObject _ruinPrefab = null;
+    [SerializeField]
+    private GameObject _buildingPrefab = null;
     private GameObject _building = null;
     [SerializeField]
-    private GameObject ColliderPrefab = null;
+    private GameObject _colliderPrefab = null;
     private GameObject _collider = null;
 
     private Material[] _mats;
@@ -163,30 +165,19 @@ public class BaseBuilding : MonoBehaviour
     public void InstantiateCollider()
     {
         Assert.IsNull(_collider);
-        _collider = Instantiate(ColliderPrefab, transform);
+        _collider = Instantiate(_colliderPrefab, transform);
         _collider.transform.localPosition= Vector3.zero;
     }
 
     void Awake()
     {
-        _health = GetComponent<IHealth>();
-        if (_health != null) _health.OnDied += HandleBuildingDeath;
+        _health = GetComponent<Health>();
+        _health.OnDied += HandleBuildingDeath;
     }
 
-    void OnDestroy()
+    void HandleBuildingDeath(DeathArgs args)
     {
-        if (_health != null) _health.OnDied -= HandleBuildingDeath;
-    }
-
-    private void HandleBuildingDeath(DeathArgs args)
-    {
-        if (State.IsConstructed) Destruct();
-        else
-        {
-            // if smashed mid-construction
-            if (_building != null) Destroy(_building);
-            State.Set(StateImpl.Flag.Destructed);
-        }
+        Destruct();
     }
 
     void OnDrawGizmos()
@@ -201,9 +192,11 @@ public class BaseBuilding : MonoBehaviour
     {
         State.Set(StateImpl.Flag.InConstruction);
 
+        _health.Heal(_health.BuildingMaxHealth);
+
         if (_building == null)
         {
-            _building = Instantiate(BuildingPrefab, transform);
+            _building = Instantiate(_buildingPrefab, transform);
             _building.transform.localPosition = Vector3.zero;
 
             _mats = _building.GetComponent<MeshRenderer>()
@@ -223,8 +216,9 @@ public class BaseBuilding : MonoBehaviour
                 Unity.AI.Navigation.NavMeshSurface>()
                     .BuildNavMesh();
 
-        var materials = _building.GetComponent<MeshRenderer>()
-                .sharedMaterials;
+        var mesh = _building.GetComponent<MeshRenderer>();
+        var materials = mesh.sharedMaterials;
+        var time = _constructionTimeSeconds / materials.Length;
 
         for (var i = 0; i < materials.Length; )
         {
@@ -235,13 +229,11 @@ public class BaseBuilding : MonoBehaviour
             }
 
             // we got workers, continue construction
-            var time = _constructionTimeSeconds / materials.Length;
-            time /= _workers.Count;
-            yield return new WaitForSeconds(time);
+            var wait = time / _workers.Count;
+            yield return new WaitForSeconds(wait);
 
             materials[i] = _mats[i];
-            _building.GetComponent<MeshRenderer>()
-                    .sharedMaterials = materials;
+            mesh.sharedMaterials = materials;
             ++i;
         }
 
@@ -258,45 +250,34 @@ public class BaseBuilding : MonoBehaviour
     {
         State.Set(StateImpl.Flag.InDestruction);
 
-        // EXPLODE.
+        // TDOO: draw cloud
 
-        /*
-        foreach (var part in _parts)
+        if (_building)
         {
-            if (part.TryGetComponent<Rigidbody>(out var body))
-            {
-                body.AddExplosionForce(5000, transform.position, 10);
-                body.useGravity = true;
-
-                if (_particle != null)
-                {
-                    Instantiate(_particle, part.transform.position, Quaternion.identity);
-                }
-            }
+            Destroy(_building);
+            _mats = null;
         }
 
-        yield return new WaitForSeconds(1);
+        _building = Instantiate(_ruinPrefab, transform);
+        _building.transform.localPosition = Vector3.zero;
 
-        foreach (var part in _parts)
+        // decay
+        var mesh = _building.GetComponent<MeshRenderer>();
+        var materials = mesh.sharedMaterials;
+
+        // TODO: tweak this?
+        yield return new WaitForSeconds(10f);
+        var time = 10f / materials.Length;
+
+        for (int i = materials.Length - 1; i >= 0; --i)
         {
-            // TODO: skip inactive parts, construction may have never finished
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(time);
 
-            if (_particle != null)
-            {
-                Instantiate(_particle, part.transform.position, Quaternion.identity);
-            }
-
-            part.SetActive(false);
+            materials[i] = _hiddenMat;
+            mesh.sharedMaterials = materials;
         }
-        */
 
-        yield return new WaitForSeconds(0.1f);
-
-        //_parts.Clear();
         Destroy(_building);
-        // _building = null; 
-
         State.Set(StateImpl.Flag.Destructed);
     }
 
