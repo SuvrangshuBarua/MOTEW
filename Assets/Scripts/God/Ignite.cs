@@ -40,6 +40,8 @@ public class Ignite : BaseTool
         var impl = fire.GetComponent<Fire>();
         impl.Damage = _damage;
         impl.Radius = _radius;
+        impl.Duration = _duration;
+
         Destroy(fire, _duration);
 
         _timestamp = now;

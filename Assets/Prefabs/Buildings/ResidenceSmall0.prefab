@@ -502,6 +502,7 @@ MonoBehaviour:
   _buildingPrefab: {fileID: 919132149155446097, guid: 5ec76836fa294dd4a8568bea65e205f4, type: 3}
   _colliderPrefab: {fileID: 7091292494048423228, guid: 2c2b333816e086049ab77442608603ad, type: 3}
   _hiddenMat: {fileID: 2100000, guid: bcb77138ea2f4970f92075f276d0b5f3, type: 2}
+  _firePrefab: {fileID: 5881145060523611696, guid: c741e1d18d566fdb19ae83a345e6f582, type: 3}
   _particle: {fileID: 0}
   _constructionTimeSeconds: 60
   ResidentCapacity: 5

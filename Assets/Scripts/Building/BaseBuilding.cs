@@ -113,6 +113,21 @@ public class BaseBuilding : MonoBehaviour
         }
     }
 
+    public void SetOnFire(Fire source)
+    {
+        if (State.IsOnFire)
+        {
+            return;
+        }
+
+        State.Set(StateImpl.Flag.OnFire);
+        var fire = gameObject.AddComponent<FireDamage>();
+        fire.Damage = source.Damage;
+
+        _fire_vfxs.Add(UnityEngine.Object.Instantiate(
+                _firePrefab, transform));
+        //.transform.localScale *= 0.5f;
+    }
 
 
 
@@ -140,6 +155,10 @@ public class BaseBuilding : MonoBehaviour
     private Material[] _mats;
     [SerializeField]
     private Material _hiddenMat;
+
+    [SerializeField]
+    private GameObject _firePrefab;
+    private List<GameObject> _fire_vfxs = new ();
 
     [SerializeField]
     private GameObject _particle; 
@@ -173,11 +192,31 @@ public class BaseBuilding : MonoBehaviour
     {
         _health = GetComponent<Health>();
         _health.OnDied += HandleBuildingDeath;
+        _health.OnDamaged += OnDamaged;
     }
 
     void HandleBuildingDeath(DeathArgs args)
     {
+        if (TryGetComponent(out FireDamage fire))
+        {
+            Destroy(fire);
+            State.Clear(StateImpl.Flag.OnFire);
+        }
+
         Destruct();
+    }
+
+    void OnDamaged(HealthChangedArgs args)
+    {
+        var cash = -args.Delta;
+        if (cash <= 0)
+        {
+            return;
+        }
+
+        IndicatorManager.Instance.New(transform,
+                $"${cash}");
+        GameManager.Instance.AddCash(cash);
     }
 
     void OnDrawGizmos()
@@ -271,6 +310,15 @@ public class BaseBuilding : MonoBehaviour
         // TODO: tweak this?
         yield return new WaitForSeconds(10f);
         var time = 10f / materials.Length;
+
+        // detsroy fire vfx
+        foreach (var fire in _fire_vfxs)
+        {
+            var ps = fire.GetComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            Destroy(fire, 2f);
+        }
+        _fire_vfxs.Clear();
 
         for (int i = materials.Length - 1; i >= 0; --i)
         {
