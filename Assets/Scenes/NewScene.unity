@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visitorCapacity: 0
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
+  _destroyedBuildingPrefab: {fileID: 0}
   _particle: {fileID: 0}
   _baseConstructionRate: 4
   ResidentCapacity: 0
@@ -865,7 +866,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: daa43a69bad26d9988799e5c612c1781, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: b5f1327204fdd484caaee86be589d48e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &293047468
 GameObject:
@@ -1334,6 +1335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visitorCapacity: 0
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
+  _destroyedBuildingPrefab: {fileID: 0}
   _particle: {fileID: 0}
   _baseConstructionRate: 4
   ResidentCapacity: 0
@@ -1600,6 +1602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visitorCapacity: 0
   BuildingPrefab: {fileID: 4367787602747943360, guid: 00976978fea5bd3cb9892143ec9ff960, type: 3}
+  _destroyedBuildingPrefab: {fileID: 0}
   _particle: {fileID: 0}
   _baseConstructionRate: 4
   ResidentCapacity: 0
@@ -2001,6 +2004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HammerPrefab: {fileID: 6785804703948368277, guid: ebebc941b14cd149aa08b3849ddedb16, type: 3}
+  FirePrefab: {fileID: 5881145060523611696, guid: 8061f4bea6f14f05183305f2fca132ba, type: 3}
 --- !u!4 &1484001373
 Transform:
   m_ObjectHideFlags: 0
@@ -2284,9 +2288,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cashText: {fileID: 119396163}
   _toolButton: {fileID: 297995391}
-  _upgradeHammerButton: {fileID: 280454032}
+  _upgradeButton: {fileID: 280454032}
   _pickupSprite: {fileID: 21300000, guid: d5f1331e7be6b0941adf7b503a8dd05f, type: 3}
   _hammerSprite: {fileID: 21300000, guid: 97757258ec706d64d827d2f030780067, type: 3}
+  _igniteSprite: {fileID: 21300000, guid: 1038a0fdb25410447a1551b41102739e, type: 3}
 --- !u!1001 &2092879204
 PrefabInstance:
   m_ObjectHideFlags: 0

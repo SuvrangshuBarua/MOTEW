@@ -179,8 +179,7 @@ public class Humon : MonoBehaviour
         if (state == State.OnFire)
         {
             // if we're on fire, visit and extinguish
-            if (!building.State.IsOnFire
-                && building.Visit(gameObject, 1f, OnExitBuilding))
+            if (building.Visit(gameObject, 1f, OnExitBuilding))
             {
                 _stateMachine.GetState<OnFireState>()
                         .SpeechBubble.Hide();
@@ -253,7 +252,8 @@ public class Humon : MonoBehaviour
 
         IndicatorManager.Instance.New(transform, "$10");
         GameManager.Instance.AddCash(10);
-
+        GameManager.Instance.IncreaseDeathCount();
+        
         //Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);
     }
