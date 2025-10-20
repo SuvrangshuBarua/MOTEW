@@ -103,7 +103,6 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         var residence = Instantiate(_residencePrefab,
                 new Vector3(0, 10000, 0),
                 new Quaternion(0, Random.value, 0, 1));
-        residence.Instantiate();
 
         var pos = TryPlaceObject(residence.Collider);
 
