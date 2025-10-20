@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: af5527cb94dc4bb488f5cce3a8ed0686
+guid: f7af5ec5ddf35ad48aaee4141fda4b5b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: c45e90684e2d0ca489a763a6758efb49, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,6 +21,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -30,7 +37,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -105,3 +112,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 315595
+  packageName: Lowpoly Character - Chibi
+  packageVersion: 0.0.1
+  assetPath: Assets/PolyOne/Chibi Character/Model/Envi/SM_SkyBox.fbx
+  uploadId: 751650
