@@ -62,8 +62,9 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
+        base.Awake();
         var nav = FindFirstObjectByType<
                 Unity.AI.Navigation.NavMeshSurface>();
         _bounds = nav.navMeshData.sourceBounds;
