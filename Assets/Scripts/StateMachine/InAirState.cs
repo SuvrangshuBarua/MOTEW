@@ -4,6 +4,7 @@ namespace StateMachine
 {
     public class InAirState : IState
     {
+        private int IsFalling = Animator.StringToHash("falling");
         private bool m_dropInitiated = false;
         public void Enter(Humon npc)
         {
@@ -12,6 +13,7 @@ namespace StateMachine
             {
                 npc.Navigation.Agent.enabled = false;
             }
+            npc.Animator.SetBool(IsFalling, true);
         }
 
         public void Update(Humon npc)
@@ -26,6 +28,7 @@ namespace StateMachine
         public void Exit(Humon npc)
         {
             m_dropInitiated = false;
+            npc.Animator.SetBool(IsFalling, false);
         }
         public State GetState()
         {

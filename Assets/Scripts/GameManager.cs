@@ -13,6 +13,10 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     public event Action<int> OnCashChanged;
     public uint Population => (uint) _humons.Count;
 
+    public int HumonDeathCount => _humonDeathCount;
+    public event Action<int> OnHumonDeathCountChanged;
+
+
     public uint PopulationCapacity()
     {
         uint capacity = 0;
@@ -24,6 +28,16 @@ public class GameManager : PersistantMonoSingleton<GameManager>
 
         return capacity;
     }
+
+    public void IncreaseDeathCount()
+    {
+        _humonDeathCount++;
+        OnHumonDeathCountChanged?.Invoke(_humonDeathCount);
+    }
+
+
+
+    private int _humonDeathCount = 0;
 
     private int _cash;
     private Bounds _bounds;
@@ -41,17 +55,15 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         if (Population >= PopulationCapacity())
         {
             Debug.Log($"{Population}/{PopulationCapacity()}");
-            SpawnResidence();
         }
+            SpawnResidence();
     }
 
     private void Awake()
     {
         var nav = FindFirstObjectByType<
                 Unity.AI.Navigation.NavMeshSurface>();
-        var bounds = nav.navMeshData.sourceBounds;
-
-        _bounds = new Bounds(bounds.center, bounds.size);
+        _bounds = nav.navMeshData.sourceBounds;
     }
 
     public Humon SpawnHumon(Vector3 pos)
@@ -147,12 +159,16 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         half.x += buffer;
         half.z += buffer;
 
+        // HACK: navMeshSurface.sourceBounds uses underlying
+        // geometry, not the nav mesh
+        const float off = 10;
+
         var min = new Vector2(
-                _bounds.min.x + MathF.Sqrt(2) * half.x,
-                _bounds.min.z + MathF.Sqrt(2) * half.z);
+                _bounds.min.x + MathF.Sqrt(2) * half.x + off,
+                _bounds.min.z + MathF.Sqrt(2) * half.z + off);
         var max = new Vector2(
-                _bounds.max.x - MathF.Sqrt(2) * half.x,
-                _bounds.max.z - MathF.Sqrt(2) * half.z);
+                _bounds.max.x - MathF.Sqrt(2) * half.x - off,
+                _bounds.max.z - MathF.Sqrt(2) * half.z - off);
 
         for (var tries = 0; tries < 100; ++tries)
         {
@@ -172,5 +188,11 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         }
 
         return null;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(_bounds.min, 10);
+        Gizmos.DrawSphere(_bounds.max, 10);
     }
 } 

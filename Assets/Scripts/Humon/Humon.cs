@@ -14,24 +14,30 @@ public class Humon : MonoBehaviour
     private Perception _perception;
     private Navigation _navigation;
     private Rigidbody _rigidbody;
+    private Animator _animator;
     private Collider _collider;
     public bool IsBeingDragged => _draggable.IsDragged;
     public Perception Perception => _perception;
     public Navigation Navigation => _navigation;
     public Rigidbody Rigidbody => _rigidbody;
+    public Animator Animator => _animator;
     public StateMachine.StateMachine StateMachine => _stateMachine;
 
     private BehaviorGraphAgent _agent;
+    private float _currentSpeed;
+    private float _currentBlendValue;
     private StateMachine.StateMachine _stateMachine;
     private Draggable _draggable;
     private Coroutine _dropCoroutine;
     private FallDamage _fallDamage;
     private IHealth _health;
+    private int speed = UnityEngine.Animator.StringToHash("speed");
 
     private void Awake()
     {
         _perception = gameObject.AddComponent<Perception>();
         _navigation = gameObject.GetComponent<Navigation>();
+        _animator = gameObject.GetComponentInChildren<Animator>();
 
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _collider = gameObject.GetComponent<Collider>();
@@ -92,6 +98,11 @@ public class Humon : MonoBehaviour
     private void Update()
     {
         _stateMachine.Update();
+        
+        float currentSpeed = _navigation.Agent.velocity.magnitude;
+        float normalizeSpeed = Mathf.InverseLerp(0f, 20f, currentSpeed);
+        _currentBlendValue = Mathf.Lerp(_currentBlendValue, normalizeSpeed, 0.1f);
+        _animator.SetFloat(speed, _currentBlendValue);
     }
 
     private void OnStartDrag()
@@ -253,7 +264,8 @@ public class Humon : MonoBehaviour
 
         IndicatorManager.Instance.New(transform, "$10");
         GameManager.Instance.AddCash(10);
-
+        GameManager.Instance.IncreaseDeathCount();
+        
         //Debug.Log($"[Humon] {name} destroyed (source: {args.Source})"); // DEBUG
         Destroy(gameObject);
     }

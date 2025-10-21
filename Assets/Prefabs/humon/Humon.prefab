@@ -274,6 +274,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2690499177461158670}
+  - {fileID: 4192396988119570564}
   m_Father: {fileID: 4757521335017072590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1271701012968332579
@@ -1017,6 +1018,131 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &4441916631206444911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8511414736651444225}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_Name
+      value: Body Type 3@Male Standing Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2494309200128091973, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2494309200128091973, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8358076e344e04b819db7298113d1cf8, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3787386597144195931}
+  m_SourcePrefab: {fileID: 100100000, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+--- !u!1 &3559447298922021438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+  m_PrefabInstance: {fileID: 4441916631206444911}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3787386597144195931
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3559447298922021438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+  m_Controller: {fileID: 9100000, guid: f513282496e146146be51b3f58069e37, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Humanoid.3 (metarig).003'\n\tTransform 'spine.003'\n\tTransform
+    'f_pinky.01.R'\n\tTransform 'spine.002'\n\tTransform 'f_index.02.R'\n\tTransform
+    'thigh.R'\n\tTransform 'upper_arm.R'\n\tTransform 'hand.R'\n\tTransform 'forearm.L'\n\tTransform
+    'shoulder.L'\n\tand more ...\n\tFrom animation clip 'fall'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &4192396988119570564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b1e0897d02bd40be982fd4d72c1b028, type: 3}
+  m_PrefabInstance: {fileID: 4441916631206444911}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8130166794278781680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1084,6 +1210,10 @@ PrefabInstance:
     - target: {fileID: 6830101962358524740, guid: ed84b15b632f06b45978ed64721ae6c6, type: 3}
       propertyPath: m_Name
       value: SM_Chibi_Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830101962358524740, guid: ed84b15b632f06b45978ed64721ae6c6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7511444393421685051, guid: ed84b15b632f06b45978ed64721ae6c6, type: 3}
       propertyPath: m_CastShadows
