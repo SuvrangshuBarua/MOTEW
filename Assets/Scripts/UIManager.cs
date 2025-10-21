@@ -16,6 +16,9 @@ public enum Tool
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Text _cashText;
+    [SerializeField] private Text RemianingHumonText;
+    [SerializeField] private Text KillCountText;
+    [SerializeField] private Text SoulText;
     [SerializeField] private Button _toolButton;
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private Sprite _pickupSprite;
@@ -44,6 +47,8 @@ public class UIManager : MonoBehaviour
         _active = _toolMap["pickup"];
 
         _stringBuilder = new StringBuilder();
+        
+        DisplayCash(0);
 
         UpdateUpgradeButton();
     }
@@ -94,11 +99,15 @@ public class UIManager : MonoBehaviour
         ToolManager.Instance.UpgradeTool();
 
         UpdateUpgradeButton();
+        
     }
 
     private void DisplayCash(int cash)
     {
         _stringBuilder.Clear();
+        SoulText.text = "Souls: " + GameManager.Instance.Souls.ToString();
+        KillCountText.text =  "KillCount: " + GameManager.Instance.HumonDeathCount.ToString();
+        RemianingHumonText.text = "Remaining Humons: " + GameManager.Instance.Population.ToString();
         _stringBuilder.Append("Cash: ").Append(cash);
         _cashText.text = _stringBuilder.ToString();
     }

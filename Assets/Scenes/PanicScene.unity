@@ -2941,6 +2941,17 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1087280901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4332280484676895760, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+  m_PrefabInstance: {fileID: 1999031743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1133390072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a720e6a29f2045744a09f42df8208168, type: 3}
@@ -3981,6 +3992,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 853afe73ba516f04290fffb25e840f56, type: 3}
   m_PrefabInstance: {fileID: 1191710925}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1436698191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1138741516599004815, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+  m_PrefabInstance: {fileID: 1999031743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1447902554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4788,6 +4810,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a720e6a29f2045744a09f42df8208168, type: 3}
+--- !u!114 &1693019578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2431151655813953084, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+  m_PrefabInstance: {fileID: 1999031743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1699664835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a720e6a29f2045744a09f42df8208168, type: 3}
@@ -5371,6 +5404,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1069675857}
+    - target: {fileID: 7538470040686657670, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: SoulText
+      value: 
+      objectReference: {fileID: 1087280901}
+    - target: {fileID: 7538470040686657670, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: KillCountText
+      value: 
+      objectReference: {fileID: 1436698191}
+    - target: {fileID: 7538470040686657670, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
+      propertyPath: RemianingHumonText
+      value: 
+      objectReference: {fileID: 1693019578}
     - target: {fileID: 8003272721085861962, guid: 022f69545b4ccf94e8660e50b3d61b5c, type: 3}
       propertyPath: m_Layer
       value: 5

@@ -14,6 +14,8 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     public uint Population => (uint) _humons.Count;
 
     public int HumonDeathCount => _humonDeathCount;
+    private int _souls = 0;
+    public int Souls => _souls;
     public event Action<int> OnHumonDeathCountChanged;
 
 
@@ -32,6 +34,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     public void IncreaseDeathCount()
     {
         _humonDeathCount++;
+        _souls++;
         OnHumonDeathCountChanged?.Invoke(_humonDeathCount);
     }
 
@@ -65,6 +68,10 @@ public class GameManager : PersistantMonoSingleton<GameManager>
                 Unity.AI.Navigation.NavMeshSurface>();
         _bounds = nav.navMeshData.sourceBounds;
     }
+    private void Start()
+    {
+        _humons.AddRange(FindObjectsByType<Humon>(default));
+    }
 
     public Humon SpawnHumon(Vector3 pos)
     {
@@ -77,7 +84,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     public void DestroyHumon(Humon humon)
     {
         _humons.Remove(humon);
-        Destroy(humon);
+        //Destroy(humon);
     }
 
     public void AddCash(int amount)
