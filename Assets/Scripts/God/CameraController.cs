@@ -55,13 +55,14 @@ public class CameraController : MonoBehaviour
             return;
         }
 
+        HandleZoom();
+
         if (!Input.GetMouseButton(1))
         {
             return;
         }
 
         HandleCameraMovement();
-        HandleZoom();
         ClampCamera();
         
         Debug.DrawRay(_cam.transform.position, _cam.transform.forward * 100, Color.red);

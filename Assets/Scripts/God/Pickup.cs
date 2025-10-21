@@ -10,6 +10,8 @@ public class Pickup : BaseTool
     private float _fixedY;
     private float _pickupOffset = 4f;
     private Plane _dragPlane;
+    private Vector3? _prevPos = null;
+    private Vector3? _curPos = null;
 
     public override float Range()
     {
@@ -67,6 +69,12 @@ public class Pickup : BaseTool
         {
             _fixedY += 1f;
         }
+
+        if (_draggable != null)
+        {
+            _prevPos = Vector3.zero + _curPos;
+            _curPos = _draggable.transform.position;
+        }
     }
 
     public override void MouseUp()
@@ -79,12 +87,21 @@ public class Pickup : BaseTool
         if (_draggable.TryGetComponent(out Rigidbody body))
         {
             body.useGravity = true;
+
+            if (_prevPos != null && _curPos != null)
+            {
+                var force = _curPos - _prevPos;
+                force *= 10f;
+                body.AddForce(force.Value, ForceMode.VelocityChange);
+            }
         }
 
         _draggable.IsDragged = false;
         _draggable.OnDragEnd?.Invoke();
 
         _draggable = null;
+        _curPos = null;
+        _prevPos = null;
     }
 
     public override void FixedUpdate()
@@ -93,9 +110,6 @@ public class Pickup : BaseTool
         {
             return;
         }
-
-        // TODO: can miss inputs
-        
 
         Ray ray = Camera.main.ScreenPointToRay(
                 Input.mousePosition);
