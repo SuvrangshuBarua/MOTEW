@@ -1053,14 +1053,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2494,14 +2486,6 @@ PrefabInstance:
     - target: {fileID: 4757521335017072590, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4599,14 +4583,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5481,14 +5457,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5651,22 +5619,6 @@ PrefabInstance:
     - target: {fileID: 4757521335017072590, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5461673106057303184, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: m_Acceleration
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5461673106057303184, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5834,18 +5786,6 @@ PrefabInstance:
     - target: {fileID: 4757521335017072590, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: Surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5858568909791802063, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: surface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443638650289209297, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
-      propertyPath: healthBar
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

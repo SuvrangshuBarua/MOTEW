@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1e9e57424999793af171deaba51b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humonStats: {fileID: 0}
+  humonStats: {fileID: 11400000, guid: c8c964b6eeddc634989a9de9de650bcf, type: 2}
   _firePrefab: {fileID: 5881145060523611696, guid: c741e1d18d566fdb19ae83a345e6f582, type: 3}
 --- !u!114 &5858568909791802063
 MonoBehaviour:
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88417e7ed7d25b742b54503ed7336168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humonStats: {fileID: 0}
+  humonStats: {fileID: 11400000, guid: c8c964b6eeddc634989a9de9de650bcf, type: 2}
   buildingStats: {fileID: 0}
 --- !u!114 &5348444776700351718
 MonoBehaviour:
@@ -1128,12 +1128,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Humanoid.3 (metarig).003'\n\tTransform 'spine.003'\n\tTransform
-    'f_pinky.01.R'\n\tTransform 'spine.002'\n\tTransform 'f_index.02.R'\n\tTransform
-    'thigh.R'\n\tTransform 'upper_arm.R'\n\tTransform 'hand.R'\n\tTransform 'forearm.L'\n\tTransform
-    'shoulder.L'\n\tand more ...\n\tFrom animation clip 'fall'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

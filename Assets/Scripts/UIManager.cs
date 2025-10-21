@@ -50,6 +50,11 @@ public class UIManager : MonoBehaviour
         
         DisplayCash(0);
 
+        //UpdateUpgradeButton();
+    }
+
+    private void Start()
+    {
         UpdateUpgradeButton();
     }
 
