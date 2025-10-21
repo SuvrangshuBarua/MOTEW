@@ -55,8 +55,8 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         if (Population >= PopulationCapacity())
         {
             Debug.Log($"{Population}/{PopulationCapacity()}");
-        }
             SpawnResidence();
+        }
     }
 
     private void Awake()
