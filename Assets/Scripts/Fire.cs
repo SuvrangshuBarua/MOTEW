@@ -21,6 +21,19 @@ public class Fire : MonoBehaviour
                     .SetOnFire(this);
         }
 
+        // trees
+        hits = Physics.OverlapSphere(
+                transform.position, Radius,
+                LayerMask.GetMask("Default"));
+        foreach (var hit in hits)
+        {
+            Debug.Log(hit);
+            if (hit.TryGetComponent(out TreeAsset tree))
+            {
+                tree.SetOnFire(this);
+            }
+        }
+
         // fade out fire
         StartCoroutine(StopVfx());
     }
