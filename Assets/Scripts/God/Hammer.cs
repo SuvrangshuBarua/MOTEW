@@ -8,11 +8,16 @@ namespace God
     public class Hammer : BaseTool
     {
         public GameObject Prefab;
-
         private float _radius = 6f;
         private int _damage = 10;
 
         private int _cost = 50;
+
+
+        public override float Range()
+        {
+            return _radius;
+        }
 
         public override void MouseDown()
         {
@@ -56,6 +61,7 @@ namespace God
         public override void MouseUp()
         {
         }
+
         public override void Update()
         {
         }

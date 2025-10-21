@@ -77,7 +77,9 @@ public class ToolManager : MonoSingleton<ToolManager>
         {
             _mUp = true;
         }
-        _selected?.Update();
+
+        _selected.Update();
+        ToolIndicator.Instance.Draw(_selected.Range());
     }
 
     void FixedUpdate()

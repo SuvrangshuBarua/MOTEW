@@ -17,6 +17,12 @@ public class Ignite : BaseTool
 
     public GameObject Prefab = null;
 
+
+    public override float Range()
+    {
+        return _radius;
+    }
+
     public override void MouseDown()
     {
         var now = Time.time;

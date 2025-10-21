@@ -11,6 +11,10 @@ public class Pickup : BaseTool
     private float _pickupOffset = 4f;
     private Plane _dragPlane;
 
+    public override float Range()
+    {
+        return 0f;
+    }
 
     public override void MouseDown()
     {
