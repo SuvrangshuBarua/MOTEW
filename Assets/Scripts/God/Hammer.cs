@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 namespace God
 {
@@ -18,6 +19,11 @@ namespace God
             Ray ray = Camera.main.ScreenPointToRay(
                     Input.mousePosition);
 
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                // Pointer is over a UI element, so skip raycasting into the world
+                return;
+            }
             if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Default")))
             {
                 return;
