@@ -4,6 +4,7 @@ using StateMachine;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using Upgrade;
 
 public class Humon : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class Humon : MonoBehaviour
 
         // Fall damage
         // TODO: check logic here
-        _fallDamage.HumonStatsAsset = humonStats;
+        _fallDamage.HumonStatsAsset = UpgradeManager.Instance.GetStats();
         _fallDamage.OnLand += () =>
         {
             if (_stateMachine.CurrentState.GetState() != State.Construction)

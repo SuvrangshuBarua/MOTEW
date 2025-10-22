@@ -51,6 +51,8 @@ namespace Upgrade
             milestone.isComplete = true;
             milestone.upgrades.ForEach(u => u.ApplyToStats(m_currentStats));
         }
+        
+        public HumonStats GetStats() => m_currentStats;
     }
 }
 

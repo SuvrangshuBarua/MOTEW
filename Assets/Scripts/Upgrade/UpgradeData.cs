@@ -17,6 +17,7 @@ namespace Upgrade
             stats.BaseSpeed += extraSpeed;
             stats.BaseRange += extraRange;
             stats.DamagePerMeter -= reducedDamagePerMeter;
+            Debug.Log($"New Health: {stats.BaseHealth} | New Speed: {stats.BaseSpeed} | New Range: {stats.BaseRange} | New Damage: {stats.DamagePerMeter}");
         }
     }
 
