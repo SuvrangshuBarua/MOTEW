@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: OutroDD
   m_EditorClassIdentifier: 
   lines:
-  - text: Hello, new God!
-  - text: 'Do Some Godly Stuff
-
-'
+  - text: 'Congratualtions! '
+  - text: You finished the game.
+  - text: But at what cost!
