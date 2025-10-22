@@ -7,9 +7,11 @@ using System.Collections.Generic;
 
 using Random = UnityEngine.Random;
 
-public class GameManager : PersistantMonoSingleton<GameManager>
+public class GameManager : MonoSingleton<GameManager>
 {
     public bool canAfford;
+    public DialogueData initalDialogue;
+    public DialogueSystem dialogueSystem;
     public event Action<int> OnCashChanged;
     public uint Population => (uint) _humons.Count;
 
@@ -65,6 +67,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     protected virtual void Awake()
     {
         base.Awake();
+        
         var nav = FindFirstObjectByType<
                 Unity.AI.Navigation.NavMeshSurface>();
         _bounds = nav.navMeshData.sourceBounds;
@@ -72,6 +75,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     private void Start()
     {
         _humons.AddRange(FindObjectsByType<Humon>(default));
+        dialogueSystem.StartDialogue(initalDialogue);
     }
 
     public Humon SpawnHumon(Vector3 pos)

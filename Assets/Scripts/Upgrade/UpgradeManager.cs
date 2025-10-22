@@ -18,10 +18,16 @@ namespace Upgrade
         public HumonStats baseStats;
         private HumonStats m_currentStats;
         public HumonStats CurrentStats => m_currentStats;
-        public List<UpgradeMilestone> milestones; 
+        public List<UpgradeMilestone> milestones;
+        protected override void Awake()
+        {
+            base.Awake();
+            Initialize();
+        }
+
         private void Start()
         {
-            Initialize();
+            
             GameManager.Instance.OnHumonDeathCountChanged += CheckforMilestone;
         }
         private void Initialize()
