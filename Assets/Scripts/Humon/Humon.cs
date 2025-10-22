@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Humon : MonoBehaviour
 {
-    [SerializeField] private Stats stats;
+    [SerializeField] private HumonStats humonStats;
     [SerializeField] private GameObject _firePrefab;
 
     [Header("Core Components: ")]
@@ -20,7 +20,7 @@ public class Humon : MonoBehaviour
     public Navigation Navigation => _navigation;
     public Rigidbody Rigidbody => _rigidbody;
     public StateMachine.StateMachine StateMachine => _stateMachine;
-    
+
     private BehaviorGraphAgent _agent;
     private StateMachine.StateMachine _stateMachine;
     private Draggable _draggable;
@@ -46,7 +46,7 @@ public class Humon : MonoBehaviour
 
         // Fall damage
         // TODO: check logic here
-        _fallDamage.StatsAsset = stats;
+        _fallDamage.HumonStatsAsset = humonStats;
         _fallDamage.OnLand += () =>
         {
             if (_stateMachine.CurrentState.GetState() != State.Construction)
@@ -215,7 +215,7 @@ public class Humon : MonoBehaviour
     void OnPerceiveHumonPanic(Collider other)
     {
         var humon = other.GetComponent<Humon>();
-        
+
         if (humon.StateMachine.CurrentState.GetState() == State.InAir)
         {
             // spotted a floating humon -> panic
@@ -276,5 +276,3 @@ public class Humon : MonoBehaviour
         _draggable.OnDragEnd -= OnDragEnd;
     }
 }
-
-

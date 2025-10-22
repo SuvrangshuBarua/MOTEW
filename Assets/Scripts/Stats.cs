@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Stats", menuName = "MOTEW/Stats", order = 51)]
-public class Stats : ScriptableObject
+[CreateAssetMenu(fileName = "Humon stats", menuName = "MOTEW/Humon Stats", order = 51)]
+public class HumonStats : ScriptableObject
 {
     [SerializeField] private int _baseHealth = 100;
     [SerializeField] private float _baseRange = 1;

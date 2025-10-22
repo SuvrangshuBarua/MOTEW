@@ -8,7 +8,9 @@
 public interface IHealth
 {
     int CurrentHealth { get; }
-    int MaxHealth { get; }
+    int HumonMaxHealth { get; }
+
+    int BuildingMaxHealth { get; }
     bool IsDead { get; }
 
     event System.Action<HealthChangedArgs> OnDamaged;
@@ -18,7 +20,7 @@ public interface IHealth
 
     void Spawn();
     void TakeDamage(int amount, object source = null);
-    // void Heal(int amount, object source = null);
+    void Heal(int amount, object source = null);
     // void Kill(object source = null);
 }
 

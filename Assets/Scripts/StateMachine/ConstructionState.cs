@@ -4,71 +4,75 @@ using UnityEngine.Assertions;
 namespace StateMachine
 {
 
-public class ConstructionState : IState
-{
-    public Building.BaseBuilding Building = null;
-
-    private Nav.Patrol _patrol;
-
-    public void Enter(Humon npc)
+    public class ConstructionState : IState
     {
-        Assert.IsNotNull(Building, "Building must be assigned before changing states");
+        public Building.BaseBuilding Building = null;
 
-        Building.AddConstructionWorker(npc.gameObject);
+        private Nav.Patrol _patrol;
+        private float _currentAngle = 0f;
 
-        System.Func<Vector3> pos = () =>
+
+        public void Enter(Humon npc)
         {
-            while (true)
+            float AngleStep = 30f; // Degrees between each patrol point
+            Assert.IsNotNull(Building, "Building must be assigned before changing states");
+
+            Building.AddConstructionWorker(npc.gameObject);
+
+            // Start at a random angle to distribute workers around the circle
+            _currentAngle = Random.Range(0f, 360f);
+
+            // Randomly change the direction of patrol
+            if (Random.value > 0.5f)
             {
-                // Get a point thats within the construction radius, but not inside
-                // the building collider, to avoid getting stuck.
-                // Im sure there is a smarter way
-
-                Vector2 off = Random.insideUnitCircle * Building.ConstructionSiteRadius;
-                var pos = new Vector3(
-                        Building.transform.position.x + off.x,
-                        npc.transform.position.y,
-                        Building.transform.position.z + off.y);
-
-                var box = Building.Collider;
-                var local = box.transform.InverseTransformPoint(pos);
-                var half = box.size * 0.5f;
-
-                if ((Mathf.Abs(local.x - box.center.x) <= half.x &&
-                    Mathf.Abs(local.y - box.center.y) <= half.y &&
-                    Mathf.Abs(local.z - box.center.z) <= half.z) == false)
-                {
-                    return pos;
-                }
+                AngleStep *= -1f;
             }
-        };
+          
+            System.Func<Vector3> pos = () =>
+            {
+                _currentAngle += AngleStep;
+                if (_currentAngle >= 360f)
+                    _currentAngle -= 360f;
 
-        _patrol = new Nav.Patrol(npc.Navigation, pos(), pos());
-    }
+                float radians = _currentAngle * Mathf.Deg2Rad;
+                Vector2 offset = new Vector2(
+                Mathf.Cos(radians) * Building.ConstructionSiteRadius,
+                Mathf.Sin(radians) * Building.ConstructionSiteRadius);
 
-    public void Update(Humon npc)
-    {
-        if (Building.State.IsConstructed)
-        {
-            npc.StateMachine.ChangeState<RoamState>();
-            return;
+                return new Vector3(
+                Building.transform.position.x + offset.x * 0.8f,
+                npc.transform.position.y,
+                Building.transform.position.z + offset.y * 0.8f);
+            };
+            npc.Navigation.TogglePanicSpeed();
+            // Run 12 patrol points around the building
+            _patrol = new Nav.Patrol(npc.Navigation, pos(), pos(), pos(), pos(), pos(), pos(), pos(), pos(), pos(), pos(), pos(), pos());
         }
 
-        _patrol.Update();
-    }
+        public void Update(Humon npc)
+        {
+            if (Building.State.IsConstructed)
+            {
+                npc.StateMachine.ChangeState<RoamState>();
+                return;
+            }
 
-    public void Exit(Humon npc)
-    {
-        Building.RemoveConstructionWorker(npc.gameObject);
-        Building = null;
-        _patrol = null;
-    }
+            _patrol.Update();
+        }
 
-    public State GetState()
-    {
-        return State.Construction;
+        public void Exit(Humon npc)
+        {
+            Building.RemoveConstructionWorker(npc.gameObject);
+            npc.Navigation.TogglePanicSpeed();
+            Building = null;
+            _patrol = null;
+        }
+
+        public State GetState()
+        {
+            return State.Construction;
+        }
     }
-}
 
 } // namespace StateMachine
 

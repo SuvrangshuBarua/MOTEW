@@ -2,6 +2,7 @@ using GrimTools.Runtime.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Random = UnityEngine.Random;
@@ -28,7 +29,7 @@ public class GameManager : PersistantMonoSingleton<GameManager>
     private Bounds _bounds;
 
     [SerializeField] private Humon _humonPrefab;
-    [SerializeField] private Building.Residence _residencePrefab;
+    [SerializeField] private Building.Residence[] _residencePrefabs;
 
     private List<Humon> _humons = new ();
     private List<Building.Residence> _residences = new ();
@@ -93,7 +94,9 @@ public class GameManager : PersistantMonoSingleton<GameManager>
 
     private void SpawnResidence()
     {
-        var residence = Instantiate(_residencePrefab,
+        var prefab = _residencePrefabs[
+                Random.Range(0, _residencePrefabs.Length)];
+        var residence = Instantiate(prefab,
                 new Vector3(0, 10000, 0),
                 new Quaternion(0, Random.value, 0, 1));
 
@@ -113,8 +116,23 @@ public class GameManager : PersistantMonoSingleton<GameManager>
         // NOTE: add whatever offset needed so that
         // the assets are level with the ground...
         residence.gameObject.transform.position +=
-                _residencePrefab.transform.position;
+                prefab.transform.position;
         _residences.Add(residence);
+
+        // rebake mesh
+        StartCoroutine(DeferredRebake());
+    }
+
+    private IEnumerator DeferredRebake()
+    {
+        // defer at least 1 frame
+        yield return null;
+
+        var surface = FindFirstObjectByType<
+                Unity.AI.Navigation.NavMeshSurface>();
+        surface.useGeometry = UnityEngine.AI
+                .NavMeshCollectGeometry.PhysicsColliders;
+        surface.BuildNavMesh();
     }
 
     private Vector3? TryPlaceObject(Collider col)
