@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - _humonPrefab: {instanceID: 0}
   - _residencePrefab: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: -20
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

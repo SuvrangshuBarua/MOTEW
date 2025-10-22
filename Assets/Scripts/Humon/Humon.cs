@@ -54,6 +54,7 @@ public class Humon : MonoBehaviour
         // Fall damage
         // TODO: check logic here
         _fallDamage.HumonStatsAsset = UpgradeManager.Instance.GetStats();
+        if (_fallDamage.HumonStatsAsset == null) Debug.LogError("HumonStatsAsset is null");
         _fallDamage.OnLand += () =>
         {
             if (_stateMachine.CurrentState.GetState() != State.Construction)
