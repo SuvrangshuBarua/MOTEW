@@ -12,7 +12,7 @@ public abstract class BaseTool : ScriptableObject
     public abstract void Update();
     public abstract float Range();
     public virtual void Upgrade() {}
-
+    public virtual int UnlockPrice() { return 0; }
     public virtual int UpgradeCost()
     {
         return int.MaxValue;

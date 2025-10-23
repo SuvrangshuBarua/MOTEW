@@ -16,8 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     public uint Population => (uint) _humons.Count;
 
     public int HumonDeathCount => _humonDeathCount;
-    private int _souls = 0;
-    public int Souls => _souls;
+    public int Souls = 0;
     public event Action<int> OnHumonDeathCountChanged;
 
 
@@ -36,7 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void IncreaseDeathCount()
     {
         _humonDeathCount++;
-        _souls++;
+        Souls++;
         OnHumonDeathCountChanged?.Invoke(_humonDeathCount);
     }
 

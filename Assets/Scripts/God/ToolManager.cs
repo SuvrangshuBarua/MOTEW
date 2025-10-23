@@ -20,8 +20,9 @@ public class ToolManager : MonoSingleton<ToolManager>
 
     void Awake()
     {
-        _tools.Add("pickup", Pickup.CreateInstance<Pickup>());
+        _tools.Add(Pickup.Name, Pickup.CreateInstance<Pickup>());
 
+        /*
         var hammer = Hammer.CreateInstance<Hammer>();
         hammer.Prefab = HammerPrefab;
         _tools.Add("hammer", hammer);
@@ -29,6 +30,7 @@ public class ToolManager : MonoSingleton<ToolManager>
         var ignite = Hammer.CreateInstance<Ignite>();
         ignite.Prefab = FirePrefab;
         _tools.Add("ignite", ignite);
+        */
 
 
         _toolKeys = new string[_tools.Count];
@@ -64,6 +66,26 @@ public class ToolManager : MonoSingleton<ToolManager>
                 _selected : _tools[toolName];
 
         return tool.UpgradeCost();
+    }
+
+    public void UnlockHammer()
+    {
+        var hammer = Hammer.CreateInstance<Hammer>();
+        hammer.Prefab = HammerPrefab;
+        _tools.Add(Hammer.Name, hammer);
+
+        _toolKeys = new string[_tools.Count];
+        _tools.Keys.CopyTo(_toolKeys, 0);
+    }
+
+    public void UnlockIgnite()
+    {
+        var ignite = Ignite.CreateInstance<Ignite>();
+        ignite.Prefab = FirePrefab;
+        _tools.Add(Ignite.Name, ignite);
+
+        _toolKeys = new string[_tools.Count];
+        _tools.Keys.CopyTo(_toolKeys, 0);
     }
 
     void Update()
