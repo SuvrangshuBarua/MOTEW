@@ -17,6 +17,13 @@ public abstract class BaseTool : ScriptableObject
     {
         return int.MaxValue;
     }
+
+    public virtual bool TryUpgradeCooldown() { return false; }
+    public virtual bool TryUpgradeDamage() { return false; }
+    public virtual bool TryUpgradeRange() { return false; }
+    public virtual Stat[] GetCooldownStats() { return null; }
+    public virtual Stat[] GetDamageStats() { return null; }
+    public virtual Stat[] GetRangeStats() { return null; }
 }
 
 } // namespace God

@@ -15,9 +15,6 @@ public class ToolManager : MonoSingleton<ToolManager>
     private bool _mDown;
     private bool _mUp;
 
-    private string[] _toolKeys;
-    private int _currentToolIndex;
-
     void Awake()
     {
         _tools.Add(Pickup.Name, Pickup.CreateInstance<Pickup>());
@@ -33,17 +30,17 @@ public class ToolManager : MonoSingleton<ToolManager>
         */
 
 
-        _toolKeys = new string[_tools.Count];
-        _tools.Keys.CopyTo(_toolKeys, 0);
-        _currentToolIndex = 0;
-        _selected = _tools[_toolKeys[_currentToolIndex]];
+        _selected = _tools[Pickup.Name];
     }
 
-    public string SelectNextTool()
+    public void SelectTool(string tool)
     {
-        _currentToolIndex = (_currentToolIndex + 1) % _toolKeys.Length;
-        _selected = _tools[_toolKeys[_currentToolIndex]];
-        return _toolKeys[_currentToolIndex];
+        _selected = _tools[tool];
+    }
+
+    public BaseTool GetTool(string name)
+    {
+        return _tools[name];
     }
 
     public void UpgradeTool(string toolName = null)
@@ -73,9 +70,6 @@ public class ToolManager : MonoSingleton<ToolManager>
         var hammer = Hammer.CreateInstance<Hammer>();
         hammer.Prefab = HammerPrefab;
         _tools.Add(Hammer.Name, hammer);
-
-        _toolKeys = new string[_tools.Count];
-        _tools.Keys.CopyTo(_toolKeys, 0);
     }
 
     public void UnlockIgnite()
@@ -83,9 +77,6 @@ public class ToolManager : MonoSingleton<ToolManager>
         var ignite = Ignite.CreateInstance<Ignite>();
         ignite.Prefab = FirePrefab;
         _tools.Add(Ignite.Name, ignite);
-
-        _toolKeys = new string[_tools.Count];
-        _tools.Keys.CopyTo(_toolKeys, 0);
     }
 
     void Update()
