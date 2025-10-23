@@ -43,7 +43,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private int _humonDeathCount = 0;
 
-    private int _cash;
+    private int _cash = 999999;
     private Bounds _bounds;
 
     [SerializeField] private Humon _humonPrefab;
@@ -106,6 +106,17 @@ public class GameManager : MonoSingleton<GameManager>
     {
         _cash = amount;
         OnCashChanged?.Invoke(_cash);
+    }
+
+    public bool TryDeductCash(int amount)
+    {
+        if (CanDeductCash(amount))
+        {
+            _cash -= amount;
+            OnCashChanged?.Invoke(_cash);
+            return true;
+        }
+        return false;
     }
 
     public bool CanDeductCash(int amount)
