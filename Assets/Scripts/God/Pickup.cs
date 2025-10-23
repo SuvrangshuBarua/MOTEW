@@ -13,6 +13,9 @@ public class Pickup : BaseTool
     private Vector3? _prevPos = null;
     private Vector3? _curPos = null;
 
+    public static string Name = "pickup";
+    public static int Price = 0;
+
     public override float Range()
     {
         return 0f;
