@@ -10,8 +10,9 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoSingleton<GameManager>
 {
     public bool canAfford;
-    public DialogueData initalDialogue;
-    public DialogueSystem dialogueSystem;
+    public DialogueData IntroDialogue;
+    public DialogueData OutroDialogue;
+    public DialogueSystem DialogueSystem;
     public event Action<int> OnCashChanged;
     public uint Population => (uint) _humons.Count;
 
@@ -46,6 +47,8 @@ public class GameManager : MonoSingleton<GameManager>
     private int _cash = 999999;
     private Bounds _bounds;
 
+    private bool _won = false;
+
     [SerializeField] private Humon _humonPrefab;
     [SerializeField] private Building.Residence[] _residencePrefabs;
 
@@ -61,6 +64,12 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log($"{Population}/{PopulationCapacity()}");
             SpawnResidence();
         }
+
+        if (Win())
+        {
+            //Time.timeScale = 0f;
+            DialogueSystem.StartDialogue(OutroDialogue);
+        }
     }
 
     protected virtual void Awake()
@@ -71,11 +80,37 @@ public class GameManager : MonoSingleton<GameManager>
                 Unity.AI.Navigation.NavMeshSurface>();
         _bounds = nav.navMeshData.sourceBounds;
     }
+
     private void Start()
     {
         _humons.AddRange(FindObjectsByType<Humon>(default));
-        dialogueSystem.StartDialogue(initalDialogue);
+        DialogueSystem.StartDialogue(IntroDialogue);
     }
+
+    private bool Win()
+    {
+        if (_won)
+        {
+            return false;
+        }
+
+        if (Population > 0)
+        {
+            return false;
+        }
+
+        foreach (var residence in _residences)
+        {
+            if (residence.State.IsConstructed)
+            {
+                return false;
+            }
+        }
+
+        _won = true;
+        return true;
+    }
+
 
     public Humon SpawnHumon(Vector3 pos)
     {

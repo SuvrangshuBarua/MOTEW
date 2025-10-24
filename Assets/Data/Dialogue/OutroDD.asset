@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: OutroDD
   m_EditorClassIdentifier: 
   lines:
-  - text: 'Congratualtions! '
-  - text: You finished the game.
-  - text: But at what cost!
+  - text: 'World state: desolate. Cycle 10642 complete...'
+  - text: Congratulations!
+  - text: You did well.
+  - text: Your work here is done.

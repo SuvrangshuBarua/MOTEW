@@ -30,8 +30,23 @@ public class SocializeState : IState
 
             if (Speak)
             {
+                string[] texts = {
+                    "Hejsan!",
+                    "Hej hej!",
+                    "Tjena",
+                    "Still standing, huh?",
+                    "Dreamed the sky fell again",
+                    "If it's quiet, it's good",
+                    "Your place intact?",
+                    "I've seen things",
+                    "Weird stuff",
+                    "Strange ways",
+                    "We live, for now",
+                };
+
                 SpeechBubbleManager.Instance.CreateSpeechBubble(
-                        npc.transform, "Hejsan!");
+                        npc.transform,
+                        texts[Random.Range(0, texts.Length)]);
                 Speak = false;
             }
 

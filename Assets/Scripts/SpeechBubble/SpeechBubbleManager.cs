@@ -35,6 +35,7 @@ public class SpeechBubbleManager : PersistantMonoSingleton<SpeechBubbleManager>
             bubble.ShowSpeechBubble(target, text, emoji, duration);
         }
         m_activeSpeechBubbles.Add(target, bubble);
+        bubble.transform.localPosition += Vector3.up;
         return bubble;
     }
     public SpeechBubble CreateSpeechBubble(Transform target, SpeechBubbleData data)

@@ -28,7 +28,7 @@ public class OnFireState : IState
             "NOT LIKE THIS",
             "WHO SET ME ON FIRE?!",
             "HOLD THE LINE",
-            "EVERY MAN FOR HIMSELF",
+            "EVERYONE FOR THEMSELVES",
             "CALL 112!",
         };
 

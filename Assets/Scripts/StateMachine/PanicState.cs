@@ -17,9 +17,23 @@ public class PanicState : IState
     {
         npc.Navigation.TogglePanicSpeed();
 
-        // TODO: draw bubble with ?!
-        SpeechBubble = SpeechBubbleManager.Instance.CreateSpeechBubble(npc.transform, "?!",
-                null, _duration);
+        if (Random.Range(0f, 1f) < 0.5f)
+        {
+            string[] texts = {
+                "WHAT THE F-",
+                "RUUUN",
+                "HIDE! HIDE!",
+                "CATCH ME IF YOU CAN",
+                "I HAVE KIDS",
+                "ITS THE END",
+                "SPARE ME",
+            };
+
+            SpeechBubble = SpeechBubbleManager.Instance
+                    .CreateSpeechBubble(npc.transform,
+                        texts[Random.Range(0, texts.Length)],
+                        null, _duration);
+        }
 
         _timestamp = Time.time + _duration;
     }

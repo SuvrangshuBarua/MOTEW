@@ -1674,8 +1674,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAfford: 0
-  initalDialogue: {fileID: 11400000, guid: 67ac743c41360774cbceac0f91419cc8, type: 2}
-  dialogueSystem: {fileID: 1659860026}
+  IntroDialogue: {fileID: 11400000, guid: 67ac743c41360774cbceac0f91419cc8, type: 2}
+  OutroDialogue: {fileID: 11400000, guid: 7e4df87f81397ff4fbdc57277cd547d9, type: 2}
+  DialogueSystem: {fileID: 1659860026}
   Souls: 150
   _humonPrefab: {fileID: 4064623401430800096, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
   _residencePrefabs:
