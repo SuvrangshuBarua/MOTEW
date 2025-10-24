@@ -164,7 +164,7 @@ public class BaseBuilding : MonoBehaviour
     private GameObject _particle; 
 
     [SerializeField]
-    private float _constructionTimeSeconds = 60f;
+    public float ConstructionTimeSeconds = 60f;
     private List<GameObject> _workers = new ();
     // TODO: make this dependent on the building size
     // if we're gonna have buildings of differnet sizes
@@ -259,7 +259,7 @@ public class BaseBuilding : MonoBehaviour
 
         var mesh = _building.GetComponent<MeshRenderer>();
         var materials = mesh.sharedMaterials;
-        var time = _constructionTimeSeconds / materials.Length;
+        var time = ConstructionTimeSeconds / materials.Length;
 
         for (var i = 0; i < materials.Length; )
         {

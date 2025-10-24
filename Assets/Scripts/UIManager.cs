@@ -61,6 +61,21 @@ internal class Upgrades
         Cooldown.Button.onClick.AddListener(OnCooldown);
         Damage.Button.onClick.AddListener(OnDamage);
         Range.Button.onClick.AddListener(OnRange);
+
+        var stats = _tool.GetCooldownStats();
+        Cooldown.Data.text =
+                $"{stats[0].Value}s -> {stats[1].Value}s"
+                + $" ({stats[1].Cost} Cash)";
+
+        stats = _tool.GetDamageStats();
+        Damage.Data.text =
+                $"{stats[0].Value} -> {stats[1].Value}"
+                + $" ({stats[1].Cost} Cash)";
+
+        stats = _tool.GetDamageStats();
+        Range.Data.text =
+                $"{stats[0].Value} -> {stats[1].Value}"
+                + $" ({stats[1].Cost} Cash)";
     }
 
     internal void SetActive(bool b)

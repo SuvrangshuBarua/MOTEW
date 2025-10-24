@@ -17,3 +17,4 @@ MonoBehaviour:
   - text: Congratulations!
   - text: You did well.
   - text: Your work here is done.
+  - text: 'Time: 00:00:00'

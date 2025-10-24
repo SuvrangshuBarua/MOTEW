@@ -82,15 +82,18 @@ public class FallDamage : MonoBehaviour
         //_rigidbody.isKinematic = true;
         //_rigidbody.useGravity = false;
 
-        if (_agent)
+        if (UnityEngine.AI.NavMesh.SamplePosition(transform.position, out var hit, 2f, UnityEngine.AI.NavMesh.AllAreas))
         {
-            if (UnityEngine.AI.NavMesh.SamplePosition(transform.position, out var hit, 2f, UnityEngine.AI.NavMesh.AllAreas))
-                _agent.Warp(hit.position);
+            _agent.Warp(hit.position);
             _agent.enabled = true;
+            _isAirborne = false;
+            OnLand?.Invoke();
         }
-
-        _isAirborne = false;
-        OnLand?.Invoke();
+        else
+        {
+            // FIXME: Out of bounds -> die
+            GetComponent<Health>().TakeDamage(100000);
+        }
     }
 
     // Update is called once per frame

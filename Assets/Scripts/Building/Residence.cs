@@ -45,6 +45,7 @@ public class Residence : BaseBuilding
     {
         var pos = _spawnOffset + transform.position;
         _residents.Add(GameManager.Instance.SpawnHumon(pos));
+        GameManager.Instance.UpdateUI();
     }
 }
 

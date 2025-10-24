@@ -13,8 +13,8 @@ public class Hammer : BaseTool
     {
         new Stat(6f, 0),
         new Stat(4f, 100),
-        new Stat(2f, 200),
-        new Stat(1f, 400),
+        new Stat(2f, 100),
+        new Stat(1f, 200),
         new Stat(0.5f, 400),
         new Stat(0.25f, 400),
     };

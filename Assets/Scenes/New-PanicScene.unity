@@ -1677,7 +1677,7 @@ MonoBehaviour:
   IntroDialogue: {fileID: 11400000, guid: 67ac743c41360774cbceac0f91419cc8, type: 2}
   OutroDialogue: {fileID: 11400000, guid: 7e4df87f81397ff4fbdc57277cd547d9, type: 2}
   DialogueSystem: {fileID: 1659860026}
-  Souls: 150
+  Souls: 0
   _humonPrefab: {fileID: 4064623401430800096, guid: 580721656fa31c9429269ee6ac9fe762, type: 3}
   _residencePrefabs:
   - {fileID: -6050301789080440681, guid: c5b716538767b3cda89fc93478fa79b9, type: 3}
@@ -7059,7 +7059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -725.00006}
+  m_AnchoredPosition: {x: 0, y: -725.00037}
   m_SizeDelta: {x: 0, y: -449.9999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1538617927

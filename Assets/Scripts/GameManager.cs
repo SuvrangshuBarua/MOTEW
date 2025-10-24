@@ -40,11 +40,17 @@ public class GameManager : MonoSingleton<GameManager>
         OnHumonDeathCountChanged?.Invoke(_humonDeathCount);
     }
 
+    public void UpdateUI()
+    {
+        OnCashChanged?.Invoke(_cash);
+    }
+
 
 
     private int _humonDeathCount = 0;
+    private int _maxPopulation = 120;
 
-    private int _cash = 999999;
+    private int _cash = 0;
     private Bounds _bounds;
 
     private bool _won = false;
@@ -59,16 +65,37 @@ public class GameManager : MonoSingleton<GameManager>
     {
         _humons.RemoveAll((humon) => humon == null);
 
-        if (Population >= PopulationCapacity())
+        var capacity = PopulationCapacity();
+        if (Population >= capacity
+                && capacity < _maxPopulation)
         {
-            Debug.Log($"{Population}/{PopulationCapacity()}");
             SpawnResidence();
         }
 
         if (Win())
         {
             //Time.timeScale = 0f;
+            var now = System.TimeSpan.FromSeconds(Time.time);
+            OutroDialogue.lines[OutroDialogue.lines.Count - 1]
+                    .text = "Time: " + string.Format(
+                        "{0:D2}:{1:D2}:{2:D2}",
+                        now.Hours, now.Minutes, now.Seconds);
             DialogueSystem.StartDialogue(OutroDialogue);
+        }
+
+        // FIXME: out of map -> die
+        List<Humon> remove = new ();
+        foreach (var humon in _humons)
+        {
+            if (humon.transform.position.y < -10)
+            {
+                remove.Add(humon);
+            }
+        }
+
+        foreach (var humon in remove)
+        {
+            humon.GetComponent<Health>().TakeDamage(100000);
         }
     }
 
@@ -79,12 +106,21 @@ public class GameManager : MonoSingleton<GameManager>
         var nav = FindFirstObjectByType<
                 Unity.AI.Navigation.NavMeshSurface>();
         _bounds = nav.navMeshData.sourceBounds;
+
+
+        // spawn a house so that the game can't
+        // be won instantly
+        SpawnResidenceAt(new Vector3(-4, 0, 0));
+        _residences[0].GetComponent<Building.BaseBuilding>()
+                .ConstructionTimeSeconds = 10f;
     }
 
     private void Start()
     {
         _humons.AddRange(FindObjectsByType<Humon>(default));
         DialogueSystem.StartDialogue(IntroDialogue);
+
+        UpdateUI();
     }
 
     private bool Win()
@@ -192,6 +228,27 @@ public class GameManager : MonoSingleton<GameManager>
         StartCoroutine(DeferredRebake());
     }
 
+    private void SpawnResidenceAt(Vector3 pos)
+    {
+        var prefab = _residencePrefabs[
+                Random.Range(0, _residencePrefabs.Length)];
+        var residence = Instantiate(prefab,
+                new Vector3(0, 10000, 0),
+                new Quaternion(0, Random.value, 0, 1));
+
+        residence.InstantiateCollider();
+
+        residence.gameObject.transform.position = pos;
+        // NOTE: add whatever offset needed so that
+        // the assets are level with the ground...
+        residence.gameObject.transform.position +=
+                prefab.transform.position;
+        _residences.Add(residence);
+
+        // rebake mesh
+        StartCoroutine(DeferredRebake());
+    }
+
     private IEnumerator DeferredRebake()
     {
         // defer at least 1 frame
@@ -227,12 +284,22 @@ public class GameManager : MonoSingleton<GameManager>
                 _bounds.max.x - MathF.Sqrt(2) * half.x - off,
                 _bounds.max.z - MathF.Sqrt(2) * half.z - off);
 
+        var surface = FindFirstObjectByType<
+                Unity.AI.Navigation.NavMeshSurface>();
+
         for (var tries = 0; tries < 100; ++tries)
         {
             var pos = new Vector3(
                     Random.Range(min.x, max.x),
                     0,
                     Random.Range(min.y, max.y));
+
+            if (!UnityEngine.AI.NavMesh.SamplePosition(pos,
+                    out var hit, 1f,
+                    UnityEngine.AI.NavMesh.AllAreas))
+            {
+                continue;
+            }
 
             var cols = Physics.OverlapBox(pos, half,
                     col.transform.rotation,
@@ -246,10 +313,5 @@ public class GameManager : MonoSingleton<GameManager>
 
         return null;
     }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(_bounds.min, 10);
-        Gizmos.DrawSphere(_bounds.max, 10);
-    }
 } 
+

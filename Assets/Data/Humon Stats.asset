@@ -17,4 +17,4 @@ MonoBehaviour:
   _baseSpeed: 2
   _minFallHeight: 1
   _damagePerMeter: 10
-  _maxFallDamage: 50
+  _maxFallDamage: 100

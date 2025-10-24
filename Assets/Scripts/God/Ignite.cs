@@ -58,7 +58,7 @@ public class Ignite : BaseTool
     public GameObject Prefab = null;
 
     public static string Name = "ignite";
-    public static int Price = 100;
+    public static int Price = 30;
 
     public override float Range()
     {
@@ -185,7 +185,7 @@ public class Ignite : BaseTool
         var impl = fire.GetComponent<Fire>();
         impl.Damage = (int) _damages[_damage].Value;
         impl.Radius = _ranges[_range].Value;
-        impl.Duration = _cooldowns[_cooldown].Value;
+        impl.Duration = 10f;
 
         Destroy(fire, _cooldowns[_cooldown].Value);
 
