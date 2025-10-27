@@ -46,7 +46,7 @@ public class Hammer : BaseTool
     private float _timestamp = -6f;
 
     public static string Name = "hammer";
-    public static int Price = 10;
+    public static int Price = 30;
 
     public override float Range()
     {

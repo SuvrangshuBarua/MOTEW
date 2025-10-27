@@ -58,7 +58,7 @@ public class Ignite : BaseTool
     public GameObject Prefab = null;
 
     public static string Name = "ignite";
-    public static int Price = 30;
+    public static int Price = 10;
 
     public override float Range()
     {
