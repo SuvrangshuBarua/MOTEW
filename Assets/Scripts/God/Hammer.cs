@@ -53,6 +53,16 @@ public class Hammer : BaseTool
         return _ranges[_range].Value;
     }
 
+    public override bool OnCooldown()
+    {
+        return _timestamp + _cooldowns[_cooldown].Value > Time.time;
+    }
+
+    public override float Cooldown()
+    {
+        return Mathf.Max(0, _timestamp + _cooldowns[_cooldown].Value - Time.time);
+    }
+
     public override Stat[] GetCooldownStats()
     {
         if (_cooldown == _cooldowns.Length - 1)

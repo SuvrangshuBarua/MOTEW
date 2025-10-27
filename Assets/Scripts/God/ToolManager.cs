@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using GrimTools.Runtime.Core;
+using UnityEngine.UI;
 
 namespace God {
 
@@ -8,6 +9,10 @@ public class ToolManager : MonoSingleton<ToolManager>
 {
     public GameObject HammerPrefab;
     public GameObject FirePrefab;
+
+
+    [SerializeField]
+    private GameObject _cooldown;
 
     private Dictionary<string, BaseTool> _tools = new ();
     private BaseTool _selected;
@@ -97,10 +102,22 @@ public class ToolManager : MonoSingleton<ToolManager>
 
     void FixedUpdate()
     {
+        if (_selected.OnCooldown())
+        {
+            _cooldown.gameObject.SetActive(true);
+            var max = _selected.GetCooldownStats()[0].Value;
+            _cooldown.GetComponent<Image>().fillAmount = _selected.Cooldown() / max;
+        }
+        else
+        {
+            _cooldown.gameObject.SetActive(false);
+        }
+
         if (_mDown)
         {
             _selected?.MouseDown();
             _mDown = false;
+
             return;
         }
 

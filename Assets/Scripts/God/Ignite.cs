@@ -65,6 +65,16 @@ public class Ignite : BaseTool
         return _ranges[_range].Value;
     }
 
+    public override float Cooldown()
+    {
+        return Mathf.Max(0, _timestamp + _cooldowns[_cooldown].Value - Time.time);
+    }
+
+    public override bool OnCooldown()
+    {
+        return _timestamp + _cooldowns[_cooldown].Value > Time.time;
+    }
+
     public override bool TryUpgradeCooldown()
     {
         if (_cooldown == _cooldowns.Length - 1)

@@ -14,7 +14,18 @@ public class IndicatorManager : PersistantMonoSingleton<IndicatorManager>
 
     public void New(Transform at, string what)
     {
-        GameObject indicator = Instantiate(_prefab, at.position, Quaternion.identity);
+        GameObject indicator = Instantiate(_prefab, at.position, Quaternion.Euler(transform.eulerAngles.x, 0, 0));
+
+        var text = indicator.GetComponent<TextMesh>();
+        text.text = what;
+        text.fontSize = 20;
+    }
+
+    public void NewOffset(Transform at, string what, Vector3 off)
+    {
+        GameObject indicator = Instantiate(_prefab, at.position, Quaternion.Euler(transform.eulerAngles.x, 0, 0));
+
+        indicator.transform.localPosition = off;
 
         var text = indicator.GetComponent<TextMesh>();
         text.text = what;

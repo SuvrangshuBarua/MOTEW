@@ -13,11 +13,9 @@ public abstract class BaseTool : ScriptableObject
     public abstract float Range();
     public virtual void Upgrade() {}
     public virtual int UnlockPrice() { return 0; }
-    public virtual int UpgradeCost()
-    {
-        return int.MaxValue;
-    }
-
+    public virtual int UpgradeCost() { return int.MaxValue; }
+    public virtual bool OnCooldown() { return false; }
+    public virtual float Cooldown() { return 0; }
     public virtual bool TryUpgradeCooldown() { return false; }
     public virtual bool TryUpgradeDamage() { return false; }
     public virtual bool TryUpgradeRange() { return false; }
