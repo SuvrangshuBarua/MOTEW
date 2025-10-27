@@ -197,7 +197,7 @@ public class Ignite : BaseTool
         impl.Radius = _ranges[_range].Value;
         impl.Duration = 10f;
 
-        Destroy(fire, _cooldowns[_cooldown].Value);
+        Destroy(fire, 10f);
 
         _timestamp = now;
     }
